@@ -33,11 +33,17 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log("JeuWebGlProjet listening on port " + app.get('port'));
 });
 
+var Players = [];
 
 
 //socket
 var io = require('socket.io').listen(server);
 
 io.on('connection', function (socket) {
-
+	socket.on('registerPlayer', function (player) {
+		if (Players.indexOf(player.id) === -1) {
+			Players.push(player);
+			socket.emit('newPlayerJoin', player);
+		}
+	})
 })

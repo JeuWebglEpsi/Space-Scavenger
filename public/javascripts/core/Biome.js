@@ -23,6 +23,7 @@ Biome.prototype.findInBiome = function (idItemInBiome) {
 //ajouter un perso au biome
 Biome.prototype.addInBiome = function (personnage) {
 	var biome = this;
+	core.socket.emit('registerPlayer', personnage);
 	biome.personnages.push(personnage);
 }
 

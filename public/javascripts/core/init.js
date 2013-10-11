@@ -3,7 +3,8 @@
 
 (function () {
 	'use strict';
-	var core = {
+	window.core = {
+		socket: io.connect('http://' + location.host),
 		idCanvas: "mainFrame",
 		files: [
 			"Map", "Biome", "Personnage"
@@ -41,4 +42,5 @@
 	}
 	game.localPlayer = new Personnage("Tommy", 100, 100, 'fire');
 	game.biome.addInBiome(game.localPlayer);
+
 })();
