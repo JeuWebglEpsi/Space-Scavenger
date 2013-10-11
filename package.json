@@ -3,8 +3,9 @@
   "description": "JeuWebGlProjet",
   "private": true,
   "version": "1.0.0",
-  "scripts": { "start": "node app" },
-  
+  "scripts": {
+    "start": "node app"
+  },
   "dependencies": {
     "express": "~3.2.4",
     "ejs": "~0.8.4",
@@ -14,6 +15,6 @@
     "q": "~0.9.3",
     "request": "~2.21.0",
     "strong-mq": "~0.0.4",
-    "socket.io": "~0.9.14"
+    "socket.io": "~0.9.16"
   }
 }

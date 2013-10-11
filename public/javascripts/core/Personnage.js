@@ -3,7 +3,11 @@ var Personnage = function (name, life, armor, type) {
 	var personnage = this;
 	this._id;
 	this._socketId;
-	this._position = [];
+	this._position = {
+		x: 0,
+		y: 0,
+		z: 0
+	};
 	this._name = name;
 	this._life = life;
 	this._armor = armor;
@@ -65,21 +69,28 @@ Personnage.prototype.setPosition = function (position) {
 	this._position = position;
 }
 Personnage.prototype.moveUpX = function () {
+	console.log(this.name() + " moving up " + this._position.x);
 	this._position.x += 1;
 }
 Personnage.prototype.moveUpY = function () {
+	console.log(this.name() + " moving right " + this._position.y);
 	this._position.y += 1;
 }
 Personnage.prototype.moveUpZ = function () {
+	console.log(this.name() + " jumping " + this._position.z);
+
 	this._position.z += 1;
 }
 Personnage.prototype.moveDownX = function () {
+	console.log(this.name() + " moving down " + this._position.x);
 	this._position.x -= 1;
 }
 Personnage.prototype.moveDownY = function () {
+	console.log(this.name() + " moving left " + this._position.y);
 	this._position.y -= 1;
 }
 Personnage.prototype.moveDownZ = function () {
+	console.log(this.name() + " crouch " + this._position.z);
 	if (this._position.z === 0) return;
 	this._position.z -= 1;
 }

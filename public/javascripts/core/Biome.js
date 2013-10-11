@@ -36,3 +36,9 @@ Biome.prototype.delInBiome = function (idItemInBiome) {
 	}
 	return;
 }
+
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+	module.exports = Biome;
+else
+	window.Biome = Biome;

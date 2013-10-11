@@ -4,24 +4,27 @@
 (function () {
 	'use strict';
 	var core = {
+		idCanvas: "mainFrame",
 		files: [
-			"Map", "Biome", "Keyboard", "Personnage"
+			"Map", "Biome", "Personnage"
 		],
 		init: function () {
-			console.log('initializing');
-			var headID = document.getElementsByTagName("head")[0];
+			console.log('Initializing plateforme');
+			var headID = $('head');
 			this.files.forEach(function (file) {
 				var newScript = document.createElement('script');
 				newScript.type = 'text/javascript';
 				newScript.src = '/javascripts/core/' + file + '.js';
-				headID.appendChild(newScript);
+				headID.append(newScript);
 			})
-			console.log('initialized');
+			console.log('Plateforme initialized');
 		},
 	}
+
+
 	var loadCore = function () {
 		core.init();
-	}();
+	};
 	var sizeMainFrame = function () {
 		console.log("resizing");
 		var win = $(window);
@@ -30,6 +33,12 @@
 		mainFrame.width(win.width());
 	}
 
-
+	loadCore();
 	window.addEventListener("resize", sizeMainFrame);
+
+	window.game = {
+		biome: new Biome()
+	}
+	game.localPlayer = new Personnage("Tommy", 100, 100, 'fire');
+	game.biome.addInBiome(game.localPlayer);
 })();
