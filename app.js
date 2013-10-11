@@ -29,14 +29,14 @@ var options = {};
 
 routes(app, options);
 
-http.createServer(app).listen(app.get('port'), function () {
+var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log("JeuWebGlProjet listening on port " + app.get('port'));
 });
 
 
 
 //socket
-var io = require('socket.io').listen(serveur);
+var io = require('socket.io').listen(server);
 
 io.on('connection', function (socket) {
 

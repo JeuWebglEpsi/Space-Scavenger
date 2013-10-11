@@ -84,4 +84,7 @@ Personnage.prototype.moveDownZ = function () {
 	this._position.z -= 1;
 }
 
-module.exports = Personnage;
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+	module.exports = Personnage;
+else
+	window.Personnage = Personnage;
