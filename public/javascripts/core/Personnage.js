@@ -12,8 +12,8 @@ var Personnage = function (name, life, armor, type) {
 }
 
 //Propriété accessor
-Personnage.prototype.name = function (name = null) {
-	if (name typeof "String") {
+Personnage.prototype.name = function (name) {
+	if (typeof name == "String") {
 		throw new Error("Name must be a String");
 	}
 	var personnage = this;
@@ -23,7 +23,7 @@ Personnage.prototype.name = function (name = null) {
 		return this._name;
 	}
 }
-Personnage.prototype.life = function (life = null) {
+Personnage.prototype.life = function (life) {
 	if (NaN === parseInt(life)) {
 		throw new Error("Life must be a number");
 	}
@@ -34,7 +34,7 @@ Personnage.prototype.life = function (life = null) {
 		return this._life;
 	}
 }
-Personnage.prototype.armor = function (armor = null) {
+Personnage.prototype.armor = function (armor) {
 	if (NaN === parseInt(armor)) {
 		throw new Error("armor must be a number");
 	}
@@ -45,8 +45,8 @@ Personnage.prototype.armor = function (armor = null) {
 		return this._armor;
 	}
 }
-Personnage.prototype.type = function (type = null) {
-	if (type typeof "String") {
+Personnage.prototype.type = function (type) {
+	if (typeof type == "String") {
 		throw new Error("Type must be a String");
 	}
 	var personnage = this;
@@ -61,7 +61,7 @@ Personnage.prototype.type = function (type = null) {
 Personnage.prototype.getPosition = function () {
 	return this._position;
 }
-Peronnage.prototype.setPosition = function (position) {
+Personnage.prototype.setPosition = function (position) {
 	this._position = position;
 }
 Personnage.prototype.moveUpX = function () {
@@ -83,3 +83,5 @@ Personnage.prototype.moveDownZ = function () {
 	if (this._position.z === 0) return;
 	this._position.z -= 1;
 }
+
+module.exports = Personnage;
