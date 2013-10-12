@@ -8,6 +8,7 @@ Une guerre spaciale fait rage ! Vous tentez de survivre en tant que pillard. Vot
 - [NodeJS](http://nodejs.org) Plateforme de développement pour applications web
 - [Socket.io](http://socket.io) WebSocket cross-browser pour applications en temps réel.
 - [ThreeJS](http://threejs.org) Librairie WebGL.
+
 ##Crédit
 - Hugues FOUCRAY, développeur et concepteur.
 - Joseph ROUFFET, développeur et concepteur.
