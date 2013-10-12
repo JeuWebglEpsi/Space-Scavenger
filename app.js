@@ -17,6 +17,7 @@ app.configure(function () {
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
+	app.use(express.compress());
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -45,5 +46,13 @@ io.on('connection', function (socket) {
 			Players.push(player);
 			socket.emit('newPlayerJoin', player);
 		}
+	})
+	socket.on('moveX', function (x) {
+		console.log(socket.id + ' moving ' + x);
+		socket.broadcast.emit('moveX', socket.id, x);
+	})
+	socket.on('moveY', function (y) {
+		console.log(socket.id + ' moving ' + y);
+		socket.broadcast.emit('moveY', socket.id, y);
 	})
 })
