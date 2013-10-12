@@ -13,6 +13,5 @@ Une guerre spaciale fait rage ! Vous tentez de survivre en tant que pillard. Vot
 - Hugues FOUCRAY, développeur et concepteur.
 - Joseph ROUFFET, développeur et concepteur.
 - Tommy BOUCHER, développeur et concepteur.
-
 - École Privée des Sciences Informatiques - LYON
 
