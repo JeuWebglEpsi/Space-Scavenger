@@ -9,6 +9,8 @@ Une guerre spaciale fait rage ! Vous tentez de survivre en tant que pillard. Vot
 - [Socket.io](http://socket.io) WebSocket cross-browser pour applications en temps réel.
 - [ThreeJS](http://threejs.org) Librairie WebGL.
 
+####Utilisation
+Lancement : node app.js puis visiter la page [locahost:3000](http://localhost:3000)
 ##Crédits
 - Hugues FOUCRAY, développeur et concepteur.
 - Joseph ROUFFET, développeur et concepteur.
