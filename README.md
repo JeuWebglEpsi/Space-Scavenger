@@ -10,7 +10,7 @@ Une guerre spaciale fait rage ! Vous tentez de survivre en tant que pillard. Vot
 - [ThreeJS](http://threejs.org) Librairie WebGL.
 
 ####Utilisation
-Lancement : node app.js puis visiter la page [locahost:3000](http://localhost:3000)
+Lancement : node app.js puis visiter la page <a href="http://localhost:3000" target="_blank">localhost:3000</a>
 ##Crédits
 - Hugues FOUCRAY, développeur et concepteur.
 - Joseph ROUFFET, développeur et concepteur.
