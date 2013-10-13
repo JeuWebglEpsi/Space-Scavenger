@@ -56,12 +56,14 @@ $(document).ready(function () {
 		antialias: true
 	});
 	renderer.setSize(window.innerWidth, window.innerHeight);
+	var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
 	$('body').append(renderer.domElement);
 
 	//maintenant on va ajouter un objet créé avec blender
 	var loader = new THREE.JSONLoader();
 	var meshs = [];
-	loader.load("/javascripts/objects/brothereyes.js", function (geometry, materials) {
+	loader.load("/javascripts/test.js", function (geometry, materials) {
 
 		//correction de la couleur du 2 ieme matériel
 		//materials[1].color = new THREE.Color("rgb(255,0,0)");
@@ -69,8 +71,8 @@ $(document).ready(function () {
 		//var texture = new THREE.ImageUtils.loadTexture("/javascripts/BROTHEREYE_DIFF.jpg");
 		var mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials));
 		mesh.position.x = 0;
-		mesh.position.y = -50;
-		mesh.scale.x = mesh.scale.y = mesh.scale.z = 10;
+		mesh.position.y = 00;
+		mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
 		scene.add(mesh);
 		meshs.push(mesh);
 
@@ -81,13 +83,9 @@ $(document).ready(function () {
 	scene.add(light)
 	//on change la position de la caméra
 	camera.position.z = 200;
-
 	var render = function () {
 		requestAnimationFrame(render);
-		meshs.forEach(function (mesh) {
-			mesh.rotation.y += 0.05;
-			mesh.rotation.z += 0.02;
-		})
+
 		renderer.render(scene, camera);
 	};
 
