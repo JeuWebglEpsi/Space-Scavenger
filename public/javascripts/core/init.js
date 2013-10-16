@@ -1,5 +1,7 @@
 //loader pour l'application web
+
 'use strict';
+//on définit la méthode watch pour tout les navigateur (seulement sous firefox a la base)
 if (!Object.prototype.watch) {
 	Object.prototype.watch = function (prop, handler) {
 		var oldval = this[prop],
@@ -34,32 +36,14 @@ if (!Object.prototype.unwatch) {
 	};
 }
 
+//initialisation de core et du resizing
 (function () {
 	'use strict';
-
 	window.core = {
-		socket: io.connect('http://' + location.host),
-		idCanvas: "mainFrame",
-		files: [
-			"Renderer", "Biome", "Personnage", "Game", "Keyboard", "Map"
-		],
-		init: function () {
-			console.log('Initializing plateforme');
-			var headID = $('head');
-			this.files.forEach(function (file) {
-				var newScript = document.createElement('script');
-				newScript.type = 'text/javascript';
-				newScript.src = '/javascripts/game/' + file + '.js';
-				headID.append(newScript);
-			})
-			console.log('Plateforme initialized');
-		},
+		//connection de l'utilisateur au serveur temps réel
+		socket: io.connect('http://' + location.host)
 	}
 
-
-	var loadCore = function () {
-		core.init();
-	};
 	var sizeMainFrame = function () {
 		console.log("resizing");
 		var win = $(window);
@@ -67,11 +51,5 @@ if (!Object.prototype.unwatch) {
 		mainFrame.height(win.height());
 		mainFrame.width(win.width());
 	}
-
-	loadCore();
-
-
 	window.addEventListener("resize", sizeMainFrame);
-
-
 })();

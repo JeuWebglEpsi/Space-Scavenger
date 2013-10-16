@@ -1,10 +1,10 @@
 //GEstion des evenements clavier
 (function () {
 	'use strict';
+	//permet la répétition des touches(maintenir pour se déplacer)
 	kd.run(function () {
 		kd.tick();
 	});
-
 
 	//up
 	kd.Z.down(function () {

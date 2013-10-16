@@ -14,3 +14,10 @@ a {
 	height: 100%;
 	background:yellow;
 }
+.players{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100px;
+	color : green;
+}

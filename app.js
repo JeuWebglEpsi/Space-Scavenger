@@ -1,6 +1,8 @@
 /**
  * Main application
  */
+//express est le serveur web
+//route gere les requettes
 
 var express = require('express'),
 	routes = require('./routes'),
@@ -9,6 +11,7 @@ var express = require('express'),
 
 var app = express();
 
+//configurations
 app.configure(function () {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
@@ -34,6 +37,9 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log("JeuWebGlProjet listening on port " + app.get('port'));
 });
 
+
+//tableau des joueurs connéctés
+//contien des objets {idDeSocket, player}
 var Players = [];
 
 
@@ -41,18 +47,50 @@ var Players = [];
 var io = require('socket.io').listen(server);
 
 io.on('connection', function (socket) {
+
+	//a la connection on enregistre la socket
+	if (Players.indexOf(socket.id) === -1) {
+		console.log('register socket ' + socket.id);
+		Players.push({
+			id: socket.id,
+			type: 'player'
+		});
+		console.log(Players);
+	}
+	//on associe un player a une socket une fois qu'il est créé
 	socket.on('registerPlayer', function (player) {
-		if (Players.indexOf(player.id) === -1) {
-			Players.push(player);
-			socket.emit('newPlayerJoin', player);
+		for (var i = 0, nb = Players.length; i < nb; i++) {
+			if (Players[i].id === socket.id) {
+				Players[i].player = player
+				socket.broadcast.emit('newPlayerJoin', Players[i]);
+				io.sockets.emit('updatePlayerList', Players);
+				socket.emit('updateIdPlayer', socket.id);
+			}
 		}
 	})
+
+	//on déplace le joueur du socket en cour
 	socket.on('moveX', function (x) {
 		console.log(socket.id + ' moving ' + x);
+		socket.emit('moveX', socket.id, x);
 		socket.broadcast.emit('moveX', socket.id, x);
 	})
 	socket.on('moveY', function (y) {
 		console.log(socket.id + ' moving ' + y);
+		socket.emit('moveY', socket.id, y);
 		socket.broadcast.emit('moveY', socket.id, y);
+	})
+
+	//deconnecton du socket
+	socket.on('disconnect', function () {
+		for (var i = 0, nb = Players.length; i < nb; i++) {
+			if (Players[i])
+				if (socket.id === Players[i].id) {
+					Players.splice(i, 1);
+				}
+		}
+		//on broadcast la déconnection
+		socket.broadcast.emit('deletePlayer', socket.id);
+		io.sockets.emit('updatePlayerList', Players);
 	})
 })
