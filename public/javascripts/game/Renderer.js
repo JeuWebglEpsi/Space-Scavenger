@@ -28,7 +28,7 @@ $(document).ready(function () {
 	var light = new THREE.PointLight(0xffffff, 1, 500);
 	var light2 = new THREE.AmbientLight(0xffffff);
 
-	light.position.set(0, 200, 0);
+	light.position.set(0, 0, 0);
 	scene.add(light)
 	scene.add(light2);
 	//on change la position de la caméra
