@@ -80,15 +80,17 @@ $(document).ready(function () {
 		var loader = new THREE.JSONLoader();
 
 
-		loader.load("/javascripts/objects/brothereyes.js", function (geometry, materials) {
+		loader.load("/javascripts/test.js", function (geometry, materials) {
 			//correction de la couleur du 2 ieme matériel
 			//materials[1].color = new THREE.Color("rgb(255,0,0)");
 
-			//var texture = new THREE.ImageUtils.loadTexture("/javascripts/BROTHEREYE_DIFF.jpg");
-			var mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials));
+
+			geometry.buffersNeedUpdate = true;
+			geometry.uvsNeedUpdate = true;
+			var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 			mesh.position.x = parseInt(Math.random() * 100);
 			mesh.position.y = parseInt(Math.random() * 100);
-			mesh.scale.x = mesh.scale.y = mesh.scale.z = 4;
+			mesh.scale.x = mesh.scale.y = mesh.scale.z = .2;
 			scene.add(mesh);
 		});
 		/*fin du test*/

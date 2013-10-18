@@ -16,8 +16,11 @@ $(document).ready(function () {
 	var meshs = [];
 	// on ajoute un point de lumière
 	var light = new THREE.PointLight(0xffffff, 1, 500);
-	light.position.set(8, 2, 8);
+	var light2 = new THREE.AmbientLight(0xffffff);
+
+	light.position.set(0, 200, 0);
 	scene.add(light)
+	scene.add(light2);
 	//on change la position de la caméra
 	camera.position.z = 200;
 
