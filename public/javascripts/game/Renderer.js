@@ -13,6 +13,16 @@ $(document).ready(function () {
 
 	//maintenant on va ajouter un objet créé avec blender
 	var loader = new THREE.JSONLoader();
+
+	loader.load("/javascripts/objects/bgd.js", function (geometry, materials) {
+		console.log(materials);
+		var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+		mesh.position.x = 0;
+		mesh.position.y = 0
+		mesh.scale.x = mesh.scale.y = mesh.scale.z = -2;
+		scene.add(mesh);
+	});
+
 	var meshs = [];
 	// on ajoute un point de lumière
 	var light = new THREE.PointLight(0xffffff, 1, 500);
