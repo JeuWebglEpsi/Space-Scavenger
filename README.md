@@ -3,7 +3,7 @@
 <img src="moodboard.jpg" alt="">
 ###Histoire
 Une guerre spaciale fait rage ! <br/>
-Vous tentez de survivre en tant que pillard. Votre seule chance de survit est de récupérer des cellules d'energie sur les épaves de champs de bataille. <br/>
+Vous tentez de survivre en tant que pillard. Votre seule chance de survie est de récupérer des cellules d'énergie sur les épaves de champs de bataille. <br/>
 Malheureusement, votre tâche ne sera pas aisée du fait que ces épaves sont envahis de robots d'une origine inconnue...
 ###Manuel
 En cours d'écriture...
