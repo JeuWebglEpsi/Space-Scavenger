@@ -1,7 +1,7 @@
 //déssinateur (peut etre a appeler avec un worker pour de meilleur performances...)
 $(document).ready(function () {
 	window.scene = new THREE.Scene();
-	window.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+	window.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
 
 	window.renderer = new THREE.WebGLRenderer({
 		antialias: true
@@ -19,7 +19,7 @@ $(document).ready(function () {
 		var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 		mesh.position.x = 0;
 		mesh.position.y = 0
-		mesh.scale.x = mesh.scale.y = mesh.scale.z = -5;
+		mesh.scale.x = mesh.scale.y = mesh.scale.z = -3;
 		scene.add(mesh);
 	});
 
