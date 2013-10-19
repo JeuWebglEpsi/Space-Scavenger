@@ -72,22 +72,28 @@
 	//déplaceur
 	Personnage.prototype.moveUpX = function () {
 		this._position.x += 1;
+		camera.position.z -= 1;
 	}
 	Personnage.prototype.moveUpY = function () {
 		this._position.y += 1;
+		camera.position.y += 1;
 	}
 	Personnage.prototype.moveUpZ = function () {
 		this._position.z += 1;
+		camera.position.x += 1
 	}
 	Personnage.prototype.moveDownX = function () {
 		this._position.x -= 1;
+		camera.position.z += 1
 	}
 	Personnage.prototype.moveDownY = function () {
 		this._position.y -= 1;
+		camera.position.y -= 1
 	}
 	Personnage.prototype.moveDownZ = function () {
 		if (this._position.z === 0) return;
 		this._position.z -= 1;
+		camera.position.x -= 1
 	}
 
 	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
