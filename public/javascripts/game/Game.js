@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var Game = function () {
 		var game = this;
 		game.biome = new Biome();
+		game.map = new Map();
 	}
 	//creation de personnage en fonction du type.
 	Game.prototype.createPlayer = function (s) {
@@ -22,22 +23,23 @@ $(document).ready(function () {
 		}
 	}
 
-	//on met l'objet game dans la fenetre.
-	window.game = new Game();
-
+	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+		module.exports = Game;
+	else
+		window.Game = Game;
 
 	//sockets
 	core.socket.on('connect', function () {
 		window.socketId = this.socket.sessionid;
 		console.log(window.socketId);
-		game.createPlayer('local');
+		window.game.createPlayer('local');
 
 	});
 	//evenement quand un nouveau joueur arrive
 	core.socket.on('newPlayerJoin', function (player) {
 		var exists = false;
-		for (var i = 0, nb = game.biome.personnages.length; i < nb; i++) {
-			if (game.biome.personnages[i]._socketId === player.id) {
+		for (var i = 0, nb = window.game.biome.personnages.length; i < nb; i++) {
+			if (window.game.biome.personnages[i]._socketId === player.id) {
 				exists = true;
 			}
 		}
@@ -46,7 +48,7 @@ $(document).ready(function () {
 			console.log(player);
 			var p = player.player;
 			var play = new Personnage(player.id, p._name, p._life, p._element, p._type);
-			game.biome.personnages.push({
+			window.game.biome.personnages.push({
 				id: player.id,
 				player: play,
 				type: 'player'
@@ -56,17 +58,17 @@ $(document).ready(function () {
 	//quand un joueur se déconnecte
 	core.socket.on('deletePlayer', function (player) {
 		var exists = false;
-		for (var i = 0, nb = game.biome.personnages.length; i < nb; i++) {
-			if (game.biome.personnages[i]._socketId === player.id) {
+		for (var i = 0, nb = window.game.biome.personnages.length; i < nb; i++) {
+			if (window.game.biome.personnages[i]._socketId === player.id) {
 				exists = i;
 			}
 		}
 		if (exists) {
 			console.log('deleting from biome');
 			console.log(player);
-			game.biome.personnages.splice(exists, 1);
+			window.game.biome.personnages.splice(exists, 1);
 			$('#' + player.id).remove();
-			console.log(game.biome.personnages);
+			console.log(window.game.biome.personnages);
 		}
 	})
 	//on met a jour la liste des joueur (visible a gauche)
@@ -77,22 +79,7 @@ $(document).ready(function () {
 			$('.players .playerlist').append('<li id="' + p._socketId + '">' + p._name + '</li>');
 		})
 		/*TEST de draw quand un player arrive*/
-		var loader = new THREE.JSONLoader();
 
-
-		loader.load("/javascripts/test.js", function (geometry, materials) {
-			//correction de la couleur du 2 ieme matériel
-			//materials[1].color = new THREE.Color("rgb(255,0,0)");
-
-
-			geometry.buffersNeedUpdate = true;
-			geometry.uvsNeedUpdate = true;
-			var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-			mesh.position.x = parseInt(Math.random() * 100);
-			mesh.position.y = parseInt(Math.random() * 100);
-			mesh.scale.x = mesh.scale.y = mesh.scale.z = .2;
-			scene.add(mesh);
-		});
 		/*fin du test*/
 	})
 });

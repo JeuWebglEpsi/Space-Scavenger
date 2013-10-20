@@ -6,22 +6,32 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 
     <!--Scripts files-->
+
     <script src="/javascripts/core/lib/jquery.js"></script>
     <script src="/javascripts/core/lib/socket.io.min.js"></script>
     <script src="/javascripts/core/lib/keydrown.js"></script>
     <script src="/javascripts/core/lib/three.min.js"></script>
     <script src="/javascripts/core/lib/orbitcontrol.js"></script>
      <script src="/javascripts/core/init.js"></script>
-     <script type="text/javascript" src="/javascripts/game/Renderer.js"></script>
+
+
      <script type="text/javascript" src="/javascripts/game/Biome.js"></script>
      <script type="text/javascript" src="/javascripts/game/Personnage.js"></script>
      <script type="text/javascript" src="/javascripts/game/Game.js"></script>
      <script type="text/javascript" src="/javascripts/game/Keyboard.js"></script>
      <script type="text/javascript" src="/javascripts/game/Map.js"></script>
+          <script src='/javascripts/game/Renderer.js'></script>
+
   </head>
   <body id="mainContainer">
     <div class="players">
       <ul class="playerlist"></ul>
+    </div>
+    <div class="overlay">
+        <ul class="level">
+            <li><a href="#" id="space">Space</a></li>
+            <li><a href="#" id="ship">Ship</a></li>
+        </ul>
     </div>
   </body>
 </html>

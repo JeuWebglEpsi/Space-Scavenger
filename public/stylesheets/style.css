@@ -1,8 +1,8 @@
 body {
+	overflow: hidden;
 	margin:0 ;
 	padding: 0;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	overflow: hidden;
 }
 
 a {
@@ -20,4 +20,15 @@ a {
 	left:0;
 	width:100px;
 	color : green;
+}
+
+.overlay{
+	position: absolute;
+	width:100%;
+	background: none;
+	text-align: center;
+	z-index: 100;
+}
+.overlay .level{
+	list-style: none;
 }
