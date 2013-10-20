@@ -24,7 +24,7 @@
 
 		var meshs = [];
 		// on ajoute un point de lumière
-		var light = new THREE.PointLight(0xffffff, 50, 5000);
+		var light = new THREE.PointLight(0xffffff, 50, 50000);
 		var light2 = new THREE.AmbientLight(0xffffff);
 		var directionalLight = new THREE.DirectionalLight(0xffffff);
 		directionalLight.position.set(1, 1, 1).normalize();

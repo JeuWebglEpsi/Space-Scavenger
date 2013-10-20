@@ -1,7 +1,7 @@
 //déssinateur (peut etre a appeler avec un worker pour de meilleur performances...)
 $(document).ready(function () {
 	window.scene = new THREE.Scene();
-	window.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+	window.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000000);
 
 	window.renderer = new THREE.WebGLRenderer({
 		antialias: true,
