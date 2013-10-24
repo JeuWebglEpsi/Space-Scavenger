@@ -5,6 +5,7 @@
 		var map = this;
 		var walls = [];
 		var obstacles = [];
+
 		/* ... */
 	};
 	Map.prototype.init = function () {
@@ -15,10 +16,10 @@
 
 		//background image
 		loader.load("/javascripts/Maps/bgd.js", function (geometry, materials) {
-			var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+			var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
 			mesh.position.x = 0;
 			mesh.position.y = 0
-			mesh.scale.x = mesh.scale.y = mesh.scale.z = -100;
+			mesh.scale.x = mesh.scale.y = mesh.scale.z = -200;
 			scene.add(mesh);
 		});
 
@@ -36,8 +37,12 @@
 		camera.position.z = camera.position.y = camera.position.x = 0;
 
 		// create the particle variables
-		var particleCount = 3600,
-			particles = new THREE.Geometry();
+		var particleCount = 2000000,
+			particles = new Physijs.createMaterial(
+				new THREE.Geometry(),
+				.8, // high friction
+				.3 // low restitution
+			);
 		// create the particle variables
 		var pMaterial = new THREE.ParticleBasicMaterial({
 			color: 0xFFFFFF,
@@ -60,9 +65,9 @@
 
 			// create a particle with random
 			// position values, -250 -> 250
-			var pX = Math.random() * 1000 - 250,
-				pY = Math.random() * 1000 - 250,
-				pZ = Math.random() * 1000 - 250,
+			var pX = Math.random() * 5000 - 250,
+				pY = Math.random() * 5000 - 250,
+				pZ = Math.random() * 5000 - 250,
 				particle = new THREE.Vector3(pX, pY, pZ);
 			particle.velocity = new THREE.Vector3(
 				0, // x
