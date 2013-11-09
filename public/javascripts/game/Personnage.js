@@ -1,7 +1,7 @@
 //Personnage.js
-(function () {
+(function() {
 	'use strict';
-	var Personnage = function (id, name, life, element, type) {
+	var Personnage = function(id, name, life, element, type) {
 		var personnage = this;
 		//id de socket(selecteur unique)
 		this._socketId = id;
@@ -20,7 +20,7 @@
 	}
 
 	//Propriété
-	Personnage.prototype.name = function (name) {
+	Personnage.prototype.name = function(name) {
 		if (typeof name == "String") {
 			throw new Error("Name must be a String");
 		}
@@ -31,7 +31,7 @@
 			return this._name;
 		}
 	}
-	Personnage.prototype.life = function (life) {
+	Personnage.prototype.life = function(life) {
 		if (NaN === parseInt(life)) {
 			throw new Error("Life must be a number");
 		}
@@ -43,7 +43,7 @@
 		}
 	}
 
-	Personnage.prototype.type = function (type) {
+	Personnage.prototype.type = function(type) {
 		if (typeof type == "String") {
 			throw new Error("Type must be a String");
 		}
@@ -54,50 +54,50 @@
 			return this._type;
 		}
 	}
-	Personnage.prototype.setSocketId = function (id) {
+	Personnage.prototype.setSocketId = function(id) {
 		var personnage = this;
 		personnage._socketId = id;
 	}
-	Personnage.prototype.getSocketId = function () {
+	Personnage.prototype.getSocketId = function() {
 		var personnage = this;
 		return personnage._socketId;
 	}
 	//Gestion du positionnement (watch to redraw)
-	Personnage.prototype.getPosition = function () {
+	Personnage.prototype.getPosition = function() {
 		return this._position;
 	}
-	Personnage.prototype.setPosition = function (position) {
+	Personnage.prototype.setPosition = function(position) {
 		this._position = position;
 	}
 	//déplaceur
-	Personnage.prototype.moveUpX = function () {
+	Personnage.prototype.moveUpX = function() {
 		this._position.x += 1;
 		camera.position.z -= 1;
 	}
-	Personnage.prototype.moveUpY = function () {
+	Personnage.prototype.moveUpY = function() {
 		this._position.y += 1;
 		camera.position.y += 1;
 	}
-	Personnage.prototype.moveUpZ = function () {
+	Personnage.prototype.moveUpZ = function() {
 		this._position.z += 1;
 		camera.position.x += 1
 	}
-	Personnage.prototype.moveDownX = function () {
+	Personnage.prototype.moveDownX = function() {
 		this._position.x -= 1;
 		camera.position.z += 1
 	}
-	Personnage.prototype.moveDownY = function () {
+	Personnage.prototype.moveDownY = function() {
 		this._position.y -= 1;
 		camera.position.y -= 1
 	}
-	Personnage.prototype.moveDownZ = function () {
+	Personnage.prototype.moveDownZ = function() {
 		if (this._position.z === 0) return;
 		this._position.z -= 1;
 		camera.position.x -= 1
 	}
 
 
-	Personnage.prototype.init = function (args) {
+	Personnage.prototype.init = function(args) {
 		/* ... */
 		// Set the character modelisation object
 		this.mesh = new THREE.Object3D();
@@ -115,9 +115,10 @@
 		];
 		// And the "RayCaster", able to test for intersections
 		this.caster = new THREE.Raycaster();
+		return this.mesh;
 	}
 	// Test and avoid collisions
-	Personnage.prototype.collision = function () {
+	Personnage.prototype.collision = function() {
 		'use strict';
 		var collisions, i,
 			// Maximum distance from the origin before we consider collision
@@ -147,7 +148,7 @@
 		}
 	},
 	// Process the character motions
-	Personnage.prototype.motion = function () {
+	Personnage.prototype.motion = function() {
 		'use strict';
 		// Update the directions if we intersect with an obstacle
 		this.collision();

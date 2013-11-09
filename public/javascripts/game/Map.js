@@ -25,34 +25,26 @@
 
 		var meshs = [];
 		// on ajoute un point de lumière
-		var light = new THREE.PointLight(0xffffff, 50, 50000);
-		var light2 = new THREE.AmbientLight(0xffffff);
-		var directionalLight = new THREE.DirectionalLight(0xffffff);
-		directionalLight.position.set(1, 1, 1).normalize();
-		scene.add(directionalLight);
-		light.position.set(0, 0, 0);
-		scene.add(light)
-		scene.add(light2);
+		var light = new THREE.AmbientLight(0xffffff);
+
+		console.log(light);
+		scene.add(light);
 		//on change la position de la caméra
 		camera.position.z = camera.position.y = camera.position.x = 0;
 
 		// create the particle variables
-		var particleCount = 2000000,
-			particles = new Physijs.createMaterial(
-				new THREE.Geometry(),
-				.8, // high friction
-				.3 // low restitution
-			);
-		// create the particle variables
-		var pMaterial = new THREE.ParticleBasicMaterial({
-			color: 0xFFFFFF,
-			size: .8,
-			map: THREE.ImageUtils.loadTexture(
-				"/javascripts/Maps/particle.png"
-			),
-			blending: THREE.AdditiveBlending,
-			transparent: true
-		});
+		var particleCount = 200000,
+			particles = new THREE.Geometry()
+			// create the particle variables
+			var pMaterial = new THREE.ParticleBasicMaterial({
+				color: 0xFFFFFF,
+				size: 1.2,
+				// map: THREE.ImageUtils.loadTexture(
+				// 	"/javascripts/Maps/particle.png"
+				// ),
+				blending: THREE.AdditiveBlending,
+				transparent: true
+			});
 
 		// also update the particle system to
 		// sort the particles which enables
@@ -65,14 +57,11 @@
 
 			// create a particle with random
 			// position values, -250 -> 250
-			var pX = Math.random() * 5000 - 250,
-				pY = Math.random() * 5000 - 250,
-				pZ = Math.random() * 5000 - 250,
+			var pX = Math.random() * 10000 - 5000,
+				pY = Math.random() * 10000 - 5000,
+				pZ = Math.random() * 10000 - 5000,
 				particle = new THREE.Vector3(pX, pY, pZ);
-			particle.velocity = new THREE.Vector3(
-				0, // x
-				-Math.random(), // y: random vel
-				0);
+
 
 			// add it to the geometry
 			particles.vertices.push(particle);
@@ -86,7 +75,6 @@
 		// add it to the scene
 		scene.add(this.particleSystem);
 
-		renderer.shadowMapEnabled = true;
 
 
 	}

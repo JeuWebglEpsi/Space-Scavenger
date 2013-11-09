@@ -1,12 +1,12 @@
-$(document).ready(function () {
+$(document).ready(function() {
 	'use strict';
-	var Game = function () {
+	var Game = function() {
 		var game = this;
 		game.biome = new Biome();
 		game.map = new Map();
 	}
 	//creation de personnage en fonction du type.
-	Game.prototype.createPlayer = function (s) {
+	Game.prototype.createPlayer = function(s) {
 		var game = this;
 		if (s === 'local') {
 			var nom = prompt("Saisisez votre nom");
@@ -19,6 +19,7 @@ $(document).ready(function () {
 					player: p,
 					type: 'player'
 				});
+				window.scene.add(game.localPlayer.init());
 			}
 		}
 	}
@@ -29,14 +30,14 @@ $(document).ready(function () {
 		window.Game = Game;
 
 	//sockets
-	core.socket.on('connect', function () {
+	core.socket.on('connect', function() {
 		window.socketId = this.socket.sessionid;
 		console.log(window.socketId);
 		window.game.createPlayer('local');
 
 	});
 	//evenement quand un nouveau joueur arrive
-	core.socket.on('newPlayerJoin', function (player) {
+	core.socket.on('newPlayerJoin', function(player) {
 		var exists = false;
 		for (var i = 0, nb = window.game.biome.personnages.length; i < nb; i++) {
 			if (window.game.biome.personnages[i]._socketId === player.id) {
@@ -56,7 +57,7 @@ $(document).ready(function () {
 		}
 	})
 	//quand un joueur se déconnecte
-	core.socket.on('deletePlayer', function (player) {
+	core.socket.on('deletePlayer', function(player) {
 		var exists = false;
 		for (var i = 0, nb = window.game.biome.personnages.length; i < nb; i++) {
 			if (window.game.biome.personnages[i]._socketId === player.id) {
@@ -72,9 +73,9 @@ $(document).ready(function () {
 		}
 	})
 	//on met a jour la liste des joueur (visible a gauche)
-	core.socket.on('updatePlayerList', function (players) {
+	core.socket.on('updatePlayerList', function(players) {
 		$('.playerlist').html('');
-		players.forEach(function (player) {
+		players.forEach(function(player) {
 			var p = player.player;
 			$('.players .playerlist').append('<li id="' + p._socketId + '">' + p._name + '</li>');
 		})
