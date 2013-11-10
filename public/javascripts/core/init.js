@@ -37,18 +37,18 @@
 // }
 //initialisation de core et du resizing
 (function () {
-	'use strict';
-	window.core = {
-		//connection de l'utilisateur au serveur temps réel
-		socket: io.connect('http://' + location.host)
-	}
+    'use strict';
+    window.core = {
+        //connection de l'utilisateur au serveur temps réel
+        socket: io.connect('http://' + location.host)
+    }
 
-	var sizeMainFrame = function () {
-		console.log("resizing");
-		var win = $(window);
-		var mainFrame = $('#mainContainer canvas');
-		mainFrame.height(win.height());
-		mainFrame.width(win.width());
-	}
-	window.addEventListener("resize", sizeMainFrame);
+    var sizeMainFrame = function () {
+        console.log("resizing");
+        var win = $(window);
+        var mainFrame = $('#mainContainer canvas');
+        mainFrame.height(win.height());
+        mainFrame.width(win.width());
+    }
+    window.addEventListener("resize", sizeMainFrame);
 })();

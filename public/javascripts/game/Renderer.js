@@ -1,64 +1,64 @@
 //déssinateur (peut etre a appeler avec un worker pour de meilleur performances...)
 $(document).ready(function () {
-	Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
+    Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
 
-	window.scene = new Physijs.Scene;
-	scene.setGravity(new THREE.Vector3(0, -30, 0));
-
-
-	window.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000000);
-
-	window.renderer = new THREE.WebGLRenderer({
-		antialias: true,
-		precision: 'highp'
-	});
-	renderer.setSize(window.innerWidth, window.innerHeight);
-
-	var controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-	$('body').append(renderer.domElement);
-
-	window.game = new Game();
-	console.log(game);
-	game.map.init();
+    window.scene = new Physijs.Scene;
+    scene.setGravity(new THREE.Vector3(0, -30, 0));
 
 
-	var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+    window.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000000);
 
-	hemiLight.position.set(0, 500, 0);
-	scene.add(hemiLight);
+    window.renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        precision: 'highp'
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-	var dirLight = new THREE.DirectionalLight(0xffffff, 1);
-	dirLight.position.set(-1, 0.75, 1);
-	dirLight.position.multiplyScalar(50);
-	dirLight.name = "dirlight";
-	// dirLight.shadowCameraVisible = true;
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-	scene.add(dirLight);
+    $('body').append(renderer.domElement);
 
-	dirLight.castShadow = true;
-	dirLight.shadowMapWidth = dirLight.shadowMapHeight = 1024 * 2;
+    window.game = new Game();
+    console.log(game);
+    game.map.init();
 
-	var d = 300;
 
-	dirLight.shadowCameraLeft = -d;
-	dirLight.shadowCameraRight = d;
-	dirLight.shadowCameraTop = d;
-	dirLight.shadowCameraBottom = -d;
+    var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
 
-	dirLight.shadowCameraFar = 3500;
-	dirLight.shadowBias = -0.0001;
-	dirLight.shadowDarkness = 0.35;
+    hemiLight.position.set(0, 500, 0);
+    scene.add(hemiLight);
 
-	//fonction qui lance le rendu
-	var render = function () {
-		scene.simulate();
-		requestAnimationFrame(render);
+    var dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(-1, 0.75, 1);
+    dirLight.position.multiplyScalar(50);
+    dirLight.name = "dirlight";
+    // dirLight.shadowCameraVisible = true;
 
-		game.map.particleSystem.rotation.y += 0.000005;
+    scene.add(dirLight);
 
-		renderer.render(scene, camera);
-	};
+    dirLight.castShadow = true;
+    dirLight.shadowMapWidth = dirLight.shadowMapHeight = 1024 * 2;
 
-	render();
+    var d = 300;
+
+    dirLight.shadowCameraLeft = -d;
+    dirLight.shadowCameraRight = d;
+    dirLight.shadowCameraTop = d;
+    dirLight.shadowCameraBottom = -d;
+
+    dirLight.shadowCameraFar = 3500;
+    dirLight.shadowBias = -0.0001;
+    dirLight.shadowDarkness = 0.35;
+
+    //fonction qui lance le rendu
+    var render = function () {
+        scene.simulate();
+        requestAnimationFrame(render);
+
+        game.map.particleSystem.rotation.y += 0.000005;
+
+        renderer.render(scene, camera);
+    };
+
+    render();
 })

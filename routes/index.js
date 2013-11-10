@@ -4,9 +4,9 @@
  */
 
 function index(req, res) {
-	res.render('index', {
-		title: 'JeuWebGlProjet'
-	});
+    res.render('index', {
+        title: 'JeuWebGlProjet'
+    });
 };
 
 /**
@@ -14,5 +14,5 @@ function index(req, res) {
  */
 
 module.exports = function (app, options) {
-	app.get('/', index);
+    app.get('/', index);
 }

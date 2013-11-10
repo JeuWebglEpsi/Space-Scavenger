@@ -22,8 +22,8 @@ var p = new Biome();
 */
 
 exports['Biome'] = {
-	'Biome': function (test) {
-		console.log(p);
-		test.done();
-	},
+    'Biome': function (test) {
+        console.log(p);
+        test.done();
+    },
 };

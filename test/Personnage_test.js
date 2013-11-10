@@ -22,12 +22,12 @@ var p = new Personnage('Tommy', 100, 100, 'fire');
 */
 
 exports['Perso'] = {
-	'Perso': function (test) {
-		console.log(p);
-		test.ok(p.name(), 'Tommy');
-		test.ok(p.life(), 100);
-		test.ok(p.armor(), 100);
-		test.ok(p.type(), 'fire');
-		test.done();
-	},
+    'Perso': function (test) {
+        console.log(p);
+        test.ok(p.name(), 'Tommy');
+        test.ok(p.life(), 100);
+        test.ok(p.armor(), 100);
+        test.ok(p.type(), 'fire');
+        test.done();
+    },
 };
