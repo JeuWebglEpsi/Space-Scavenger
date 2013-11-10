@@ -24,11 +24,80 @@ a {
 
 .overlay{
 	position: absolute;
+	z-index: 100;
 	width:100%;
 	background: none;
 	text-align: center;
-	z-index: 100;
 }
 .overlay .level{
 	list-style: none;
 }
+.ath{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.ath .values {
+	position: relative;
+}
+.ath .athlife{
+	position: absolute;
+	right:20px;
+	bottom: 20px;
+	float: right;
+}
+
+
+.ath .athammo{
+	position: absolute;
+	bottom: 20px;
+	left:20px;
+	float: left;
+	color:rgba(59,238,255,.9);
+}
+.ath font{
+	font-family: Helvetica;
+	font-size: 30px;
+}
+.ath .athammo font{
+		box-shadow: 0 1px 0px 0 rgba(59,238,255,.2);
+
+}
+
+
+
+.ath .athlife progress {
+	width: 400px;
+	height: 14px;
+	margin: 20px auto;
+	display: block;
+	/* Important Thing */
+	-webkit-appearance: none;
+	border: none;
+}
+.ath .athlife font{
+	position: absolute;
+	color :rgba(59,238,255,.9);
+	float:right;
+	right: 0;
+	bottom: 40px;
+}
+/* All good till now. Now we'll style the background */
+.ath .athlife progress::-webkit-progress-bar {
+	border-radius: 6px;
+	height: 30px;
+	background: rgba(59,238,255,.2);
+	padding: 4px;
+	box-shadow: 0 1px 0px 0 rgba(59,238,255,.2);
+}
+
+/* Now the value part */
+.ath .athlife progress::-webkit-progress-value {
+	border-radius: 6px;
+	box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+	background:rgba(59,238,255,.9)
+}
+
+
+
+

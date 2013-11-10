@@ -8,18 +8,18 @@
 
     //up
     kd.Z.down(function () {
-        game.localPlayer.moveUpX();
+        //game.localPlayer.moveUpX();
     });
     //left
     kd.Q.down(function () {
-        game.localPlayer.moveDownY();
+        //game.localPlayer.moveDownY();
     });
     //right
     kd.D.down(function () {
-        game.localPlayer.moveUpY();
+        //game.localPlayer.moveUpY();
     });
     //down
     kd.S.down(function () {
-        game.localPlayer.moveDownX();
+        //game.localPlayer.moveDownX();
     });
 })()
