@@ -1,5 +1,6 @@
 //déssinateur (peut etre a appeler avec un worker pour de meilleur performances...)
 $(document).ready(function () {
+    /* MAYBE MOVE IT TO GAME*/
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
 
     window.scene = new Physijs.Scene;
@@ -19,46 +20,24 @@ $(document).ready(function () {
     $('body').append(renderer.domElement);
 
     window.game = new Game();
-    console.log(game);
-    game.map.init();
+    game.map.space();
 
 
     var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
 
     hemiLight.position.set(0, 500, 0);
     scene.add(hemiLight);
+    /*END MAYBE*/
 
-    var dirLight = new THREE.DirectionalLight(0xffffff, 1);
-    dirLight.position.set(-1, 0.75, 1);
-    dirLight.position.multiplyScalar(50);
-    dirLight.name = "dirlight";
-    // dirLight.shadowCameraVisible = true;
+    //GAME LOOP
+    window.render = function () {
 
-    scene.add(dirLight);
+        //Game update loop
+        game.update();
 
-    dirLight.castShadow = true;
-    dirLight.shadowMapWidth = dirLight.shadowMapHeight = 1024 * 2;
-
-    var d = 300;
-
-    dirLight.shadowCameraLeft = -d;
-    dirLight.shadowCameraRight = d;
-    dirLight.shadowCameraTop = d;
-    dirLight.shadowCameraBottom = -d;
-
-    dirLight.shadowCameraFar = 3500;
-    dirLight.shadowBias = -0.0001;
-    dirLight.shadowDarkness = 0.35;
-
-    //fonction qui lance le rendu
-    var render = function () {
-        scene.simulate();
+        //Game render loop
         requestAnimationFrame(render);
-
-        game.map.particleSystem.rotation.y += 0.000005;
-
         renderer.render(scene, camera);
     };
 
-    render();
 })

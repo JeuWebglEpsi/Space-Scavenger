@@ -13,7 +13,7 @@
         var biome = this;
         var it = biome.personnages.length - 1;
         while (it--) {
-            if (idItemInBiome === this.personnages[i].id) {
+            if (idItemInBiome === this.personnages[i].get('_socketId')) {
                 return it;
             }
         }
@@ -39,6 +39,11 @@
             return true;
         }
         return;
+    }
+    //Biome updating function
+    Biome.prototype.update = function () {
+        var biome = this;
+        //  console.log('Biome updating...');
     }
 
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')

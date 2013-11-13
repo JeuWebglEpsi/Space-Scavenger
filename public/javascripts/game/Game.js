@@ -14,6 +14,7 @@ $(document).ready(function () {
                 var p = new Personnage(window.socketId, nom, 100, 'feu', 'player');
                 core.socket.emit('registerPlayer', p);
                 game.localPlayer = p;
+                p.set('_life', 80);
                 game.biome.personnages.push({
                     id: window.socketId,
                     player: p,
@@ -22,6 +23,21 @@ $(document).ready(function () {
                 window.scene.add(game.localPlayer.init());
             }
         }
+    }
+
+    //Game updating function
+    Game.prototype.update = function () {
+        var game = this;
+        //     console.log('Game updating...');
+        var r = Math.random();
+        if (r >= 0.5) {
+            r = 1;
+        } else {
+            r = -1;
+        }
+        game.localPlayer.set('_life', (game.localPlayer.get('_life') + r));
+        this.biome.update();
+        this.map.update();
     }
 
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
@@ -34,7 +50,7 @@ $(document).ready(function () {
         window.socketId = this.socket.sessionid;
         console.log(window.socketId);
         window.game.createPlayer('local');
-
+        window.render();
     });
     //evenement quand un nouveau joueur arrive
     core.socket.on('newPlayerJoin', function (player) {

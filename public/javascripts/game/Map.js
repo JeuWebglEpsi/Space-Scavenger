@@ -9,7 +9,7 @@
         /* ... */
     };
 
-    Map.prototype.init = function () {
+    Map.prototype.space = function () {
         'use strict';
         console.log('map initializing')
         //maintenant on va ajouter un objet créé avec blender
@@ -39,18 +39,14 @@
             // create the particle variables
             var pMaterial = new THREE.ParticleBasicMaterial({
                 color: 0xFFFFFF,
-                size: 1.2,
-                // map: THREE.ImageUtils.loadTexture(
-                // 	"/javascripts/Maps/particle.png"
-                // ),
+                size: 1.5,
+                map: THREE.ImageUtils.loadTexture(
+                    "/javascripts/Maps/particle.png"
+                ),
                 blending: THREE.AdditiveBlending,
                 transparent: true
             });
 
-        // also update the particle system to
-        // sort the particles which enables
-        // the behaviour we want
-        //particleSystem.sortParticles = true;
 
         var pcount = particleCount;
         // now create the individual particles
@@ -72,9 +68,18 @@
         this.particleSystem = new THREE.ParticleSystem(
             particles,
             pMaterial);
+
         // add it to the scene
         scene.add(this.particleSystem);
     }
+
+    //Map updating function
+    Map.prototype.update = function () {
+        var map = this;
+        this.particleSystem.rotation.y += 0.0005;
+        // console.log('Map updating...');
+    }
+
     Map.prototype.getObstacles = function () {
         'use strict';
         return this.obstacles.concat(this.walls);

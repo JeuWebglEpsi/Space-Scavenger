@@ -23,10 +23,18 @@
         return this[prop];
     }
     Personnage.prototype.set = function (prop, value) {
+        if (prop === '_life') {
+            if (value <= 0) value = 0;
+            if (value > 100) value = 100;
+        }
         this[prop] = value;
+        var life = $('.athlife');
+        life.find('font').text(value);
+        life.find('progress.life').val(value);
     }
 
     Personnage.prototype.init = function (args) {
+
         /* ... */
         // Set the character modelisation object
         this.mesh = new THREE.Object3D();
