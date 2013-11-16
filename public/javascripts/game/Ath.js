@@ -21,7 +21,14 @@
         this.ammo = ammo;
     }
     //draw ath
-    ATH.prototype.paint = function () {
-
+    ATH.prototype.update = function () {
+        var life = $('.athlife');
+        life.find('font').text(game.localPlayer.get('_life'));
+        life.find('progress.life').val(game.localPlayer.get('_life'));
     }
+
+    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+        module.exports = ATH;
+    else
+        window.ATH = ATH;
 })()

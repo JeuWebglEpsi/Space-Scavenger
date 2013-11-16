@@ -16,6 +16,7 @@
         this._element = element;
         this._type = type;
         this._items = [];
+        this.ath = new ATH();
     }
 
     /* Getters & setters */
@@ -28,9 +29,7 @@
             if (value > 100) value = 100;
         }
         this[prop] = value;
-        var life = $('.athlife');
-        life.find('font').text(value);
-        life.find('progress.life').val(value);
+        this.ath.update();
     }
 
     Personnage.prototype.init = function (args) {

@@ -34,7 +34,7 @@
         camera.position.z = camera.position.y = camera.position.x = 0;
 
         // create the particle variables
-        var particleCount = 200000,
+        var particleCount = 400000,
             particles = new THREE.Geometry()
             // create the particle variables
             var pMaterial = new THREE.ParticleBasicMaterial({
@@ -76,7 +76,7 @@
     //Map updating function
     Map.prototype.update = function () {
         var map = this;
-        this.particleSystem.rotation.y += 0.0005;
+        this.particleSystem.rotation.y += 0.0002;
         // console.log('Map updating...');
     }
 
