@@ -13,21 +13,44 @@
     <link rel="prefetch" href="/javascripts/Maps/particle.png" />
 
     <!--Scripts files-->
-    <script type="text/javascript" src="/javascripts/core/lib/jquery.js"></script>
-    <script type="text/javascript" src="/javascripts/core/lib/socket.io.min.js"></script>
-    <script type="text/javascript" src="/javascripts/core/lib/keydrown.js"></script>
-    <script type="text/javascript" src="/javascripts/core/lib/three.min.js"></script>
-    <script type="text/javascript" src="/javascripts/core/lib/physi.js"></script>
-    <script type="text/javascript" src="/javascripts/core/lib/orbitcontrol.js"></script>
-    <script async type="text/javascript" src="/javascripts/core/init.js"></script>
+    <script type="text/javascript" src="/javascripts/core/lib/require.js"></script>
+    <script type="text/javascript">
 
-    <script async type="text/javascript" src="/javascripts/game/Biome.js"></script>
-    <script async type="text/javascript" src="/javascripts/game/Ath.js"></script>
-    <script async type="text/javascript" src="/javascripts/game/Personnage.js"></script>
-    <script async type="text/javascript" src="/javascripts/game/Game.js"></script>
-    <script async type="text/javascript" src="/javascripts/game/Keyboard.js"></script>
-    <script async type="text/javascript" src="/javascripts/game/Map.js"></script>
-    <script async type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
+    require.config({
+    baseUrl: '/javascripts/core/lib/',
+    paths: {
+        jquery: 'jquery',
+        socket: 'socket.io.min',
+        keydrown: 'keydrown',
+        three:'three.min',
+        physi: 'physi',
+        orbit: 'orbitcontrol'
+    },
+    shim: {
+        three:{
+            deps: [],
+            exports: 'THREE'
+        },
+        physi: {
+            deps:['three'],
+            exports : 'Physijs'
+        },
+         orbit:['three'],
+        keydrown:['jquery'],
+        orbit:['three']
+    }
+});
+    </script>
+
+
+    <script  type="text/javascript" src="/javascripts/core/lib/init.js"></script>
+    <script  type="text/javascript" src="/javascripts/game/Biome.js"></script>
+    <script  type="text/javascript" src="/javascripts/game/Ath.js"></script>
+    <script  type="text/javascript" src="/javascripts/game/Personnage.js"></script>
+    <script  type="text/javascript" src="/javascripts/game/Game.js"></script>
+    <script  type="text/javascript" src="/javascripts/game/Keyboard.js"></script>
+    <script  type="text/javascript" src="/javascripts/game/Map.js"></script>
+    <script  type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
 
   </head>
   <body id="mainContainer">

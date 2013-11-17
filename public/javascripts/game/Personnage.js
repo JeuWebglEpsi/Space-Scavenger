@@ -102,7 +102,10 @@
         }
     }
 
-
+    Personnage.prototype.AI = function () {
+        'use strict';
+        //loop reading game and readcing about.
+    }
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
         module.exports = Personnage;
     else
