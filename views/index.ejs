@@ -23,6 +23,8 @@
         socket: 'socket.io.min',
         keydrown: 'keydrown',
         three:'three.min',
+        clock:'three.clock',
+        firstpersoncontrols:'three.firstpersoncontrols',
         physi: 'physi',
         orbit: 'orbitcontrol'
     },
@@ -30,6 +32,14 @@
         three:{
             deps: [],
             exports: 'THREE'
+        },
+        firstpersoncontrols:{
+            deps:['three'],
+            exports:'THREE.FlyControls'
+        },
+        clock:{
+            deps:['three'],
+            exports:'THREE.Clock'
         },
         physi: {
             deps:['three'],
@@ -48,7 +58,6 @@
     <script  type="text/javascript" src="/javascripts/game/Ath.js"></script>
     <script  type="text/javascript" src="/javascripts/game/Personnage.js"></script>
     <script  type="text/javascript" src="/javascripts/game/Game.js"></script>
-    <script  type="text/javascript" src="/javascripts/game/Keyboard.js"></script>
     <script  type="text/javascript" src="/javascripts/game/Map.js"></script>
     <script  type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
 

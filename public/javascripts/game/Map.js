@@ -30,8 +30,6 @@
 
         console.log(light);
         scene.add(light);
-        //on change la position de la caméra
-        camera.position.z = camera.position.y = camera.position.x = 0;
 
         // create the particle variables
         var particleCount = 400000,
