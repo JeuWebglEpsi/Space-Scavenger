@@ -26,6 +26,9 @@
         life.find('font').text(game.localPlayer.get('_life'));
         life.find('progress.life').val(game.localPlayer.get('_life'));
     }
+    ATH.prototype.highlightItem = function (item) {
+        //TODO
+    }
 
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
         module.exports = ATH;

@@ -5,7 +5,6 @@ require(['jquery', 'three', 'physi'], function ($, THREE, Physijs) {
     window.scene = new Physijs.Scene;
     scene.setGravity(new THREE.Vector3(0, -30, 0));
 
-
     window.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000000);
 
     window.renderer = new THREE.WebGLRenderer({

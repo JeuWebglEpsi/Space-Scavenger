@@ -54,9 +54,7 @@
         return this.mesh;
     }
 
-    Personnage.prototype.hightLightItem = function (item) {
 
-    }
     // Test and avoid collisions
     Personnage.prototype.collision = function () {
         'use strict';
