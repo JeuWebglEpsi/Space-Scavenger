@@ -1,4 +1,3 @@
-require(['jquery', 'socket'], function ($, io) {
     var Game = function () {
         var game = this;
         game.socket = io.connect('http://' + location.host);
@@ -44,4 +43,3 @@ require(['jquery', 'socket'], function ($, io) {
         module.exports = Game;
     else
         window.Game = Game;
-});

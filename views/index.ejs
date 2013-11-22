@@ -12,57 +12,88 @@
     <link rel="prefetch" href="/javascripts/Maps/cube1.png" />
     <link rel="prefetch" href="/javascripts/Maps/particle.png" />
 
+
     <!--Scripts files-->
     <script type="text/javascript" src="/javascripts/core/lib/require.js"></script>
     <script type="text/javascript">
 
     require.config({
-    baseUrl: '/javascripts/core/lib/',
+    baseUrl: '/javascripts/',
     paths: {
-        jquery: 'jquery',
-        socket: 'socket.io.min',
-        keydrown: 'keydrown',
-        three:'three.min',
-        clock:'three.clock',
-        firstpersoncontrols:'three.firstpersoncontrols',
-        physi: 'physi',
-        orbit: 'orbitcontrol'
+        jquery: 'core/lib/jquery',
+        socket: 'core/lib/socket.io.min',
+        keydrown: 'core/lib/keydrown',
+        three:'core/lib/three.min',
+      //  clock:'core/lib/three.clock',
+        pointerlockcontrols:'core/lib/three.pointerlockcontrols',
+        physi: 'core/lib/physi',
+        orbit: 'core/lib/orbitcontrol',
+        resize:'core/lib/threex.windowresize',
+        ath:'game/Ath',
+        map:'game/Map',
+        personnage:'game/Personnage',
+        game:'game/Game',
+        biome:'game/Biome'
     },
     shim: {
         three:{
             deps: [],
             exports: 'THREE'
         },
-        firstpersoncontrols:{
+        pointerlockcontrols:{
             deps:['three'],
-            exports:'THREE.FlyControls'
+            exports:'THREE.PointerLockControls'
         },
-        clock:{
+        resize:{
             deps:['three'],
-            exports:'THREE.Clock'
+            exports:'THREEx.WindowResize'
         },
         physi: {
             deps:['three'],
             exports : 'Physijs'
         },
-         orbit:['three'],
+        orbit:['three'],
         keydrown:['jquery'],
-        orbit:['three']
+        orbit:['three'],
+        ath:{
+            deps:[''],
+            exports:'window.Ath'
+        },
+        map:{
+            deps:['three'],
+            exports:'window.Map'
+        },
+        personnage:{
+            deps:['three','ath'],
+            exports:'window.Personnage'
+        },
+        biome:{
+            deps:['personnage'],
+            exports:'window.Biome'
+        },
+        game:{
+            deps:['three','ath','map','personnage','biome','socket'],
+            exports:'window.Game'
+        }
     }
 });
     </script>
-
-
-    <script  type="text/javascript" src="/javascripts/core/lib/init.js"></script>
-    <script  type="text/javascript" src="/javascripts/game/Biome.js"></script>
-    <script  type="text/javascript" src="/javascripts/game/Ath.js"></script>
-    <script  type="text/javascript" src="/javascripts/game/Personnage.js"></script>
-    <script  type="text/javascript" src="/javascripts/game/Game.js"></script>
-    <script  type="text/javascript" src="/javascripts/game/Map.js"></script>
-    <script  type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
-
+    <script async type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
   </head>
   <body id="mainContainer">
+
+    <div id="blocker">
+        <div class="reticule">+</div>
+          <div class="menu"  style="display:none">
+            <ul>
+                <li><a href="">Jouer</a></li>
+                <li><a href="">Options</a></li>
+                <li><a href="">Quitter</a></li>
+                <li><a href=""></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="instructions"></div>
     <div class="players">
       <ul class="playerlist"></ul>
     </div>
@@ -84,5 +115,9 @@
             </div>
         </div>
         </div>
+
+
+
+
   </body>
 </html>

@@ -1,13 +1,52 @@
-require(['jquery', 'three', 'physi', 'firstpersoncontrols', 'clock'], function ($, THREE, Physijs, FlyControl, Clock) {
+require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game) {
     console.log(arguments);
+
+    if ('webkitIsFullScreen' in document) {
+        Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
+        HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
+        document.__defineGetter__("isFullScreen", function () {
+            return document.webkitIsFullScreen;
+        });
+        document.__defineGetter__("fullScreen", function () {
+            return document.webkitIsFullScreen;
+        });
+    } else if ('mozFullScreen' in document) {
+        Document.prototype.cancelFullScreen = document.mozCancelFullScreen;
+        HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.mozRequestFullScreen;
+        document.__defineGetter__("isFullScreen", function () {
+            return document.mozFullScreen;
+        });
+        document.__defineGetter__("fullScreen", function () {
+            return document.mozFullScreen;
+        });
+    }
+
+    window.isBlocked = true;
+    //capture du pointeur.
+    window.addEventListener('click', function () {
+        var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+
+        var element = document.body;
+        element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+        element.requestPointerLock();
+        //element.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        $('#blocker').addClass('hidden')
+    })
+
+
+    //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
-    var clock = new Clock();
     window.scene = new Physijs.Scene;
     scene.setGravity(new THREE.Vector3(0, -30, 0));
 
-    window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 10000000);
+    var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
 
-    window.renderer = new THREE.WebGLRenderer({
+    var controls = new PointerLockControls(camera);
+    controls.enabled = true;
+    scene.add(controls.getObject());
+
+    var renderer = new THREE.WebGLRenderer({
         antialias: true,
         precision: 'highp'
     });
@@ -16,15 +55,9 @@ require(['jquery', 'three', 'physi', 'firstpersoncontrols', 'clock'], function (
 
     $('body').append(renderer.domElement);
 
-    var controls = new FlyControl(camera);
-    controls.movementSpeed = 1000;
-    controls.domElement = renderer.domElement;
-    controls.rollSpeed = Math.PI / 24;
-    controls.autoForward = false;
-    controls.dragToLook = false;
     window.game = new Game();
     game.map.space();
-
+    console.log(game.map)
 
 
     //sockets
@@ -86,20 +119,27 @@ require(['jquery', 'three', 'physi', 'firstpersoncontrols', 'clock'], function (
     scene.add(hemiLight);
     /*END MAYBE*/
 
+    var time = Date.now();
+
+    WindowResize(renderer, camera);
+
 
 
     //GAME LOOP
     window.render = function () {
-        var delta = clock.getDelta(),
-            speed = delta * 500;
-
         //Game update loop
         game.update();
-        controls.update(delta);
-
+        controls.update(Date.now() - time);
+        scene.traverse(function (obj) {
+            if (obj.id === 10) {
+                obj.position.x = controls.getObject().position.x;
+                obj.position.y = controls.getObject().position.y;
+                obj.position.z = controls.getObject().position.z;
+            }
+        })
         //Game render loop
         requestAnimationFrame(render);
         renderer.render(scene, camera);
+        time = Date.now();
     };
-
 })
