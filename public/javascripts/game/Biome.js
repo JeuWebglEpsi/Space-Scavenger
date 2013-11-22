@@ -39,6 +39,10 @@ Biome.prototype.delInBiome = function (idItemInBiome) {
 Biome.prototype.update = function () {
     var biome = this;
     //  console.log('Biome updating...');
+    var i = biome.personnages.length - 1;
+    while (i--) {
+        biome.personnages[i].update();
+    }
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')

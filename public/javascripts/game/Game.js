@@ -35,8 +35,8 @@
             r = -1;
         }
         game.localPlayer.set('_life', (game.localPlayer.get('_life') + r));
-        this.biome.update();
-        this.map.update();
+        game.biome.update();
+        game.map.update();
     }
 
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
