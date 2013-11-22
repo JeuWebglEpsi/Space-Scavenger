@@ -13,7 +13,7 @@ Map.prototype.space = function () {
     var loader = new THREE.JSONLoader();
 
     //background image
-    loader.load("/javascripts/Maps/bgd.js", function (geometry, materials) {
+    loader.load("/javascripts/Maps/bgd2.js", function (geometry, materials) {
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
         mesh.position.x = 0;
         mesh.position.y = 0

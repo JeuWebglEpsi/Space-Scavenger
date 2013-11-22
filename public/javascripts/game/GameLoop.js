@@ -30,7 +30,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
         var element = document.body;
         element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
         element.requestPointerLock();
-        //element.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        element.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
         $('#blocker').addClass('hidden')
     })
 

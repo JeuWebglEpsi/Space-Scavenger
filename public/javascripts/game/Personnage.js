@@ -33,7 +33,7 @@ Personnage.prototype.init = function (args) {
 
     /* ... */
     // Set the character modelisation object
-   // this.mesh = new THREE.Object3D();
+    this.mesh = new THREE.Object3D();
     /* ... */
     // Set the rays : one vector for every potential direction
     //this.rays = [
@@ -48,7 +48,7 @@ Personnage.prototype.init = function (args) {
     ];*/
     // And the "RayCaster", able to test for intersections
     //this.caster = new THREE.Raycaster();
-    //return this.mesh;
+    return this.mesh;
 }
 
 
