@@ -47,8 +47,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
     scene.add(controls.getObject());
 
     var renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        precision: 'highp'
+        antialias: false,
+        precision: 'lowp',
+        preserveDrawingBuffer: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
 

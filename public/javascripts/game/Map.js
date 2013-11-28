@@ -2,11 +2,14 @@ var Map = function () {
     var map = this;
     var walls = [];
     var obstacles = [];
+    this.asteroids = [];
+    this.particleSystem;
 
     /* ... */
 };
 
 Map.prototype.space = function () {
+    var map = this;
     'use strict';
     console.log('map initializing')
     //maintenant on va ajouter un objet créé avec blender
@@ -35,6 +38,7 @@ Map.prototype.space = function () {
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
             mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
+            mesh.name = "asteroid";
             scene.add(mesh);
         }
     });
@@ -76,24 +80,40 @@ Map.prototype.space = function () {
     }
 
     // create the particle system
-    this.particleSystem = new THREE.ParticleSystem(
+    map.particleSystem = new THREE.ParticleSystem(
         particles,
         pMaterial);
 
     // add it to the scene
-    scene.add(this.particleSystem);
+    scene.add(map.particleSystem);
 }
 
 //Map updating function
 Map.prototype.update = function () {
     var map = this;
-    this.particleSystem.rotation.y += 0.0002;
+    map.particleSystem.rotation.y += 0.0002;
+    var i = 0,
+        mult = 0.005;
+    scene.traverse(function (obj) {
+        if (obj.name === "asteroid") {
+            if (i % 2 === 0) {
+                obj.rotation.x += Math.random() * mult;
+                obj.rotation.y += Math.random() * mult;
+                obj.rotation.z += Math.random() * mult;
+            } else {
+                obj.rotation.x -= Math.random() * mult;
+                obj.rotation.y -= Math.random() * mult;
+                obj.rotation.z -= Math.random() * mult;
+            }
+            i++;
+        }
+    })
     // console.log('Map updating...');
 }
 
 Map.prototype.getObstacles = function () {
     'use strict';
-    return this.obstacles.concat(this.walls);
+    return map.obstacles.concat(map.walls);
 }
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = Map;
