@@ -28,17 +28,20 @@ Map.prototype.space = function () {
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
 
-        var asteroidCount = 10000;
+        var asteroidCount = 1000;
         while (asteroidCount--) {
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-            mesh.position.x = Math.random() * 10000 - 5000;
-            mesh.position.y = Math.random() * 10000 - 5000;
-            mesh.position.z = Math.random() * 10000 - 5000;
+            mesh.position.x = Math.random() * 1000 - 500;
+            mesh.position.y = 0;
+            mesh.position.z = Math.random() * 1000 - 500;
             mesh.rotation.x = Math.random();
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
             mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
             mesh.name = "asteroid";
+            mesh.addEventListener('collision', function (object) {
+                console.log("Object " + mesh.id + " " + mesh.name + " collided with " + object.name + "  " + object.id);
+            });
             scene.add(mesh);
         }
     });
@@ -55,9 +58,7 @@ Map.prototype.space = function () {
         var pMaterial = new THREE.ParticleBasicMaterial({
             color: 0xFFFFFF,
             size: 1.5,
-            map: THREE.ImageUtils.loadTexture(
-                "/javascripts/Maps/particle.png"
-            ),
+            map: THREE.ImageUtils.loadTexture("/javascripts/Maps/particle.png"),
             blending: THREE.AdditiveBlending,
             transparent: true
         });
@@ -95,7 +96,7 @@ Map.prototype.update = function () {
     var i = 0,
         mult = 0.005;
     scene.traverse(function (obj) {
-        if (obj.name === "asteroid") {
+        if (obj.name === "asteroid ") {
             if (i % 2 === 0) {
                 obj.rotation.x += Math.random() * mult;
                 obj.rotation.y += Math.random() * mult;

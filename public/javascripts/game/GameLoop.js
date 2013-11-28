@@ -38,12 +38,19 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
     //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
     window.scene = new Physijs.Scene;
-    scene.setGravity(new THREE.Vector3(0, -30, 0));
+    scene.setGravity(new THREE.Vector3(0, 0, 0));
 
     var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
 
     var controls = new PointerLockControls(camera);
     controls.enabled = true;
+    var cameraCollider = new Physijs.BoxMesh(new THREE.CubeGeometry(20, 20, 20), new THREE.MeshLambertMaterial({
+        color: 0xDDDDDD
+    }));
+    cameraCollider.addEventListener('collision', function (object) {
+        console.log("cameraCollider " + cameraCollider.id + " " + cameraCollider.name + " collided with " + object.name + "  " + object.id);
+    });
+    camera.add(cameraCollider);
     scene.add(controls.getObject());
 
     var renderer = new THREE.WebGLRenderer({
@@ -129,6 +136,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
     //GAME LOOP
     window.render = function () {
         //Game update loop
+
+        scene.simulate();
         game.update();
         controls.update(Date.now() - time);
         scene.traverse(function (obj) {
