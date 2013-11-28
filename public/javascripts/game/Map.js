@@ -15,13 +15,29 @@ Map.prototype.space = function () {
     //background image
     loader.load("/javascripts/Maps/bgd2.js", function (geometry, materials) {
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+        mesh.name = "bgd";
         mesh.position.x = 0;
         mesh.position.y = 0
         mesh.scale.x = mesh.scale.y = mesh.scale.z = -200;
         scene.add(mesh);
     });
 
-    var meshs = [];
+
+    loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+
+        var asteroidCount = 10000;
+        while (asteroidCount--) {
+            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+            mesh.position.x = Math.random() * 10000 - 5000;
+            mesh.position.y = Math.random() * 10000 - 5000;
+            mesh.position.z = Math.random() * 10000 - 5000;
+            mesh.rotation.x = Math.random();
+            mesh.rotation.y = Math.random();
+            mesh.rotation.z = Math.random();
+            mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
+            scene.add(mesh);
+        }
+    });
     // on ajoute un point de lumière
     var light = new THREE.AmbientLight(0xffffff);
 

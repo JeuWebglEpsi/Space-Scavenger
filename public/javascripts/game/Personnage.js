@@ -29,26 +29,19 @@ Personnage.prototype.set = function (prop, value) {
     this.ath.update();
 }
 
-Personnage.prototype.init = function (args) {
+Personnage.prototype.init = function (scene) {
+    var loader = new THREE.JSONLoader();
 
-    /* ... */
-    // Set the character modelisation object
-    this.mesh = new THREE.Object3D();
-    /* ... */
-    // Set the rays : one vector for every potential direction
-    //this.rays = [
-    /*    new THREE.Vector3(0, 0, 1),
-        new THREE.Vector3(1, 0, 1),
-        new THREE.Vector3(1, 0, 0),
-        new THREE.Vector3(1, 0, -1),
-        new THREE.Vector3(0, 0, -1),
-        new THREE.Vector3(-1, 0, -1),
-        new THREE.Vector3(-1, 0, 0),
-        new THREE.Vector3(-1, 0, 1)
-    ];*/
-    // And the "RayCaster", able to test for intersections
-    //this.caster = new THREE.Raycaster();
-    return this.mesh;
+    loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+        mesh.position.x = 0;
+        mesh.position.y = 0;
+        mesh.position.z = 0;
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
+        scene.add(mesh);
+
+    });
 }
 
 

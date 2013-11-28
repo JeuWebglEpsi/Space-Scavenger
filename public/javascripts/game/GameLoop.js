@@ -57,7 +57,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
 
     window.game = new Game();
     game.map.space();
-    console.log(game.map)
+    console.log(game.map);
 
 
     //sockets
@@ -131,7 +131,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
         game.update();
         controls.update(Date.now() - time);
         scene.traverse(function (obj) {
-            if (obj.id === 10) {
+            if (obj.name === "bgd") {
                 obj.position.x = controls.getObject().position.x;
                 obj.position.y = controls.getObject().position.y;
                 obj.position.z = controls.getObject().position.z;

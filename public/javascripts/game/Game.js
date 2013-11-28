@@ -19,7 +19,7 @@
                     player: p,
                     type: 'player'
                 });
-                window.scene.add(game.localPlayer.init());
+                game.localPlayer.init(window.scene);
             }
         }
     }
