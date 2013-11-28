@@ -146,6 +146,13 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
                 obj.position.y = controls.getObject().position.y;
                 obj.position.z = controls.getObject().position.z;
             }
+             if (obj.name === "arme") {
+                obj.position.x = controls.getObject().position.x;
+                obj.position.y = controls.getObject().position.y;
+                obj.position.z = controls.getObject().position.z;
+                obj.scale.x = obj.scale.z = -10;
+                obj.scale.y= 1;
+            }
         })
         //Game render loop
         requestAnimationFrame(render);

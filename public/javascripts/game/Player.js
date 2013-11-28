@@ -36,9 +36,11 @@ Player.prototype.init = function (scene) {
 
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
         mesh.position.x = 0;
-        mesh.position.y = 0;
+        mesh.position.y = 7;
         mesh.position.z = 0;
-        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
+        mesh.scale.x = mesh.scale.z = -1;
+        mesh.scale.y = 1;
+         mesh.name= "bgd";
         scene.add(mesh);
 
     });
