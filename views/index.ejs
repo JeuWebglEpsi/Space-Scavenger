@@ -32,6 +32,7 @@
         ath:'game/Ath',
         map:'game/Map',
         personnage:'game/Personnage',
+        player:'game/Player',
         game:'game/Game',
         biome:'game/Biome'
     },
@@ -67,12 +68,17 @@
             deps:['three','ath'],
             exports:'window.Personnage'
         },
+         player:{
+            deps:['three','ath'],
+            exports:'window.Player'
+        },
         biome:{
-            deps:['personnage'],
+            deps:['personnage','player'],
             exports:'window.Biome'
         },
+
         game:{
-            deps:['three','ath','map','personnage','biome','socket'],
+            deps:['three','ath','map','personnage','player','biome','socket'],
             exports:'window.Game'
         }
     }
