@@ -140,19 +140,18 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
         game.update();
         controls.update(Date.now() - time);
         cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
-        console.log(controls.getObject().position);
         scene.traverse(function (obj) {
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
-             if (obj.name === "arme") {
+            if (obj.name === "arme") {
                 var x = controls.getObject().position.x;
                 var y = controls.getObject().position.y;
-                var z = controls.getObject().position.z;             
-               obj.position.x = x;
-               obj.position.y = y -1.5;
-               obj.position.z = z;
-               // obj.scale.x = obj.scale.z = -10;
+                var z = controls.getObject().position.z;
+                obj.position.x = x;
+                obj.position.y = y - 1.5;
+                obj.position.z = z;
+                // obj.scale.x = obj.scale.z = -10;
                 //obj.scale.y= 10;
             }
         })
