@@ -10,7 +10,7 @@
         if (s === 'local') {
             var nom = prompt("Saisisez votre nom");
             if (nom != null) {
-                var p = new Personnage(window.socketId, nom, 100, 'feu', 'player');
+                var p = new Player(window.socketId, nom, 100, 'feu', 'player');
                 game.socket.emit('registerPlayer', p);
                 game.localPlayer = p;
                 p.set('_life', 80);

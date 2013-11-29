@@ -24,6 +24,7 @@ Map.prototype.space = function () {
     });
 
 
+<<<<<<< HEAD
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
         var asteroidCount = 1000;
         while (asteroidCount--) {
@@ -42,6 +43,27 @@ Map.prototype.space = function () {
             scene.add(mesh);
         }
     });
+=======
+    // loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+
+    //     var asteroidCount = 1000;
+    //     while (asteroidCount--) {
+    //         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+    //         mesh.position.x = Math.random() * 1000 - 500;
+    //         mesh.position.y = 0;
+    //         mesh.position.z = Math.random() * 1000 - 500;
+    //         mesh.rotation.x = Math.random();
+    //         mesh.rotation.y = Math.random();
+    //         mesh.rotation.z = Math.random();
+    //         mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
+    //         mesh.name = "asteroid";
+    //         mesh.addEventListener('collision', function (object) {
+    //             console.log("Object " + mesh.id + " " + mesh.name + " collided with " + object.name + "  " + object.id);
+    //         });
+    //         scene.add(mesh);
+    //     }
+    // });
+>>>>>>> eaee8692bf8f3f35ef59f093b6b5d57b7f3c3f17
     // on ajoute un point de lumière
     var light = new THREE.AmbientLight(0xffffff);
 

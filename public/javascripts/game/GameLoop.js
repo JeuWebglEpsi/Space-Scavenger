@@ -145,6 +145,16 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
+             if (obj.name === "arme") {
+                var x = controls.getObject().position.x;
+                var y = controls.getObject().position.y;
+                var z = controls.getObject().position.z;             
+               obj.position.x = x;
+               obj.position.y = y -1.5;
+               obj.position.z = z;
+               // obj.scale.x = obj.scale.z = -10;
+                //obj.scale.y= 10;
+            }
         })
         scene.simulate();
 
