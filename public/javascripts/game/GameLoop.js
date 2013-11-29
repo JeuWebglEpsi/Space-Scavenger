@@ -1,6 +1,5 @@
 require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game) {
     console.log(arguments);
-
     if ('webkitIsFullScreen' in document) {
         Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
         HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
@@ -42,21 +41,24 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
 
     var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
 
+    var cameraCollider = new Physijs.BoxMesh(new THREE.CubeGeometry(20, 20, 20), new THREE.MeshLambertMaterial({
+        color: 0xCCCCCC,
+        wireframe: true
+    }));
+    cameraCollider.name = "cameraCollider";
+    cameraCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+        console.log('cameraCollider ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+    });
+    scene.add(cameraCollider);
+
     var controls = new PointerLockControls(camera);
     controls.enabled = true;
-    var cameraCollider = new Physijs.BoxMesh(new THREE.CubeGeometry(20, 20, 20), new THREE.MeshLambertMaterial({
-        color: 0xDDDDDD
-    }));
-    cameraCollider.addEventListener('collision', function (object) {
-        console.log("cameraCollider " + cameraCollider.id + " " + cameraCollider.name + " collided with " + object.name + "  " + object.id);
-    });
-    camera.add(cameraCollider);
     scene.add(controls.getObject());
 
+
     var renderer = new THREE.WebGLRenderer({
-        antialias: false,
-        precision: 'lowp',
-        preserveDrawingBuffer: true
+        antialias: true,
+        precision: 'lowp'
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -130,26 +132,26 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
     var time = Date.now();
 
     WindowResize(renderer, camera);
-
-
-
     //GAME LOOP
+    console.log(cameraCollider);
+
     window.render = function () {
         //Game update loop
-
-        scene.simulate();
         game.update();
         controls.update(Date.now() - time);
+        cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
+        console.log(controls.getObject().position);
         scene.traverse(function (obj) {
-            if (obj.name === "bgd") {
-                obj.position.x = controls.getObject().position.x;
-                obj.position.y = controls.getObject().position.y;
-                obj.position.z = controls.getObject().position.z;
+            if (obj.name === "bgdCube") {
+                obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
         })
+        scene.simulate();
+
         //Game render loop
         requestAnimationFrame(render);
         renderer.render(scene, camera);
         time = Date.now();
+
     };
 })

@@ -18,29 +18,26 @@ Map.prototype.space = function () {
     //background image
     loader.load("/javascripts/Maps/bgd2.js", function (geometry, materials) {
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.name = "bgd";
-        mesh.position.x = 0;
-        mesh.position.y = 0
+        mesh.name = "bgdCube";
         mesh.scale.x = mesh.scale.y = mesh.scale.z = -200;
         scene.add(mesh);
     });
 
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-
         var asteroidCount = 1000;
         while (asteroidCount--) {
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-            mesh.position.x = Math.random() * 1000 - 500;
+            mesh.position.x = Math.random() * 2000 - 1000;
             mesh.position.y = 0;
-            mesh.position.z = Math.random() * 1000 - 500;
+            mesh.position.z = Math.random() * 2000 - 1000;
             mesh.rotation.x = Math.random();
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
             mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
             mesh.name = "asteroid";
-            mesh.addEventListener('collision', function (object) {
-                console.log("Object " + mesh.id + " " + mesh.name + " collided with " + object.name + "  " + object.id);
+            mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
             });
             scene.add(mesh);
         }
