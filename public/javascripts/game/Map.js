@@ -25,16 +25,24 @@ Map.prototype.space = function () {
 
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-        var asteroidCount = 3000;
+        var asteroidCount = 2000;
+        var veryBigAste = 1;
+        var bigAste = 200;
         while (asteroidCount--) {
-            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000);
             mesh.position.x = Math.random() * 10000 - 5000;
             mesh.position.y = Math.random() * 1000 - 500;
             mesh.position.z = Math.random() * 10000 - 5000;
             mesh.rotation.x = Math.random();
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
-            mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 50 - 1;
+            if (veryBigAste-- > 0) {
+                mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 500 - 300;
+} else if (bigAste-- > 0) {
+                mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 100 - 50;
+            } else {
+                mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 50 - 1;
+            }
             mesh.name = "asteroid";
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                 // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
@@ -55,7 +63,7 @@ Map.prototype.space = function () {
     scene.add(directionalLight);
 
     // create the particle variables
-    var particleCount = 400000,
+    var particleCount = 100000,
         particles = new THREE.Geometry()
         // create the particle variables
         var pMaterial = new THREE.ParticleBasicMaterial({

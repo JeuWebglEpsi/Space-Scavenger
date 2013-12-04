@@ -34,12 +34,16 @@
         personnage:'game/Personnage',
         player:'game/Player',
         game:'game/Game',
-        biome:'game/Biome'
+        biome:'game/Biome',
+        audiojs:'core/lib/audio5.min'
     },
     shim: {
         three:{
             deps: [],
             exports: 'THREE'
+        },
+        audiojs:{
+            exports:'Audio5js'
         },
         pointerlockcontrols:{
             deps:['three'],

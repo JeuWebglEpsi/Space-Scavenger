@@ -39,7 +39,7 @@ Personnage.prototype.init = function (scene) {
         mesh.position.y = 0;
         mesh.position.z = 0;
         mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
-        scene.add(mesh);
+        //   scene.add(mesh);
 
     });
 }

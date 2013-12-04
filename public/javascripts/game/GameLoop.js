@@ -1,4 +1,4 @@
-require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game) {
+require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game, Audio5js) {
     console.log(arguments);
     if ('webkitIsFullScreen' in document) {
         Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
@@ -19,6 +19,15 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
             return document.mozFullScreen;
         });
     }
+
+    //audio sampling.
+    var audio5js = new Audio5js({
+        ready: function () {
+            this.load('/contact.mp3');
+            this.play();
+        }
+    });
+
 
     window.isBlocked = true;
     //capture du pointeur.
@@ -42,8 +51,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game'], f
     var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
 
     var cameraCollider = new Physijs.BoxMesh(new THREE.CubeGeometry(20, 20, 20), new THREE.MeshLambertMaterial({
-        color: 0xCCCCCC,
-        wireframe: true
+        color: 0xCCCCCC
     }));
     cameraCollider.name = "cameraCollider";
     cameraCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
