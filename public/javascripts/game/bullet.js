@@ -1,4 +1,7 @@
-$(document).click(function(event) {
+var Bullet = function (id, name, life, element, type) {
+    var bullet = this;
+// a modifier
+
         event.preventDefault();
         if (event.which === 1) { // Left click only
 

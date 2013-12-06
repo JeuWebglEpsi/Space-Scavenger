@@ -35,6 +35,7 @@ var DC = DC || {
         map:'game/Map',
         personnage:'game/Personnage',
         player:'game/Player',
+        bullet:'game/Bullet',
         game:'game/Game',
         biome:'game/Biome',
         audiojs:'core/lib/audio5.min'
@@ -78,13 +79,17 @@ var DC = DC || {
             deps:['three','ath'],
             exports:'window.Player'
         },
+        bullet:{
+            deps:['three','ath'],
+            exports:'window.Bullet'
+        },
         biome:{
             deps:['personnage','player'],
             exports:'window.Biome'
         },
 
         game:{
-            deps:['three','ath','map','personnage','player','biome','socket'],
+            deps:['three','ath','map','personnage','player','biome','socket','bullet'],
             exports:'window.Game'
         }
     }
