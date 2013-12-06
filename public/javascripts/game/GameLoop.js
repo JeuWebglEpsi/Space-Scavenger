@@ -85,6 +85,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     window.game = new Game();
     game.map.space();
+    //game.map.ship();
     console.log(game.map);
 
 
@@ -186,3 +187,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     };
 })
+$(document).click(function(event) {
+    var bullets = bullet
+}
