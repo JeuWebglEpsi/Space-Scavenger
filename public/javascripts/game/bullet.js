@@ -1,7 +1,11 @@
-var Bullet = function (id, name, life, element, type) {
+var Bullet = function (position) {
     var bullet = this;
-// a modifier
+    var position = function (position){
+        console.log('la poition est :' + position)
+    }
 
+// a modifier
+/*
         event.preventDefault();
         if (event.which === 1) { // Left click only
 
@@ -56,5 +60,5 @@ var Bullet = function (id, name, life, element, type) {
         });
             window.scene.add(sphere);
 
-        }
-    })
+        }*/
+})

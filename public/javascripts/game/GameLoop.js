@@ -129,6 +129,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         }
     })
     //on met a jour la liste des joueur (visible a gauche)
+
     window.game.socket.on('updatePlayerList', function (players) {
         $('.playerlist').html('');
         players.forEach(function (player) {
@@ -153,6 +154,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     WindowResize(renderer, camera);
     //GAME LOOP
     console.log(cameraCollider.position);
+    var position = new THREE.Vector3(0,0,0);
     window.render = function () {
         //Game update loop
         game.update();
@@ -167,16 +169,11 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
-            /* if (obj.name === "arme") {
-                var x = controls.getObject().position.x;
-                var y = controls.getObject().position.y;
-                var z = controls.getObject().position.z;
-                obj.position.x = x;
-                obj.position.y = y - 1.5;
-                obj.position.z = z;
-                // obj.scale.x = obj.scale.z = -10;
-                //obj.scale.y= 10;
-            }*/
+            
+                position.x = controls.getObject().position.x;
+                position.y = controls.getObject().position.y;
+                position.z = controls.getObject().position.z;
+                
         })
         scene.simulate();
 
@@ -186,7 +183,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         time = Date.now();
 
     };
+    $(document).click(function(event) {
+    var bullets = bullet.bullet;
+    bullet.position(position);
+    })
+
 })
-$(document).click(function(event) {
-    var bullets = bullet
-}
