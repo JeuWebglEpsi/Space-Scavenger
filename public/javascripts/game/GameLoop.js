@@ -51,7 +51,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
 
     var cameraCollider = new Physijs.BoxMesh(new THREE.CubeGeometry(20, 20, 20), new THREE.MeshLambertMaterial({
-        color: 0xCCCCCC
+        color: 0xCCCCCC,
+        wireframe: true
     }));
     cameraCollider.name = "cameraCollider";
     cameraCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {

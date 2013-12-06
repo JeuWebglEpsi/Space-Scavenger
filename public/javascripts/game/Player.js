@@ -41,7 +41,7 @@ Player.prototype.init = function (scene) {
         mesh.scale.x = mesh.scale.z = -0.5;
         mesh.scale.y = 0.5;
         mesh.name = "arme";
-        scene.add(mesh);
+        //scene.add(mesh);
     });
 }
 
