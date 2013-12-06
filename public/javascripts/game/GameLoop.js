@@ -64,10 +64,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 color: 0xffffff,
                 wireframe: true
             }),
-            0.2,
-            1.0
+            1,
+            0
         ), 10000);
-    cameraCollider.name = "cameraCollider";
     cameraCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
         console.log('cameraCollider ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
     });
@@ -158,7 +157,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         game.update();
         cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
         controls.update(Date.now() - time);
-        console.log(cameraCollider.position);
+
         scene.traverse(function (obj) {
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
