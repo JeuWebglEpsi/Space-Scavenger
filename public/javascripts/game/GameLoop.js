@@ -24,7 +24,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     var audio5js = new Audio5js({
         ready: function () {
             this.load('/contact.mp3');
-            this.play();
+            //this.play();
         }
     });
 
@@ -38,31 +38,41 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         var element = document.body;
         element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
         element.requestPointerLock();
-        element.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        //element.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
         $('#blocker').addClass('hidden')
     })
 
 
     //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
-    window.scene = new Physijs.Scene;
+    window.scene = new Physijs.Scene({
+        fixedTimeStep: 1 / 30
+    });
     scene.setGravity(new THREE.Vector3(0, 0, 0));
 
     var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
+    camera.position.set(0, 0, 0);
 
-    var cameraCollider = new Physijs.BoxMesh(new THREE.CubeGeometry(20, 20, 20), new THREE.MeshLambertMaterial({
-        color: 0xCCCCCC,
-        wireframe: true
-    }));
+    var controls = new PointerLockControls(camera);
+    controls.enabled = true;
+
+    scene.add(controls.getObject());
+
+    var cameraCollider = new Physijs.SphereMesh(new THREE.SphereGeometry(3),
+        Physijs.createMaterial(
+            new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                wireframe: true
+            }),
+            0.2,
+            1.0
+        ), 10000);
     cameraCollider.name = "cameraCollider";
     cameraCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
         console.log('cameraCollider ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
     });
     scene.add(cameraCollider);
 
-    var controls = new PointerLockControls(camera);
-    controls.enabled = true;
-    scene.add(controls.getObject());
 
 
     var renderer = new THREE.WebGLRenderer({
@@ -142,13 +152,13 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     WindowResize(renderer, camera);
     //GAME LOOP
-    console.log(cameraCollider);
-
+    console.log(cameraCollider.position);
     window.render = function () {
         //Game update loop
         game.update();
-        controls.update(Date.now() - time);
         cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
+        controls.update(Date.now() - time);
+        console.log(cameraCollider.position);
         scene.traverse(function (obj) {
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
