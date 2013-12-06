@@ -1,7 +1,9 @@
-var Bullet = function (position) {
+var Bullet = function () {
     var bullet = this;
-    var position = function (position){
-        console.log('la poition est :' + position)
+    this.name = 'bullet';
+}
+Bullet.prototype.position = function (position){
+        console.log('la position est :' + position)
     }
 
 // a modifier
@@ -61,4 +63,3 @@ var Bullet = function (position) {
             window.scene.add(sphere);
 
         }*/
-})

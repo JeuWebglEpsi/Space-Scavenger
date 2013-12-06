@@ -1,4 +1,4 @@
-require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game, Audio5js) {
+require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs', 'bullet'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game, Audio5js) {
     console.log(arguments);
     if ('webkitIsFullScreen' in document) {
         Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
@@ -84,8 +84,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     $('body').append(renderer.domElement);
 
     window.game = new Game();
-    game.map.space();
-    //game.map.ship();
+    //game.map.space();
+    game.map.ship();
     console.log(game.map);
 
 
@@ -153,15 +153,15 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     WindowResize(renderer, camera);
     //GAME LOOP
-    console.log(cameraCollider.position);
-    var position = new THREE.Vector3(0,0,0);
+    //console.log(cameraCollider.position);
+    var position = new THREE.Vector3(controls.getObject().position.x,controls.getObject().position.y,controls.getObject().position.z);
     window.render = function () {
         //Game update loop
         game.update();
-        console.log('collider');
+       /* console.log('collider');
         console.log(cameraCollider.position)
         console.log('controls');
-        console.log(controls.getObject().position);
+        console.log(controls.getObject().position);*/
         cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
         controls.update(Date.now() - time);
 
@@ -184,8 +184,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     };
     $(document).click(function(event) {
-    var bullets = bullet.bullet;
-    bullet.position(position);
+        var bullet = new Bullet();
+               bullet.position(position);
     })
-
 })
