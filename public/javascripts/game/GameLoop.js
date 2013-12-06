@@ -163,7 +163,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
-            if (obj.name === "arme") {
+           /* if (obj.name === "arme") {
                 var x = controls.getObject().position.x;
                 var y = controls.getObject().position.y;
                 var z = controls.getObject().position.z;
@@ -172,7 +172,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 obj.position.z = z;
                 // obj.scale.x = obj.scale.z = -10;
                 //obj.scale.y= 10;
-            }
+            }*/
         })
         scene.simulate();
 

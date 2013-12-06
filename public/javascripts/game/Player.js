@@ -30,7 +30,7 @@ Player.prototype.set = function (prop, value) {
 }
 
 Player.prototype.init = function (scene) {
-    var loader = new THREE.JSONLoader();
+    /*var loader = new THREE.JSONLoader();
 
     loader.load("/javascripts/Objects/blaster.js", function (geometry, materials) {
 
@@ -42,7 +42,7 @@ Player.prototype.init = function (scene) {
         mesh.scale.y = 0.5;
         mesh.name = "arme";
         //scene.add(mesh);
-    });
+    });*/
 }
 
 
