@@ -175,7 +175,7 @@ var FLOORHEIGHT = 2;
 
                 var wall = new Physijs.BoxMesh(cube, materials[map[i][j]],1000000000);
                 wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                wall.position.y = (WALLHEIGHT/2) - 10;
+                wall.position.y = (WALLHEIGHT/2) - 5;
                 wall.position.z = ((j - units/2) * UNITSIZE) + 212.5;
                 wall.scale.y=wall.scale.z=wall.scale.x = 0.1;
                 wall.name = "wall";
@@ -189,7 +189,7 @@ var FLOORHEIGHT = 2;
                 else{
                 var wall = new Physijs.BoxMesh(cube, materials[map[i][j]],1000000000);
                 wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                wall.position.y = (WALLHEIGHT/2) - 10;
+                wall.position.y = (WALLHEIGHT/2) - 5;
                 wall.position.z = ((j - units/2) * UNITSIZE) +212.5;
                 scene.add(wall);
                 }
@@ -200,14 +200,14 @@ var FLOORHEIGHT = 2;
                     //génération du sol
                     var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],0);
                     floor.position.x = ((i - units/2) * UNITSIZE) - 212.5;
-                    floor.position.y = (FLOORHEIGHT/2) - 10;
+                    floor.position.y = (FLOORHEIGHT/2) - 5;
                     floor.position.z = ((j - units/2) * UNITSIZE) +212.5;;
                     scene.add(floor);
 
                     //génération du plafond
                     var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]],1000000000);
                     roof.position.x = ((i - units/2) * UNITSIZE) - 212.5;
-                    roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  10;
+                    roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  5;
                     roof.position.z = ((j - units/2) * UNITSIZE) + 212.5;
                     scene.add(roof);
 
