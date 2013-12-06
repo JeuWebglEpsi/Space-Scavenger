@@ -236,6 +236,7 @@ var FLOORHEIGHT = 2;
 //Map updating function
 Map.prototype.update = function () {
     var map = this;
+    if (typeof map.particleSystem!== 'undefined')
     map.particleSystem.rotation.y += 0.0002;
     var i = 0,
         mult = 0.005;
