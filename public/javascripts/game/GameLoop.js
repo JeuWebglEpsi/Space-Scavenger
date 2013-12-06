@@ -155,6 +155,10 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     window.render = function () {
         //Game update loop
         game.update();
+        console.log('collider');
+        console.log(cameraCollider.position)
+        console.log('controls');
+        console.log(controls.getObject().position);
         cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
         controls.update(Date.now() - time);
 
@@ -162,7 +166,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             if (obj.name === "bgdCube") {
                 obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
-           /* if (obj.name === "arme") {
+            /* if (obj.name === "arme") {
                 var x = controls.getObject().position.x;
                 var y = controls.getObject().position.y;
                 var z = controls.getObject().position.z;

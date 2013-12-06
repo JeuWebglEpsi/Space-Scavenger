@@ -37,7 +37,7 @@ Map.prototype.space = function () {
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
             if (veryBigAste-- > 0) {
-                mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 500 - 300;
+                mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 500 - 250;
             } else if (bigAste-- > 0) {
                 mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 100 - 50;
             } else {
