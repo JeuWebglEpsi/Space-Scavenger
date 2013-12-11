@@ -1,179 +1,438 @@
 /**
  * @author mrdoob / http://mrdoob.com/
+ * @author alteredq / http://alteredqualia.com/
+ * @author paulirish / http://paulirish.com/
  */
 
-THREE.PointerLockControls = function (camera) {
+THREE.FirstPersonControls = function (object, domElement) {
+    this.object = object;
+    this.target = new THREE.Vector3(0, 0, 0);
 
-    var scope = this;
+    this.domElement = (domElement !== undefined) ? domElement : document;
 
-    camera.rotation.set(0, 0, 0);
+    this.movementSpeed = 1000;
+    this.lookSpeed = 0.005;
 
-    var pitchObject = new THREE.Object3D();
-    pitchObject.add(camera);
+    this.lookVertical = true;
+    this.autoForward = false;
+    //this.invertVertical = true;
 
-    var yawObject = new THREE.Object3D();
-    yawObject.add(pitchObject);
+    this.activeLook = true;
 
-    var moveForward = false;
-    var moveBackward = false;
-    var moveLeft = false;
-    var moveRight = false;
+    this.heightSpeed = false;
+    this.heightCoef = 1.0;
+    this.heightMin = 0.0;
+    this.heightMax = 1.0;
 
-    var isOnObject = false;
-    var canJump = false;
+    this.constrainVertical = false;
+    this.verticalMin = 0;
+    this.verticalMax = Math.PI;
 
-    var velocity = new THREE.Vector3();
+    this.autoSpeedFactor = 0.0;
 
-    var PI_2 = Math.PI / 2;
+    this.mouseX = 0;
+    this.mouseY = 0;
 
-    var onMouseMove = function (event) {
+    this.lat = 0;
+    this.lon = 0;
+    this.phi = 0;
+    this.theta = 0;
 
-        if (scope.enabled === false) return;
+    this.moveForward = false;
+    this.moveBackward = false;
+    this.moveLeft = false;
+    this.moveRight = false;
+    this.freeze = false;
 
-        var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-        var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+    this.mouseDragOn = false;
 
-        yawObject.rotation.y -= movementX * 0.002;
-        pitchObject.rotation.x -= movementY * 0.002;
+    this.viewHalfX = 0;
+    this.viewHalfY = 0;
 
-        pitchObject.rotation.x = Math.max(-PI_2, Math.min(PI_2, pitchObject.rotation.x));
+    if (this.domElement !== document) {
+
+        this.domElement.setAttribute('tabindex', -1);
+
+    }
+
+    //
+
+    this.handleResize = function () {
+
+        if (this.domElement === document) {
+
+            this.viewHalfX = window.innerWidth / 2;
+            this.viewHalfY = window.innerHeight / 2;
+
+        } else {
+
+            this.viewHalfX = this.domElement.offsetWidth / 2;
+            this.viewHalfY = this.domElement.offsetHeight / 2;
+
+        }
 
     };
 
-    var onKeyDown = function (event) {
+    this.onMouseDown = function (event) {
+
+        if (this.domElement !== document) {
+
+            this.domElement.focus();
+
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (this.activeLook) {
+
+            switch (event.button) {
+
+            case 0:
+                this.moveForward = true;
+                break;
+            case 2:
+                this.moveBackward = true;
+                break;
+
+            }
+
+        }
+
+        this.mouseDragOn = true;
+
+    };
+
+    this.onMouseUp = function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (this.activeLook) {
+
+            switch (event.button) {
+
+            case 0:
+                this.moveForward = false;
+                break;
+            case 2:
+                this.moveBackward = false;
+                break;
+
+            }
+
+        }
+
+        this.mouseDragOn = false;
+
+    };
+
+    this.onMouseMove = function (event) {
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.mouseX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+        this.mouseY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+        this.object.rotation.y = this.mouseX * 0.002;
+        this.object.rotation.x = this.mouseY * 0.002;
+
+        //this.object.rotation.x = Math.max(-(Math.PI / 2), Math.min((Math.PI / 2), this.object.rotation.x));
+
+    };
+
+    this.onKeyDown = function (event) {
+
+        //event.preventDefault();
+
         switch (event.keyCode) {
 
-        case 38: // up
-        case 87: // w
-            moveForward = true;
+        case 38:
+            /*up*/
+        case 87:
+            /*W*/
+            this.moveForward = true;
             break;
 
-        case 37: // left
-        case 65: // a
-            moveLeft = true;
+        case 37:
+            /*left*/
+        case 65:
+            /*A*/
+            this.moveLeft = true;
             break;
 
-        case 40: // down
-        case 83: // s
-            moveBackward = true;
+        case 40:
+            /*down*/
+        case 83:
+            /*S*/
+            this.moveBackward = true;
             break;
 
-        case 39: // right
-        case 68: // d
-            moveRight = true;
+        case 39:
+            /*right*/
+        case 68:
+            /*D*/
+            this.moveRight = true;
             break;
 
-        case 32: // space
-            if (canJump === true) velocity.y += 10;
-            canJump = false;
+        case 82:
+            /*R*/
+            this.moveUp = true;
+            break;
+        case 70:
+            /*F*/
+            this.moveDown = true;
+            break;
+
+        case 81:
+            /*Q*/
+            this.freeze = !this.freeze;
             break;
 
         }
 
     };
 
-    var onKeyUp = function (event) {
+    this.onKeyUp = function (event) {
 
         switch (event.keyCode) {
 
-        case 38: // up
-        case 87: // w
-            moveForward = false;
+        case 38:
+            /*up*/
+        case 87:
+            /*W*/
+            this.moveForward = false;
+            this.object.setLinearVelocity({
+                x: 0,
+                y: 0,
+                z: 0
+            });
             break;
 
-        case 37: // left
-        case 65: // a
-            moveLeft = false;
+        case 37:
+            /*left*/
+        case 65:
+            /*A*/
+            this.moveLeft = false;
+            this.object.setLinearVelocity({
+                x: 0,
+                y: 0,
+                z: 0
+            });
             break;
 
-        case 40: // down
-        case 83: // s
-            moveBackward = false;
+        case 40:
+            /*down*/
+        case 83:
+            /*S*/
+            this.moveBackward = false;
+            this.object.setLinearVelocity({
+                x: 0,
+                y: 0,
+                z: 0
+            });
             break;
 
-        case 39: // right
-        case 68: // d
-            moveRight = false;
+        case 39:
+            /*right*/
+        case 68:
+            /*D*/
+            this.moveRight = false;
+            this.object.setLinearVelocity({
+                x: 0,
+                y: 0,
+                z: 0
+            });
+            break;
+
+        case 82:
+            /*R*/
+            this.moveUp = false;
+            this.object.setLinearVelocity({
+                x: 0,
+                y: 0,
+                z: 0
+            });
+            break;
+        case 70:
+            /*F*/
+            this.moveDown = false;
+            this.object.setLinearVelocity({
+                x: 0,
+                y: 0,
+                z: 0
+            });
             break;
 
         }
 
     };
-
-    document.addEventListener('mousemove', onMouseMove, false);
-    document.addEventListener('keydown', onKeyDown, false);
-    document.addEventListener('keyup', onKeyUp, false);
-
-    this.enabled = true;
-
-    this.getObject = function () {
-
-        return yawObject;
-
-    };
-
-    this.isOnObject = function (boolean) {
-
-        isOnObject = boolean;
-        canJump = boolean;
-
-    };
-
     this.getDirection = function () {
-
-        // assumes the camera itself is not rotated
-
         var direction = new THREE.Vector3(0, 0, -1);
         var rotation = new THREE.Euler(0, 0, 0, "YXZ");
 
-        return function (v) {
+        rotation.set(this.object.rotation.y, this.object.rotation.x, this.object.rotation.z);
 
-            rotation.set(pitchObject.rotation.x, yawObject.rotation.y, 0);
+        direction.applyEuler(rotation);
 
-            v.copy(direction).applyEuler(rotation);
+        return direction;
 
-            return v;
-
-        }
-
-    }();
-
+    }
     this.update = function (delta) {
+        if (this.freeze) {
 
-        if (scope.enabled === false) return;
-
-        delta *= 0.1;
-
-        velocity.x += (-velocity.x) * 0.08 * delta;
-        velocity.z += (-velocity.z) * 0.08 * delta;
-
-        velocity.y -= 0.25 * delta;
-
-        if (moveForward) velocity.z -= 0.12 * delta;
-        if (moveBackward) velocity.z += 0.12 * delta;
-
-        if (moveLeft) velocity.x -= 0.12 * delta;
-        if (moveRight) velocity.x += 0.12 * delta;
-
-        if (isOnObject === true) {
-
-            velocity.y = Math.max(0, velocity.y);
+            return;
 
         }
 
-        yawObject.translateX(velocity.x);
-        yawObject.translateY(velocity.y);
-        yawObject.translateZ(velocity.z);
+        if (this.heightSpeed) {
 
-        if (yawObject.position.y < 10) {
+            var y = THREE.Math.clamp(this.object.position.y, this.heightMin, this.heightMax);
+            var heightDelta = y - this.heightMin;
 
-            velocity.y = 0;
-            yawObject.position.y = 10;
+            this.autoSpeedFactor = delta * (heightDelta * this.heightCoef);
 
-            canJump = true;
+        } else {
+
+            this.autoSpeedFactor = 0.0;
 
         }
+
+        var actualMoveSpeed = delta * this.movementSpeed;
+
+        var vector, pw, dir, toX = 0,
+            toY = 0,
+            toZ = 0;
+
+
+
+        if (this.moveForward || (this.autoForward && !this.moveBackward)) {
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+            toX += dir.x;
+            toY += dir.y;
+            toZ += dir.z;
+
+        }
+        if (this.moveBackward) {
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+            toX += -dir.x;
+            toY += -dir.y;
+            toZ += -dir.z;
+        }
+
+        if (this.moveLeft) {
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+
+            var dirLeft = new THREE.Vector3(1, 0, 0);
+
+            var axis = pw;
+            var angle = Math.PI / 2;
+            var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
+
+            dirLeft.applyMatrix4(matrix);
+
+
+            toX += dirLeft.x;
+            toY += 0;
+            toZ += dirLeft.z;
+
+        }
+        if (this.moveRight) {
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+            toX += -dir.x;
+            toY += -dir.y;
+            toZ += -dir.z;
+        }
+
+        if (this.moveUp) {
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+            toY = 1;
+        }
+        if (this.moveDown) {
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+            toY = -1;
+        }
+        if (this.moveBackward || this.moveForward || this.moveLeft || this.moveRight || this.moveUp || this.moveDown || this.autoForward) {
+            this.object.setLinearVelocity({
+                x: this.movementSpeed * toX,
+                y: this.movementSpeed * toY,
+                z: this.movementSpeed * toZ
+            });
+        }
+
+
+        var actualLookSpeed = delta * this.lookSpeed;
+
+        if (!this.activeLook) {
+
+            actualLookSpeed = 0;
+
+        }
+
+        var verticalLookRatio = 1;
+
+        if (this.constrainVertical) {
+
+            verticalLookRatio = Math.PI / (this.verticalMax - this.verticalMin);
+
+        }
+
+        this.lon += this.mouseX * actualLookSpeed;
+        if (this.lookVertical) this.lat -= this.mouseY * actualLookSpeed * verticalLookRatio;
+
+        this.lat = Math.max(-85, Math.min(85, this.lat));
+        this.phi = THREE.Math.degToRad(90 - this.lat);
+
+        this.theta = THREE.Math.degToRad(this.lon);
+
+        if (this.constrainVertical) {
+
+            this.phi = THREE.Math.mapLinear(this.phi, 0, Math.PI, this.verticalMin, this.verticalMax);
+
+        }
+
+        var targetPosition = this.target,
+            position = this.object.position;
+
+        targetPosition.x = position.x + 100 * Math.sin(this.phi) * Math.cos(this.theta);
+        targetPosition.y = position.y + 100 * Math.cos(this.phi);
+        targetPosition.z = position.z + 100 * Math.sin(this.phi) * Math.sin(this.theta);
+
+        this.object.lookAt(targetPosition);
 
     };
+
+
+    this.domElement.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+    }, false);
+
+    this.domElement.addEventListener('mousemove', bind(this, this.onMouseMove), false);
+    this.domElement.addEventListener('mousedown', bind(this, this.onMouseDown), false);
+    this.domElement.addEventListener('mouseup', bind(this, this.onMouseUp), false);
+    this.domElement.addEventListener('keydown', bind(this, this.onKeyDown), false);
+    this.domElement.addEventListener('keyup', bind(this, this.onKeyUp), false);
+
+    function bind(scope, fn) {
+
+        return function () {
+
+            fn.apply(scope, arguments);
+
+        };
+
+    };
+
+    this.handleResize();
 
 };

@@ -1,5 +1,6 @@
-require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game, Audio5js) {
+require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, Audio5js) {
     console.log(arguments);
+    console.log(FirstPersonControl);
     if ('webkitIsFullScreen' in document) {
         Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
         HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
@@ -45,34 +46,72 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
-    window.scene = new Physijs.Scene({
-        fixedTimeStep: 1 / 30
-    });
+    window.scene = new Physijs.Scene({});
     scene.setGravity(new THREE.Vector3(0, 0, 0));
+
+
+    function buildAxis(src, dst, colorHex, dashed) {
+        var geom = new THREE.Geometry(),
+            mat;
+
+        if (dashed) {
+            mat = new THREE.LineDashedMaterial({
+                linewidth: 3,
+                color: colorHex,
+                dashSize: 3,
+                gapSize: 3
+            });
+        } else {
+            mat = new THREE.LineBasicMaterial({
+                linewidth: 3,
+                color: colorHex
+            });
+        }
+
+        geom.vertices.push(src.clone());
+        geom.vertices.push(dst.clone());
+        geom.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
+
+        var axis = new THREE.Line(geom, mat, THREE.LinePieces);
+
+        return axis;
+
+    }
+
+    function buildAxes(length) {
+        var axes = new THREE.Object3D();
+
+        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(length, 0, 0), 0xFF0000, false)); // +X
+        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(-length, 0, 0), 0xFF0000, true)); // -X
+        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, length, 0), 0x00FF00, false)); // +Y
+        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, -length, 0), 0x00FF00, true)); // -Y
+        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, length), 0x0000FF, false)); // +Z
+        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -length), 0x0000FF, true)); // -Z
+
+        return axes;
+
+    }
+    scene.add(buildAxes(1000000));
 
     var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
     camera.position.set(0, 0, 0);
+    camera.rotation.set(0, 0, 0);
 
-    var controls = new PointerLockControls(camera);
-    controls.enabled = true;
+    var cameraCollider = new Physijs.SphereMesh(
+        new THREE.SphereGeometry(3),
+        new THREE.MeshBasicMaterial({
+            color: 0x888888
+        })
+    );
 
-    scene.add(controls.getObject());
-
-    var cameraCollider = new Physijs.SphereMesh(new THREE.SphereGeometry(3),
-        Physijs.createMaterial(
-            new THREE.MeshBasicMaterial({
-                color: 0xffffff,
-                wireframe: true
-            }),
-            1,
-            0
-        ), 10000);
-    cameraCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        console.log('cameraCollider ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+    cameraCollider.addEventListener('collision', function (obj) {
+        console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
     });
+    cameraCollider.position.set(0, 0, 0);
+    cameraCollider.rotation.set(0, 0, 0);
+    cameraCollider.add(camera);
     scene.add(cameraCollider);
-
-
+    var controls = new FirstPersonControl(cameraCollider);
 
     var renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -151,31 +190,27 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     WindowResize(renderer, camera);
     //GAME LOOP
-    console.log(cameraCollider.position);
+
     window.render = function () {
+        // cameraCollider.__dirtyRotation = true;
+
         //Game update loop
         game.update();
-        console.log('collider');
-        console.log(cameraCollider.position)
-        console.log('controls');
-        console.log(controls.getObject().position);
-        cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
         controls.update(Date.now() - time);
+
 
         scene.traverse(function (obj) {
             if (obj.name === "bgdCube") {
-                obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
+                //  obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
-            /* if (obj.name === "arme") {
-                var x = controls.getObject().position.x;
-                var y = controls.getObject().position.y;
-                var z = controls.getObject().position.z;
+            if (obj.name === "arme") {
+
                 obj.position.x = x;
                 obj.position.y = y - 1.5;
                 obj.position.z = z;
                 // obj.scale.x = obj.scale.z = -10;
                 //obj.scale.y= 10;
-            }*/
+            }
         })
         scene.simulate();
 
