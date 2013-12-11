@@ -184,7 +184,10 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     };
     $(document).click(function(event) {
-        var bullet = new Bullet();
-               bullet.position(position);
+        
+    
+            var bullet = new Bullet();
+            bullet.position(position);
+        
     })
 })

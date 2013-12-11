@@ -10,6 +10,7 @@ var Player = function (id, name, life, element, type) {
     };
     this._name = name;
     this._life = life;
+    this._ammo = 100;
     this._element = element;
     this._type = type;
     this._items = [];

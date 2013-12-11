@@ -20,6 +20,11 @@ ATH.prototype.update = function () {
     var life = $('.athlife');
     life.find('font').text(game.localPlayer.get('_life'));
     life.find('progress.life').val(game.localPlayer.get('_life'));
+
+
+    var cartridge = $('.athammo');
+    cartridge.find('font').text(game.localPlayer.get('_ammo'));
+    life.find('progress.ammo').val(game.localPlayer.get('_ammo'));
 }
 ATH.prototype.highlightItem = function (item) {
     //TODO

@@ -2,8 +2,34 @@ var Bullet = function () {
     var bullet = this;
     this.name = 'bullet';
 }
+
 Bullet.prototype.position = function (position){
-        console.log('la position est :' + position)
+        console.log(position);
+        if (this.hasMunition()) {
+            game.localPlayer.set('_ammo',game.localPlayer.get('_ammo')-1);
+            var sphere = new Physijs.SphereMesh(
+                new THREE.SphereGeometry(3),
+                new THREE.MeshBasicMaterial({ color: 0x888888 },0)
+            );
+            sphere.scale.x = sphere.scale.y = sphere.scale.z = 1000000000000000000000000000000000000000000;
+
+            sphere.name="bullet";
+            sphere.position = position;
+
+            window.scene.add(sphere);
+        }
+
+    }
+
+    Bullet.prototype.hasMunition= function () {
+
+        if( game.localPlayer.get('_ammo') > 0) {
+            return true;  
+        }
+        else {
+            return false;
+        }
+
     }
 
 // a modifier
