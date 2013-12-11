@@ -302,67 +302,52 @@ THREE.FirstPersonControls = function (object, domElement) {
             toY = 0,
             toZ = 0;
 
-
-
-        if (this.moveForward || (this.autoForward && !this.moveBackward)) {
-            vector = new THREE.Vector3(0, 0, -1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            dir = pw.sub(this.object.position).normalize();
-            toX += dir.x;
-            toY += dir.y;
-            toZ += dir.z;
-
-        }
-        if (this.moveBackward) {
-            vector = new THREE.Vector3(0, 0, -1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            dir = pw.sub(this.object.position).normalize();
-            toX += -dir.x;
-            toY += -dir.y;
-            toZ += -dir.z;
-        }
-
-        if (this.moveLeft) {
-            vector = new THREE.Vector3(0, 0, -1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            dir = pw.sub(this.object.position).normalize();
-
-            var dirLeft = new THREE.Vector3(1, 0, 0);
-
-            var axis = pw;
-            var angle = Math.PI / 2;
-            var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
-
-            dirLeft.applyMatrix4(matrix);
-
-
-            toX += dirLeft.x;
-            toY += 0;
-            toZ += dirLeft.z;
-
-        }
-        if (this.moveRight) {
-            vector = new THREE.Vector3(0, 0, -1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            dir = pw.sub(this.object.position).normalize();
-            toX += -dir.x;
-            toY += -dir.y;
-            toZ += -dir.z;
-        }
-
-        if (this.moveUp) {
-            vector = new THREE.Vector3(0, 0, -1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            dir = pw.sub(this.object.position).normalize();
-            toY = 1;
-        }
-        if (this.moveDown) {
-            vector = new THREE.Vector3(0, 0, -1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            dir = pw.sub(this.object.position).normalize();
-            toY = -1;
-        }
         if (this.moveBackward || this.moveForward || this.moveLeft || this.moveRight || this.moveUp || this.moveDown || this.autoForward) {
+
+            vector = new THREE.Vector3(0, 0, -1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            dir = pw.sub(this.object.position).normalize();
+
+            if (this.moveForward || (this.autoForward && !this.moveBackward)) {
+                toX += dir.x;
+                toY += dir.y;
+                toZ += dir.z;
+
+            }
+            if (this.moveBackward) {
+                toX += -dir.x;
+                toY += -dir.y;
+                toZ += -dir.z;
+            }
+
+            if (this.moveLeft) {
+
+                var dirLeft = new THREE.Vector3(1, 0, 0);
+
+                var axis = pw;
+                var angle = Math.PI / 2;
+                var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
+
+                dirLeft.applyMatrix4(matrix);
+
+
+                toX += dirLeft.x;
+                toY += 0;
+                toZ += dirLeft.z;
+
+            }
+            if (this.moveRight) {
+                toX += -dir.x;
+                toY += -dir.y;
+                toZ += -dir.z;
+            }
+
+            if (this.moveUp) {
+                toY = 1;
+            }
+            if (this.moveDown) {
+                toY = -1;
+            }
             this.object.setLinearVelocity({
                 x: this.movementSpeed * toX,
                 y: this.movementSpeed * toY,

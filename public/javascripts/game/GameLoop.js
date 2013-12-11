@@ -123,8 +123,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     $('body').append(renderer.domElement);
 
     window.game = new Game();
-    //game.map.space();
-    game.map.ship();
+    game.map.space();
+    //game.map.ship();
     console.log(game.map);
 
 
@@ -203,7 +203,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         scene.traverse(function (obj) {
             if (obj.name === "bgdCube") {
-                //  obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
+                obj.position.set(cameraCollider.position.x, cameraCollider.position.y, cameraCollider.position.z);
             }
             if (obj.name === "arme") {
 
