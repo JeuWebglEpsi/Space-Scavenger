@@ -222,15 +222,25 @@ var FLOORHEIGHT = 2;
 }
 
      //lesméchants
-    // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-    //     var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-    //     mesh.name = "mechantrobot";
-    //     mesh.position.x = (i - units/2) * UNITSIZE;
-    //     mesh.position.y = 5;
-    //     mesh.position.z = (j - units/2) * UNITSIZE;
-    //     mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
-    //     scene.add(mesh);
-    // });
+    loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
+        var count = 10;
+        while (count --){
+
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+        mesh.name = "mechantrobot";
+       /* mesh.position.x = (i - units/2) * UNITSIZE;
+        mesh.position.y = 5;
+        mesh.position.z = (j - units/2) * UNITSIZE;*/
+        mesh.position.x = Math.random() * 1000 - 500;
+            mesh.position.y = 0;
+            mesh.position.z = Math.random() * 1000 - 500;
+            mesh.rotation.x = Math.random();
+            mesh.rotation.y = Math.random();
+            mesh.rotation.z = Math.random();
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
+        scene.add(mesh);
+        }
+    });
 
 }
 //Map updating function

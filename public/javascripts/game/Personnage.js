@@ -29,10 +29,10 @@ Personnage.prototype.set = function (prop, value) {
     this.ath.update();
 }
 
-Personnage.prototype.init = function (scene) {
+Personnage.prototype.init = function () {
     var loader = new THREE.JSONLoader();
 
-    loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+    loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
 
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
         mesh.position.x = 0;
