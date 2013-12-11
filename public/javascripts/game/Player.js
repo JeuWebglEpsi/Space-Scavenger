@@ -10,6 +10,7 @@ var Player = function (id, name, life, element, type) {
     };
     this._name = name;
     this._life = life;
+    this._ammo = 100;
     this._element = element;
     this._type = type;
     this._items = [];
@@ -30,21 +31,9 @@ Player.prototype.set = function (prop, value) {
 }
 
 Player.prototype.init = function (scene) {
-    /*var loader = new THREE.JSONLoader();
-
-    loader.load("/javascripts/Objects/blaster.js", function (geometry, materials) {
-
-        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.position.x = 0;
-        mesh.position.y = 8.5;
-        mesh.position.z = 0;
-        mesh.scale.x = mesh.scale.z = -0.5;
-        mesh.scale.y = 0.5;
-        mesh.name = "arme";
-        //scene.add(mesh);
-    });*/
+    var bullets = new Bullet();
+    console.log ('bullets ' + bullets);
 }
-
 
 // Test and avoid collisions
 Player.prototype.collision = function () {

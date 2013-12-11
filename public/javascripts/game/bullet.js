@@ -1,7 +1,58 @@
-var Bullet = function (id, name, life, element, type) {
+var Bullet = function () {
     var bullet = this;
-// a modifier
+    this.name = 'bullet';
+}
 
+Bullet.prototype.position = function (position, camera){
+        
+        if (this.hasMunition()) {
+            game.localPlayer.set('_ammo',game.localPlayer.get('_ammo')-1);
+            var sphere = new Physijs.ConvexMesh(
+                new THREE.SphereGeometry(3),
+                new THREE.MeshBasicMaterial({ color: 0x888888 },10000000)
+            );
+            sphere.scale.x = sphere.scale.y = sphere.scale.z = 0.1;
+
+            sphere.name="bullet";
+            sphere.position.x = position.x;
+            sphere.position.y = position.y;
+            sphere.position.z = position.z;
+
+            console.log(sphere);
+
+
+        var mouseX = (event.clientX / window.innerWidth)*2-1;
+        var mouseY = -(event.clientY /window.innerHeight)*2+1;
+
+        // proj = new THREE.Projector();
+        // proj.projectVector(position, camera);
+        // var vector = new THREE.Vector3(mouseX, mouseY, 1);
+        // sphere.ray = new THREE.Ray(
+        //                         camera.position,
+        //                         position.sub(camera.position).normalize()
+        //         );
+        // sphere.applyCentralImpulse(10);
+
+position.applyMatrix4( sphere.matrixWorld );
+        sphere.setLinearVelocity({x:100, y:0, z:0});
+            scene.add(sphere);
+        }
+
+    }
+
+    Bullet.prototype.hasMunition= function () {
+
+        if( game.localPlayer.get('_ammo') > 0) {
+            return true;  
+        }
+        else {
+            return false;
+        }
+
+    }
+
+// a modifier
+/*
         event.preventDefault();
         if (event.which === 1) { // Left click only
 
@@ -56,5 +107,4 @@ var Bullet = function (id, name, life, element, type) {
         });
             window.scene.add(sphere);
 
-        }
-    })
+        }*/

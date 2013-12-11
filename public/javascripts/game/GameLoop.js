@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, Audio5js) {
+=======
+require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs', 'bullet'], function ($, THREE, Physijs, PointerLockControls, WindowResize, Game, Audio5js) {
+>>>>>>> 65ed5df773a8e17671972b51fac7f6cd48638e88
     console.log(arguments);
     console.log(FirstPersonControl);
     if ('webkitIsFullScreen' in document) {
@@ -123,7 +127,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     $('body').append(renderer.domElement);
 
     window.game = new Game();
-    game.map.space();
+    //game.map.space();
+    game.map.ship();
     console.log(game.map);
 
 
@@ -167,6 +172,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         }
     })
     //on met a jour la liste des joueur (visible a gauche)
+
     window.game.socket.on('updatePlayerList', function (players) {
         $('.playerlist').html('');
         players.forEach(function (player) {
@@ -189,13 +195,28 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     var time = Date.now();
 
     WindowResize(renderer, camera);
-    //GAME LOOP
 
+
+    //GAME LOOP
+<<<<<<< HEAD
+
+=======
+    //console.log(cameraCollider.position);
+    var position = new THREE.Vector3(controls.getObject().position.x,controls.getObject().position.y,controls.getObject().position.z);
+>>>>>>> 65ed5df773a8e17671972b51fac7f6cd48638e88
     window.render = function () {
         // cameraCollider.__dirtyRotation = true;
 
         //Game update loop
         game.update();
+<<<<<<< HEAD
+=======
+       /* console.log('collider');
+        console.log(cameraCollider.position)
+        console.log('controls');
+        console.log(controls.getObject().position);*/
+        cameraCollider.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
+>>>>>>> 65ed5df773a8e17671972b51fac7f6cd48638e88
         controls.update(Date.now() - time);
 
 
@@ -203,6 +224,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             if (obj.name === "bgdCube") {
                 //  obj.position.set(controls.getObject().position.x, controls.getObject().position.y, controls.getObject().position.z);
             }
+<<<<<<< HEAD
             if (obj.name === "arme") {
 
                 obj.position.x = x;
@@ -211,6 +233,13 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 // obj.scale.x = obj.scale.z = -10;
                 //obj.scale.y= 10;
             }
+=======
+            
+                position.x = controls.getObject().position.x;
+                position.y = controls.getObject().position.y;
+                position.z = controls.getObject().position.z;
+                
+>>>>>>> 65ed5df773a8e17671972b51fac7f6cd48638e88
         })
         scene.simulate();
 
@@ -220,4 +249,11 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         time = Date.now();
 
     };
+    $(document).click(function(event) {
+        
+    
+            var bullet = new Bullet();
+            bullet.position(position, camera);
+        
+    })
 })

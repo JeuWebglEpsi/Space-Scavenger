@@ -76,7 +76,7 @@ var DC = DC || {
             exports:'window.Personnage'
         },
          player:{
-            deps:['three','ath'],
+            deps:['three','ath', 'bullet'],
             exports:'window.Player'
         },
         bullet:{
@@ -129,7 +129,8 @@ var DC = DC || {
                 <progress class="life" value="" max="100"></progress>
             </div>
             <div class="athammo">
-                <font>100</font>
+                <font></font>
+                <progress class="ammo" value="" max="100"></progress>
             </div>
         </div>
         </div>

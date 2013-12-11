@@ -175,7 +175,7 @@ var FLOORHEIGHT = 2;
 
                 var wall = new Physijs.BoxMesh(cube, materials[map[i][j]],1000000000);
                 wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                wall.position.y = (WALLHEIGHT/2) - 10;
+                wall.position.y = (WALLHEIGHT/2) - 5;
                 wall.position.z = ((j - units/2) * UNITSIZE) + 212.5;
                 wall.scale.y=wall.scale.z=wall.scale.x = 0.1;
                 wall.name = "wall";
@@ -189,7 +189,7 @@ var FLOORHEIGHT = 2;
                 else{
                 var wall = new Physijs.BoxMesh(cube, materials[map[i][j]],1000000000);
                 wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                wall.position.y = (WALLHEIGHT/2) - 10;
+                wall.position.y = (WALLHEIGHT/2) - 5;
                 wall.position.z = ((j - units/2) * UNITSIZE) +212.5;
                 scene.add(wall);
                 }
@@ -198,16 +198,16 @@ var FLOORHEIGHT = 2;
 
             if(map[i][j] === 0 || map[i][j] === 9){
                     //génération du sol
-                    var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],0);
+                    var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],1000000000);
                     floor.position.x = ((i - units/2) * UNITSIZE) - 212.5;
-                    floor.position.y = (FLOORHEIGHT/2) - 10;
+                    floor.position.y = (FLOORHEIGHT/2) - 5;
                     floor.position.z = ((j - units/2) * UNITSIZE) +212.5;;
                     scene.add(floor);
 
                     //génération du plafond
                     var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]],1000000000);
                     roof.position.x = ((i - units/2) * UNITSIZE) - 212.5;
-                    roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  10;
+                    roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  5;
                     roof.position.z = ((j - units/2) * UNITSIZE) + 212.5;
                     scene.add(roof);
 
@@ -222,15 +222,25 @@ var FLOORHEIGHT = 2;
 }
 
      //lesméchants
-    // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-    //     var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-    //     mesh.name = "mechantrobot";
-    //     mesh.position.x = (i - units/2) * UNITSIZE;
-    //     mesh.position.y = 5;
-    //     mesh.position.z = (j - units/2) * UNITSIZE;
-    //     mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
-    //     scene.add(mesh);
-    // });
+    loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
+        var count = 10;
+        while (count --){
+
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+        mesh.name = "mechantrobot";
+       /* mesh.position.x = (i - units/2) * UNITSIZE;
+        mesh.position.y = 5;
+        mesh.position.z = (j - units/2) * UNITSIZE;*/
+        mesh.position.x = Math.random() * 1000 - 500;
+            mesh.position.y = 0;
+            mesh.position.z = Math.random() * 1000 - 500;
+            mesh.rotation.x = Math.random();
+            mesh.rotation.y = Math.random();
+            mesh.rotation.z = Math.random();
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
+        scene.add(mesh);
+        }
+    });
 
 }
 //Map updating function
