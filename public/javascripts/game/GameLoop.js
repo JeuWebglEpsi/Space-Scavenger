@@ -152,6 +152,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     var time = Date.now();
 
     WindowResize(renderer, camera);
+
+
     //GAME LOOP
     //console.log(cameraCollider.position);
     var position = new THREE.Vector3(controls.getObject().position.x,controls.getObject().position.y,controls.getObject().position.z);
@@ -187,7 +189,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         
     
             var bullet = new Bullet();
-            bullet.position(position);
+            bullet.position(position, camera);
         
     })
 })

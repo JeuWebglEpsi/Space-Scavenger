@@ -7,7 +7,6 @@ Bullet.prototype.position = function (position){
         console.log(position);
         if (this.hasMunition()) {
             game.localPlayer.set('_ammo',game.localPlayer.get('_ammo')-1);
-            var sphere = new Physijs.SphereMesh(
                 new THREE.SphereGeometry(3),
                 new THREE.MeshBasicMaterial({ color: 0x888888 },0)
             );

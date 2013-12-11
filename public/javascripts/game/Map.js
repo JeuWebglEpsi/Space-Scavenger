@@ -198,7 +198,7 @@ var FLOORHEIGHT = 2;
 
             if(map[i][j] === 0 || map[i][j] === 9){
                     //génération du sol
-                    var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],0);
+                    var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],1000000000);
                     floor.position.x = ((i - units/2) * UNITSIZE) - 212.5;
                     floor.position.y = (FLOORHEIGHT/2) - 5;
                     floor.position.z = ((j - units/2) * UNITSIZE) +212.5;;
