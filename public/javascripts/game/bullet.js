@@ -11,7 +11,7 @@ Bullet.prototype.position = function (position){
                 new THREE.SphereGeometry(3),
                 new THREE.MeshBasicMaterial({ color: 0x888888 },0)
             );
-            sphere.scale.x = sphere.scale.y = sphere.scale.z = 1000000000000000000000000000000000000000000;
+            sphere.scale.x = sphere.scale.y = sphere.scale.z = 0.1;
 
             sphere.name="bullet";
             sphere.position = position;

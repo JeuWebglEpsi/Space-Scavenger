@@ -24,7 +24,7 @@ ATH.prototype.update = function () {
 
     var cartridge = $('.athammo');
     cartridge.find('font').text(game.localPlayer.get('_ammo'));
-    life.find('progress.ammo').val(game.localPlayer.get('_ammo'));
+    cartridge.find('progress.ammo').val(game.localPlayer.get('_ammo'));
 }
 ATH.prototype.highlightItem = function (item) {
     //TODO
