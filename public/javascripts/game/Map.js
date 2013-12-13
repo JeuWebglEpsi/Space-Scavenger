@@ -117,6 +117,7 @@ Map.prototype.space = function () {
     // add it to the scene
     scene.add(map.particleSystem);
 }
+<<<<<<< HEAD
 Map.prototype.ship = function () {
 
     this.name = "ship";
@@ -189,18 +190,80 @@ Map.prototype.ship = function () {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png')
         }),
     ];
+=======
+Map.prototype.ship = function() {
+
+this.name = "ship";
+
+// Creation map en 2d
+var map = [
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+[1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,],
+[1,0,1,1,1,0,0,0,0,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,0,1,1,1,1,0,0,0,0,9,0,0,0,1,],
+[1,0,0,0,1,1,1,1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,1,],
+[1,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,],
+[1,0,0,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,],
+[1,0,1,1,1,0,0,0,0,1,1,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,1,0,0,0,0,1,1,],
+[1,0,1,1,0,0,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,],
+[1,0,1,1,0,1,1,1,1,1,1,0,0,0,0,0,1,1,0,1,1,0,0,0,1,1,1,1,1,0,1,1,0,0,0,1,1,1,1,0,1,1,1,1,1,],
+[1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,1,1,1,],
+[1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,],
+[1,0,0,0,1,1,1,0,1,1,1,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,0,0,0,0,1,1,1,],
+[1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,],
+[1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,1,1,1,1,1,1,],
+[1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,],
+[1,0,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,1,],
+[1,0,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,0,1,1,],
+[1,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,],
+[1,0,1,1,1,1,1,0,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,0,1,0,0,0,0,0,1,0,0,0,1,],
+[1,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,1,],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+], mapW = map.length, mapH = map[0].length;
+
+
+var units = mapW;
+var UNITSIZE = 25;
+var WALLHEIGHT = 25;
+var FLOORHEIGHT = 2;
+
+
+
+
+     var materials = [
+                    // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png'), opacity: 0.5, transparent: true }),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png')}),
+                     ];
+>>>>>>> d763b5e49ad61eb05df0e22b09d98343462f2299
     // Geometry: walls
     var cube = new THREE.CubeGeometry(UNITSIZE, WALLHEIGHT, UNITSIZE);
     var cube_floor = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var loader = new THREE.JSONLoader();
+<<<<<<< HEAD
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = map[i].length - 1; j >= 0; j--) {
+=======
+
+    var group = new THREE.Object3D();
+
+    for (var i = mapW-1; i >= 0; i--) {
+        for (var j = map[i].length-1; j >= 0; j--) {
+>>>>>>> d763b5e49ad61eb05df0e22b09d98343462f2299
             //generation des murs
             if (map[i][j] !== 0) {
 
                 if (map[i][j] === 9) {
 
+<<<<<<< HEAD
                     // console.log(map[i][j]);
                     // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
                     //     var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
@@ -228,10 +291,22 @@ Map.prototype.ship = function () {
                     wall.position.y = (WALLHEIGHT / 2) - 5;
                     wall.position.z = ((j - units / 2) * UNITSIZE) + 212.5;
                     scene.add(wall);
+=======
+                }
+
+
+                else{
+                var wall = new Physijs.BoxMesh(cube, materials[map[i][j]],1000000000);
+                wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
+                wall.position.y = (WALLHEIGHT/2) - 5;
+                wall.position.z = ((j - units/2) * UNITSIZE) +212.5;
+                group.add(wall);
+>>>>>>> d763b5e49ad61eb05df0e22b09d98343462f2299
                 }
 
             }
 
+<<<<<<< HEAD
             if (map[i][j] === 0 || map[i][j] === 9) {
                 //génération du sol
                 var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 1000000000);
@@ -246,12 +321,28 @@ Map.prototype.ship = function () {
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - 5;
                 roof.position.z = ((j - units / 2) * UNITSIZE) + 212.5;
                 scene.add(roof);
+=======
+            if(map[i][j] === 0 || map[i][j] === 9){
+                //génération du sol
+                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],1000000000);
+                floor.position.x = ((i - units/2) * UNITSIZE) - 212.5;
+                floor.position.y = (FLOORHEIGHT/2) - 5;
+                floor.position.z = ((j - units/2) * UNITSIZE) +212.5;;
+                group.add(floor);
+
+                //génération du plafond
+                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]],1000000000);
+                roof.position.x = ((i - units/2) * UNITSIZE) - 212.5;
+                roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  5;
+                roof.position.z = ((j - units/2) * UNITSIZE) + 212.5;
+                group.add(roof);
+>>>>>>> d763b5e49ad61eb05df0e22b09d98343462f2299
 
             }
 
         }
 
-
+        scene.add(group);
         //console.log(Player);
         //Player.set('_position', new THREE.Vector3(0,0,0));
 
