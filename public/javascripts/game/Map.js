@@ -119,7 +119,44 @@ Map.prototype.space = function () {
 }
 Map.prototype.ship = function () {
 
+    scene.setGravity(new THREE.Vector3(0, 0, 0));
+
     this.name = "ship";
+
+    var loader = new THREE.JSONLoader();
+
+    //background image
+    loader.load("/javascripts/Maps/bgd2.js", function (geometry, materials) {
+        var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+        mesh.name = "bgdCube";
+        mesh.material.depthWrite = false;
+        mesh.receiveShadow = false;
+        mesh.scale.set(-2000, -2000, -2000);
+        scene.add(mesh);
+    });
+
+
+    var hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x000000, .4);
+    hemiLight.castShadow = false;
+    scene.add(hemiLight);
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    directionalLight.position.set(-2000, 0, -200);
+    directionalLight.castShadow = true;
+    directionalLight.shadowMapWidth = directionalLight.shadowMapHeight = 1024 * 2;
+
+    var d = 300;
+
+    directionalLight.shadowCameraLeft = -d;
+    directionalLight.shadowCameraRight = d;
+    directionalLight.shadowCameraTop = d;
+    directionalLight.shadowCameraBottom = -d;
+
+    directionalLight.shadowCameraFar = 3500;
+    directionalLight.shadowBias = -0.0001;
+    directionalLight.shadowDarkness = 0.35;
+
+    scene.add(directionalLight);
 
     // Creation map en 2d
     var map = [
@@ -150,8 +187,8 @@ Map.prototype.ship = function () {
 
 
     var units = mapW;
-    var UNITSIZE = 25;
-    var WALLHEIGHT = 25;
+    var UNITSIZE = 50;
+    var WALLHEIGHT = 50;
     var FLOORHEIGHT = 2;
 
 
@@ -159,7 +196,8 @@ Map.prototype.ship = function () {
     var materials = [
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png'),
+            
         }),
         new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
@@ -193,7 +231,13 @@ Map.prototype.ship = function () {
     var cube = new THREE.CubeGeometry(UNITSIZE, WALLHEIGHT, UNITSIZE);
     var cube_floor = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
-    var loader = new THREE.JSONLoader();
+  
+    var group = new THREE.Object3D();
+
+    //var correction = 212.5;
+    var correction = 0;
+    var correctionY = 30;
+
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -201,82 +245,63 @@ Map.prototype.ship = function () {
 
                 if (map[i][j] === 9) {
 
-                    // console.log(map[i][j]);
-                    // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-                    //     var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-                    //     mesh.name = "mechantrobot";
-                    //     mesh.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                    //     mesh.position.y = q0;
-                    //     mesh.position.z = ((j - units/2) * UNITSIZE) + 212.5;
-                    //     mesh.scale.y=mesh.scale.z=mesh.scale.x = 5;
-                    //     scene.add(mesh);
-                    // });
 
-                    var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 1000000000);
-                    wall.position.x = ((i - units / 2) * UNITSIZE) - 212.5;
-                    wall.position.y = (WALLHEIGHT / 2) - 5;
-                    wall.position.z = ((j - units / 2) * UNITSIZE) + 212.5;
-                    wall.scale.y = wall.scale.z = wall.scale.x = 0.1;
-                    wall.name = "wall";
-                    wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                        console.log('Wall ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                    });
-                    scene.add(wall);
                 } else {
-                    var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 1000000000);
-                    wall.position.x = ((i - units / 2) * UNITSIZE) - 212.5;
-                    wall.position.y = (WALLHEIGHT / 2) - 5;
-                    wall.position.z = ((j - units / 2) * UNITSIZE) + 212.5;
-                    scene.add(wall);
+                    var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
+                    wall.position.x = ((i - units / 2) * UNITSIZE) - correction;
+                    wall.position.y = (WALLHEIGHT / 2) - correctionY;
+                    wall.position.z = ((j - units / 2) * UNITSIZE) + correction;
+                    group.add(wall);
                 }
 
             }
 
             if (map[i][j] === 0 || map[i][j] === 9) {
                 //génération du sol
-                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 1000000000);
-                floor.position.x = ((i - units / 2) * UNITSIZE) - 212.5;
-                floor.position.y = (FLOORHEIGHT / 2) - 5;
-                floor.position.z = ((j - units / 2) * UNITSIZE) + 212.5;;
-                scene.add(floor);
+                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
+                floor.position.x = ((i - units / 2) * UNITSIZE) - correction;
+                floor.position.y = (FLOORHEIGHT / 2) - correctionY;
+                floor.position.z = ((j - units / 2) * UNITSIZE) + correction;
+
+                group.add(floor);
 
                 //génération du plafond
-                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 1000000000);
-                roof.position.x = ((i - units / 2) * UNITSIZE) - 212.5;
-                roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - 5;
-                roof.position.z = ((j - units / 2) * UNITSIZE) + 212.5;
-                scene.add(roof);
+                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 0);
+                roof.position.x = ((i - units / 2) * UNITSIZE) - correction;
+                roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - correctionY;
+                roof.position.z = ((j - units / 2) * UNITSIZE) + correction;
+                group.add(roof);
 
             }
 
         }
 
-
+        scene.add(group);
         //console.log(Player);
         //Player.set('_position', new THREE.Vector3(0,0,0));
 
     }
 
     //lesméchants
-    loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-        var count = 10;
-        while (count--) {
+    // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
+    //     var count = 10;
+    //     while (count--) {
 
-            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-            mesh.name = "mechantrobot";
-            /* mesh.position.x = (i - units/2) * UNITSIZE;
-        mesh.position.y = 5;
-        mesh.position.z = (j - units/2) * UNITSIZE;*/
-            mesh.position.x = Math.random() * 1000 - 500;
-            mesh.position.y = 0;
-            mesh.position.z = Math.random() * 1000 - 500;
-            mesh.rotation.x = Math.random();
-            mesh.rotation.y = Math.random();
-            mesh.rotation.z = Math.random();
-            mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
-            scene.add(mesh);
-        }
-    });
+    //         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+    //         mesh.name = "mechantrobot";
+    //          mesh.position.x = (i - units/2) * UNITSIZE;
+    //     mesh.position.y = 5;
+    //     mesh.position.z = (j - units/2) * UNITSIZE;
+    //         mesh.position.x = Math.random() * 1000 - 500;
+    //         mesh.position.y = 0;
+    //         mesh.position.z = Math.random() * 1000 - 500;
+    //         mesh.rotation.x = Math.random();
+    //         mesh.rotation.y = Math.random();
+    //         mesh.rotation.z = Math.random();
+    //         mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
+    //         scene.add(mesh);
+    //     }
+    // });
 
 }
 
