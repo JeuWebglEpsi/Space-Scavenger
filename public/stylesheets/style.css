@@ -36,6 +36,7 @@ a {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	z-index: 10000;
 }
 .ath .values {
 	position: relative;

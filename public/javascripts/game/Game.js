@@ -13,7 +13,7 @@
                 var p = new Player(window.socketId, nom, 100, 'feu', 'player');
                 game.socket.emit('registerPlayer', p);
                 game.localPlayer = p;
-                p.set('_life', 80);
+                p.set('_life', 100);
                 game.biome.personnages.push({
                     id: window.socketId,
                     player: p,
@@ -28,13 +28,6 @@
     Game.prototype.update = function () {
         var game = this;
         //     console.log('Game updating...');
-        var r = Math.random();
-        if (r >= 0.5) {
-            r = 1;
-        } else {
-            r = -1;
-        }
-        game.localPlayer.set('_life', (game.localPlayer.get('_life') + r));
         game.biome.update();
         game.map.update();
     }

@@ -47,64 +47,49 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
     window.scene = new Physijs.Scene({});
+
+
     scene.setGravity(new THREE.Vector3(0, 0, 0));
 
-
-    function buildAxis(src, dst, colorHex, dashed) {
-        var geom = new THREE.Geometry(),
-            mat;
-
-        if (dashed) {
-            mat = new THREE.LineDashedMaterial({
-                linewidth: 3,
-                color: colorHex,
-                dashSize: 3,
-                gapSize: 3
-            });
-        } else {
-            mat = new THREE.LineBasicMaterial({
-                linewidth: 3,
-                color: colorHex
-            });
+    var debugaxis = function (axisLength) {
+        //Shorten the vertex function
+        function v(x, y, z) {
+            return new THREE.Vertex(new THREE.Vector3(x, y, z));
         }
 
-        geom.vertices.push(src.clone());
-        geom.vertices.push(dst.clone());
-        geom.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
+        //Create axis (point1, point2, colour)
+        function createAxis(p1, p2, color) {
+            var line, lineGeometry = new THREE.Geometry(),
+                lineMat = new THREE.LineBasicMaterial({
+                    color: color,
+                    lineWidth: 1
+                });
+            lineGeometry.vertices.push(p1, p2);
+            line = new THREE.Line(lineGeometry, lineMat);
+            scene.add(line);
+        }
 
-        var axis = new THREE.Line(geom, mat, THREE.LinePieces);
+        createAxis(v(-axisLength, 0, 0), v(axisLength, 0, 0), 0xFF0000);
+        createAxis(v(0, -axisLength, 0), v(0, axisLength, 0), 0x00FF00);
+        createAxis(v(0, 0, -axisLength), v(0, 0, axisLength), 0x0000FF);
+    };
 
-        return axis;
+    //To use enter the axis length
+    debugaxis(10000);
 
-    }
-
-    function buildAxes(length) {
-        var axes = new THREE.Object3D();
-
-        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(length, 0, 0), 0xFF0000, false)); // +X
-        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(-length, 0, 0), 0xFF0000, true)); // -X
-        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, length, 0), 0x00FF00, false)); // +Y
-        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, -length, 0), 0x00FF00, true)); // -Y
-        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, length), 0x0000FF, false)); // +Z
-        axes.add(buildAxis(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -length), 0x0000FF, true)); // -Z
-
-        return axes;
-
-    }
-    scene.add(buildAxes(1000000));
-
-    var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
+    window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
     camera.position.set(0, 0, 0);
     camera.rotation.set(0, 0, 0);
 
     var cameraCollider = new Physijs.SphereMesh(
-        new THREE.SphereGeometry(3),
+        new THREE.SphereGeometry(4),
         new THREE.MeshBasicMaterial({
             color: 0x888888
         })
     );
 
     cameraCollider.addEventListener('collision', function (obj) {
+        game.localPlayer.set('_life', game.localPlayer.get('_life') - 10);
         console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
     });
     cameraCollider.position.set(0, 0, 0);
@@ -114,13 +99,29 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     var controls = new FirstPersonControl(cameraCollider);
 
     var renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        precision: 'lowp'
+        antialias: false,
+        precision: 'lowp',
+        alpha: true,
+        premultiplyAlpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    renderer.shadowMapEnabled = true;
+    renderer.shadowMapSoft = true;
+
+    renderer.shadowCameraNear = 10;
+    renderer.shadowCameraFar = camera.far;
+    renderer.shadowCameraFov = 55;
+
+    renderer.shadowMapBias = 0.0039;
+    renderer.shadowMapDarkness = 0.5;
+    renderer.shadowMapWidth = 1024;
+    renderer.shadowMapHeight = 1024;
+
 
     $('body').append(renderer.domElement);
+
+
 
     window.game = new Game();
     game.map.space();
@@ -182,10 +183,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
 
-    var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
-
-    hemiLight.position.set(0, 500, 0);
-    scene.add(hemiLight);
     /*END MAYBE*/
 
     var time = Date.now();
