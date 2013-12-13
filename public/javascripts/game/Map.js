@@ -32,9 +32,9 @@ Map.prototype.space = function () {
         var bigAste = 200;
         while (asteroidCount--) {
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000);
-            mesh.position.x = Math.random() * 10000 - 5000;
+            mesh.position.x = Math.random() * 13000 - 8000;
             mesh.position.y = Math.random() * 1000 - 500;
-            mesh.position.z = Math.random() * 10000 - 5000;
+            mesh.position.z = Math.random() * 13000 - 8000;
             mesh.rotation.x = Math.random();
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
@@ -55,6 +55,18 @@ Map.prototype.space = function () {
             scene.add(mesh);
         }
     });
+
+    loader.load('/javascripts/Maps/ship.js', function (geometry, materials) {
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 1e7);
+        mesh.rotation.z += 2;
+        mesh.rotation.y += 1;
+        mesh.rotation.x += 2;
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 20;
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
+        mesh.position.set(0, 0, -3000);
+        scene.add(mesh);
+    })
 
     // on ajoute un point de lumière
     scene.add(this.addLensFlare(-2000, 0, -200, 16000, '/javascripts/Maps/lensflare0.png'))
@@ -115,7 +127,7 @@ Map.prototype.space = function () {
         pMaterial);
 
     // add it to the scene
-    scene.add(map.particleSystem);
+    //  scene.add(map.particleSystem);
 }
 Map.prototype.ship = function () {
 

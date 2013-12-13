@@ -78,7 +78,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     debugaxis(10000);
 
     window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
-    camera.position.set(0, 0, 0);
     camera.rotation.set(0, 0, 0);
 
     var cameraCollider = new Physijs.SphereMesh(
@@ -88,13 +87,17 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         })
     );
 
-    cameraCollider.addEventListener('collision', function (obj) {
+    cameraCollider.addEventListener('collision', function (obj, relative_velocity, relative_rotation, contact_normal) {
         game.localPlayer.set('_life', game.localPlayer.get('_life') - 10);
-        console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
+
+        console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position) + ' with relative_velocity of ' + JSON.stringify(relative_velocity) + ' and relative_rotation of  ' + JSON.stringify(relative_rotation) + '  and contact_normal of ' + JSON.stringify(contact_normal));
     });
-    cameraCollider.position.set(0, 0, 0);
+    cameraCollider.position.set(0, 0, 4000);
+
     cameraCollider.rotation.set(0, 0, 0);
     cameraCollider.add(camera);
+    camera.position.set(0, 0, 0);
+
     scene.add(cameraCollider);
     var controls = new FirstPersonControl(cameraCollider);
 
@@ -124,8 +127,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
     window.game = new Game();
-    //game.map.space();
-    game.map.ship();
+    game.map.space();
+    //game.map.ship();
     console.log(game.map);
 
 
