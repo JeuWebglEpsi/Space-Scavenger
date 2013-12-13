@@ -139,7 +139,7 @@ var FLOORHEIGHT = 2;
 
      var materials = [
                     // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
-                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png')}),
+                    new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png'), opacity: 0.5, transparent: true }),
                     new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
                     new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
                     new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')}),
@@ -155,6 +155,9 @@ var FLOORHEIGHT = 2;
     var cube_floor = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var loader = new THREE.JSONLoader();
+
+    var group = new THREE.Object3D();
+
     for (var i = mapW-1; i >= 0; i--) {
         for (var j = map[i].length-1; j >= 0; j--) {
             //generation des murs
@@ -162,27 +165,6 @@ var FLOORHEIGHT = 2;
 
                 if (map[i][j] ===9) {
 
-                    // console.log(map[i][j]);
-                    // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-                    //     var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-                    //     mesh.name = "mechantrobot";
-                    //     mesh.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                    //     mesh.position.y = q0;
-                    //     mesh.position.z = ((j - units/2) * UNITSIZE) + 212.5;
-                    //     mesh.scale.y=mesh.scale.z=mesh.scale.x = 5;
-                    //     scene.add(mesh);
-                    // });
-
-                var wall = new Physijs.BoxMesh(cube, materials[map[i][j]],1000000000);
-                wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
-                wall.position.y = (WALLHEIGHT/2) - 5;
-                wall.position.z = ((j - units/2) * UNITSIZE) + 212.5;
-                wall.scale.y=wall.scale.z=wall.scale.x = 0.1;
-                wall.name = "wall";
-                wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            console.log('Wall ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-        });
-                scene.add(wall);
                 }
 
 
@@ -191,31 +173,31 @@ var FLOORHEIGHT = 2;
                 wall.position.x = ((i - units/2) * UNITSIZE ) - 212.5;
                 wall.position.y = (WALLHEIGHT/2) - 5;
                 wall.position.z = ((j - units/2) * UNITSIZE) +212.5;
-                scene.add(wall);
+                group.add(wall);
                 }
 
             }
 
             if(map[i][j] === 0 || map[i][j] === 9){
-                    //génération du sol
-                    var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],1000000000);
-                    floor.position.x = ((i - units/2) * UNITSIZE) - 212.5;
-                    floor.position.y = (FLOORHEIGHT/2) - 5;
-                    floor.position.z = ((j - units/2) * UNITSIZE) +212.5;;
-                    scene.add(floor);
+                //génération du sol
+                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]],1000000000);
+                floor.position.x = ((i - units/2) * UNITSIZE) - 212.5;
+                floor.position.y = (FLOORHEIGHT/2) - 5;
+                floor.position.z = ((j - units/2) * UNITSIZE) +212.5;;
+                group.add(floor);
 
-                    //génération du plafond
-                    var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]],1000000000);
-                    roof.position.x = ((i - units/2) * UNITSIZE) - 212.5;
-                    roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  5;
-                    roof.position.z = ((j - units/2) * UNITSIZE) + 212.5;
-                    scene.add(roof);
+                //génération du plafond
+                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]],1000000000);
+                roof.position.x = ((i - units/2) * UNITSIZE) - 212.5;
+                roof.position.y = (FLOORHEIGHT/2 + WALLHEIGHT) -  5;
+                roof.position.z = ((j - units/2) * UNITSIZE) + 212.5;
+                group.add(roof);
 
             }
 
         }
 
-
+        scene.add(group);
         //console.log(Player);
         //Player.set('_position', new THREE.Vector3(0,0,0));
 

@@ -123,8 +123,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     $('body').append(renderer.domElement);
 
     window.game = new Game();
-    game.map.space();
-    //game.map.ship();
+    //game.map.space();
+    game.map.ship();
     console.log(game.map);
 
 
