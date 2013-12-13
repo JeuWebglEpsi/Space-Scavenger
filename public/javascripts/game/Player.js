@@ -32,7 +32,7 @@ Player.prototype.set = function (prop, value) {
 
 Player.prototype.init = function (scene) {
     var bullets = new Bullet();
-    console.log ('bullets ' + bullets);
+    console.log('bullets ' + bullets);
 }
 
 // Test and avoid collisions

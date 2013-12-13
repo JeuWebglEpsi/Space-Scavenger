@@ -1,6 +1,5 @@
 require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, Audio5js) {
     console.log(arguments);
-    console.log(FirstPersonControl);
     if ('webkitIsFullScreen' in document) {
         Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
         HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
@@ -46,7 +45,10 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
-    window.scene = new Physijs.Scene({});
+    window.scene = new Physijs.Scene({
+        reportsize: 2100,
+        fixedTimeStep: 1 / 200
+    });
 
 
     scene.setGravity(new THREE.Vector3(0, 0, 0));
@@ -79,9 +81,11 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
     camera.rotation.set(0, 0, 0);
+    camera.position.set(0, 0, 0);
+
 
     var cameraCollider = new Physijs.SphereMesh(
-        new THREE.SphereGeometry(4),
+        new THREE.SphereGeometry(3),
         new THREE.MeshBasicMaterial({
             color: 0x888888
         })
@@ -92,11 +96,10 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position) + ' with relative_velocity of ' + JSON.stringify(relative_velocity) + ' and relative_rotation of  ' + JSON.stringify(relative_rotation) + '  and contact_normal of ' + JSON.stringify(contact_normal));
     });
-    cameraCollider.position.set(0, 0, 4000);
+    cameraCollider.position.set(0, 0, 8000);
 
     cameraCollider.rotation.set(0, 0, 0);
     cameraCollider.add(camera);
-    camera.position.set(0, 0, 0);
 
     scene.add(cameraCollider);
     var controls = new FirstPersonControl(cameraCollider);
@@ -129,7 +132,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     window.game = new Game();
     game.map.space();
     //game.map.ship();
-    console.log(game.map);
 
 
     //sockets
@@ -193,7 +195,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     WindowResize(renderer, camera);
 
     window.render = function () {
-        // cameraCollider.__dirtyRotation = true;
 
         //Game update loop
         game.update();
@@ -214,7 +215,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 //obj.scale.y= 10;
             }
         })
-        scene.simulate();
+        scene.simulate(undefined, 5);
 
         //Game render loop
         requestAnimationFrame(render);
@@ -226,7 +227,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
         var bullet = new Bullet();
-        bullet.position(position, camera);
+        bullet.position.set(position, camera);
 
     })
 })

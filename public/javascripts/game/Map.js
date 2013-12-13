@@ -10,8 +10,9 @@ var Map = function () {
 
 Map.prototype.space = function () {
     var map = this;
-    'use strict';
     console.log('map initializing')
+
+    $('.arme1').hide();
     //maintenant on va ajouter un objet créé avec blender
     var loader = new THREE.JSONLoader();
 
@@ -27,7 +28,7 @@ Map.prototype.space = function () {
 
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-        var asteroidCount = 2000;
+        var asteroidCount = 1000;
         var veryBigAste = 1;
         var bigAste = 200;
         while (asteroidCount--) {
@@ -57,10 +58,11 @@ Map.prototype.space = function () {
     });
 
     loader.load('/javascripts/Maps/ship.js', function (geometry, materials) {
-        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 1e7);
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000000);
         mesh.rotation.z += 2;
-        mesh.rotation.y += 1;
+        mesh.rotation.y += 2;
         mesh.rotation.x += 2;
+        mesh.material.shading = THREE.FlatShading;
         mesh.scale.x = mesh.scale.y = mesh.scale.z = 20;
         mesh.receiveShadow = true;
         mesh.castShadow = true;
@@ -111,9 +113,9 @@ Map.prototype.space = function () {
 
         // create a particle with random
         // position values, -250 -> 250
-        var pX = Math.random() * 10000 - 5000,
-            pY = Math.random() * 10000 - 5000,
-            pZ = Math.random() * 10000 - 5000,
+        var pX = Math.random() * 100000 - 50000,
+            pY = Math.random() * 100000 - 50000,
+            pZ = Math.random() * 100000 - 50000,
             particle = new THREE.Vector3(pX, pY, pZ);
 
 
@@ -127,7 +129,7 @@ Map.prototype.space = function () {
         pMaterial);
 
     // add it to the scene
-    //  scene.add(map.particleSystem);
+    scene.add(map.particleSystem);
 }
 Map.prototype.ship = function () {
 
@@ -209,7 +211,7 @@ Map.prototype.ship = function () {
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png'),
-            
+
         }),
         new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
@@ -243,7 +245,7 @@ Map.prototype.ship = function () {
     var cube = new THREE.CubeGeometry(UNITSIZE, WALLHEIGHT, UNITSIZE);
     var cube_floor = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
-  
+
     var group = new THREE.Object3D();
 
     //var correction = 212.5;
