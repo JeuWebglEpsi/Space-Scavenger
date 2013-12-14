@@ -9,9 +9,9 @@ THREE.FirstPersonControls = function (object, domElement) {
     this.target = new THREE.Vector3(0, 0, 0);
 
     this.domElement = (domElement !== undefined) ? domElement : document;
-
+    this.hasMove = false;
     this.movementSpeed = 1000;
-    this.lookSpeed = 0.005;
+    this.lookSpeed = 0.01;
 
     this.lookVertical = true;
     this.autoForward = false;
@@ -128,12 +128,11 @@ THREE.FirstPersonControls = function (object, domElement) {
     };
 
     this.onMouseMove = function (event) {
-        this.mouseX = 0;
-        this.mouseY = 0;
         this.mouseX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
         this.mouseY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-        this.object.rotation.y = this.mouseX * 0.002;
-        this.object.rotation.x = this.mouseY * 0.002;
+
+        this.object.rotation.y -= this.mouseX * 0.002;
+        this.object.rotation.x += this.mouseY * 0.002;
 
         //this.object.rotation.x = Math.max(-(Math.PI / 2), Math.min((Math.PI / 2), this.object.rotation.x));
 
@@ -303,7 +302,9 @@ THREE.FirstPersonControls = function (object, domElement) {
             toZ = 0;
 
         if (this.moveBackward || this.moveForward || this.moveLeft || this.moveRight || this.moveUp || this.moveDown || this.autoForward) {
-
+            vector = null;
+            px = null;
+            dir = null;
             vector = new THREE.Vector3(0, 0, -1);
             pw = vector.applyMatrix4(this.object.matrixWorld);
             dir = pw.sub(this.object.position).normalize();
@@ -312,8 +313,8 @@ THREE.FirstPersonControls = function (object, domElement) {
                 toX += dir.x;
                 toY += dir.y;
                 toZ += dir.z;
-
             }
+
             if (this.moveBackward) {
                 toX += -dir.x;
                 toY += -dir.y;
@@ -355,7 +356,6 @@ THREE.FirstPersonControls = function (object, domElement) {
             });
         }
 
-
         var actualLookSpeed = delta * this.lookSpeed;
 
         if (!this.activeLook) {
@@ -373,7 +373,7 @@ THREE.FirstPersonControls = function (object, domElement) {
         }
 
         this.lon += this.mouseX * actualLookSpeed;
-        if (this.lookVertical) this.lat -= this.mouseY * actualLookSpeed * verticalLookRatio;
+        if (this.lookVertical) this.lat += this.mouseY * actualLookSpeed * verticalLookRatio;
 
         this.lat = Math.max(-85, Math.min(85, this.lat));
         this.phi = THREE.Math.degToRad(90 - this.lat);
@@ -394,6 +394,7 @@ THREE.FirstPersonControls = function (object, domElement) {
         targetPosition.z = position.z + 100 * Math.sin(this.phi) * Math.sin(this.theta);
 
         this.object.lookAt(targetPosition);
+        this.mouseX = this.mouseY = 0
 
     };
 
@@ -403,8 +404,7 @@ THREE.FirstPersonControls = function (object, domElement) {
     }, false);
 
     this.domElement.addEventListener('mousemove', bind(this, this.onMouseMove), false);
-    this.domElement.addEventListener('mousedown', bind(this, this.onMouseDown), false);
-    this.domElement.addEventListener('mouseup', bind(this, this.onMouseUp), false);
+
     this.domElement.addEventListener('keydown', bind(this, this.onKeyDown), false);
     this.domElement.addEventListener('keyup', bind(this, this.onKeyUp), false);
 
