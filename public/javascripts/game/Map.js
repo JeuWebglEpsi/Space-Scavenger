@@ -119,7 +119,7 @@ Map.prototype.space = function () {
 }
 Map.prototype.ship = function () {
 
-    scene.setGravity(new THREE.Vector3(0, 0, 0));
+    scene.setGravity(new THREE.Vector3(0, -10, 0));
 
     this.name = "ship";
 
@@ -187,8 +187,8 @@ Map.prototype.ship = function () {
 
 
     var units = mapW;
-    var UNITSIZE = 50;
-    var WALLHEIGHT = 50;
+    var UNITSIZE = 100;
+    var WALLHEIGHT = 100;
     var FLOORHEIGHT = 2;
 
 
@@ -196,7 +196,7 @@ Map.prototype.ship = function () {
     var materials = [
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png'),
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
             
         }),
         new THREE.MeshLambertMaterial({
@@ -235,7 +235,7 @@ Map.prototype.ship = function () {
     var group = new THREE.Object3D();
 
     //var correction = 212.5;
-    var correction = 0;
+    var correction = 100;
     var correctionY = 30;
 
     for (var i = mapW - 1; i >= 0; i--) {

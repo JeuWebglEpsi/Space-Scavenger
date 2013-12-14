@@ -223,7 +223,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
         var bullet = new Bullet();
-        bullet.position(position, camera);
+        bullet.position(obj.position, camera);
 
     })
 })
