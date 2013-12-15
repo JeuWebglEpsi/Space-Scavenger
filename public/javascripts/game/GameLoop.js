@@ -94,6 +94,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     });
     cameraCollider.position.set(0, 0, 0);
     cameraCollider.rotation.set(0, 0, 0);
+    cameraCollider.scale.y = 10;
+      cameraCollider.scale.x = 10;
+        cameraCollider.scale.z = 10;
     cameraCollider.add(camera);
     scene.add(cameraCollider);
     var controls = new FirstPersonControl(cameraCollider);
@@ -213,17 +216,34 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         })
         scene.simulate();
 
+
+
+
+            // var balle = new Physijs.ConvexMesh(
+            //     new THREE.SphereGeometry(120000000),
+            //     new THREE.MeshBasicMaterial({ color: 0x888888 },0)
+            // );
+
+            // balle.position.x = camera.lookAt.x;
+            // balle.position.y = camera.lookAt.y;
+            // balle.position.z = camera.lookAt.z;
+
+            // scene.add(balle);   
+
         //Game render loop
         requestAnimationFrame(render);
         renderer.render(scene, camera);
         time = Date.now();
 
     };
+
+
     $(document).click(function (event) {
 
 
         var bullet = new Bullet();
-        bullet.position(obj.position, camera);
+        //console.log("oueojtfod");
+        bullet.position(cameraCollider.position, camera);
 
     })
 })
