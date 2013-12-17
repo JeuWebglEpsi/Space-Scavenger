@@ -327,6 +327,7 @@ Map.prototype.ship = function () {
     //     }
     // });
 
+
 }
 
 Map.prototype.addLensFlare = function (x, y, z, size, overrideImage) {

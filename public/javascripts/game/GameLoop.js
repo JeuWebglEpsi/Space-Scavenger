@@ -21,14 +21,14 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         });
     }
 
-    //audio sampling.
+    
+//audio sampling.
     var audio5js = new Audio5js({
         ready: function () {
-            this.load('/contact.mp3');
-            //this.play();
+            this.load('/Myst.mp3');
+            this.play();
         }
     });
-
 
     window.isBlocked = true;
     //capture du pointeur.
