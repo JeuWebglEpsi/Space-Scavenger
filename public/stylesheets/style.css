@@ -1,3 +1,10 @@
+@font-face {
+    font-weight: normal;
+    font-style: normal;
+    font-family:'ds';
+    src: url('./DeadSpace.eot');
+    src: url('./DeadSpace.eot?#iefix') format('embedded-opentype'), url('./DeadSpace.ttf') format('truetype');
+}
 body {
 	overflow: hidden;
 	margin:0 ;
@@ -35,8 +42,8 @@ a {
 .ath{
 	position: absolute;
 	bottom: 0;
-	width: 100%;
 	z-index: 10000;
+	width: 100%;
 }
 .ath .values {
 	position: relative;
@@ -102,10 +109,11 @@ a {
 #blocker{
 	position: absolute;
 	z-index: 10000;
+	display: :none;
 	width: 100%;
 	height: 100%;
-	text-align: center;
 	background:rgba(0,0,0,.5);
+	text-align: center;
 }
 #blocker.hidden{
 	background:none;
@@ -127,14 +135,76 @@ a {
 
 .menu{
 	position: absolute;
-	z-index: 100000000000;
-	background:#4EDCEE;
-	padding:20px;
-	left: 45%;
 	top:42%;
+	left: 45%;
+	z-index: 100000000000;
+	padding:20px;
+	background:#4EDCEE;
 }
 .menu ul li a{
 
 	background:navy;
 	color:yellow;
+}
+h1,h2,h3,h4,h5,h6{
+	font-family: 'ds';
+}
+#game-opt {
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 100000;
+	width: 100%;
+	height: 100%;
+	background: #0A172B;
+}
+
+#game-opt .container {
+	margin-top:50px;
+}
+
+#game-opt .container h1{
+	color:#4BD9EC;
+	text-shadow:0px 0px 0px #4BD9EC;
+	font-size: 80px;
+	-webkit-animation:  glow 3s 0s linear infinite;
+}
+.btn{
+
+	font-family: 'ds';
+	font-size: 20px;
+}
+@-webkit-keyframes glow {
+0% {
+   text-shadow: 1px 0px 0px #4BD9EC;
+	-webkit-stroke-width: 0px;
+   -webkit-stroke-color: #4BD9EC;
+   -webkit-fill-color: #4BD9EC;
+}
+50% {
+   text-shadow: 1px 0px 40px #4BD9EC;
+-webkit-stroke-width: 5.3px;
+   -webkit-stroke-color: #4BD9EC;
+   -webkit-fill-color: #4BD9EC;
+ }
+ 100%{
+   text-shadow: 1px 0px 0px #4BD9EC;
+	-webkit-stroke-width: 0px;
+   -webkit-stroke-color: #4BD9EC;
+   -webkit-fill-color: #4BD9EC;
+}
+}
+.modal-dialog, .modal-content{
+	border-radius:6px;
+	background: #232B3C;
+}
+.modal-header,.modal-footer{
+	border:0;
+}
+.modal-content{
+	background: none;
+}
+.modal-dialog h4{
+	color: white;
+	font-size:20px;
 }

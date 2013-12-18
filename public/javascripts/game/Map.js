@@ -41,22 +41,17 @@ Map.prototype.space = function () {
                 weight = Math.abs(Math.random() * 50 - 1);
             }
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000 * weight);
-            mesh.position.x = Math.random() * 8000 - 4000;
+            mesh.position.x = Math.random() * 12000 - 6000;
             mesh.position.y = Math.random() * 1000 - 500;
-            mesh.position.z = Math.random() * 8000 - 4000;
+            mesh.position.z = Math.random() * 12000 - 6000;
             mesh.rotation.x = Math.random();
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
 
             mesh.receiveShadow = true;
             mesh.castShadow = true;
-            if (veryBigAste-- > 0) {
-                mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
-            } else if (bigAste-- > 0) {
-                mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
-            } else {
-                mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
-            }
+            mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
+
             mesh.name = "asteroid";
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                 // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
@@ -70,9 +65,10 @@ Map.prototype.space = function () {
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 1e10);
         mesh.rotation.z += 2;
         mesh.rotation.y += 2;
-        mesh.rotation.x += 2;
+        mesh.rotation.x = 0;
         mesh.material.shading = THREE.FlatShading;
         mesh.scale.x = mesh.scale.y = mesh.scale.z = 20;
+        mesh.scale.x = 30;
         mesh.receiveShadow = true;
         mesh.castShadow = true;
         mesh.position.set(0, 0, -3000);
@@ -395,24 +391,7 @@ Map.prototype.update = function () {
     var map = this;
     if (typeof map.particleSystem !== 'undefined')
         map.particleSystem.rotation.y += 0.0002;
-    var i = 0,
-        mult = 0.005;
-    scene.traverse(function (obj) {
-        if (obj.name === "asteroid ") {
-            if (i % 2 === 0) {
-                obj.__drityRotation = true;
-                obj.rotation.x += Math.random() * mult;
-                obj.rotation.y += Math.random() * mult;
-                obj.rotation.z += Math.random() * mult;
-            } else {
-                obj.__drityRotation = true;
-                obj.rotation.x -= Math.random() * mult;
-                obj.rotation.y -= Math.random() * mult;
-                obj.rotation.z -= Math.random() * mult;
-            }
-            i++;
-        }
-    })
+
     // console.log('Map updating...');
 }
 

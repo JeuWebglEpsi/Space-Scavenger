@@ -11,29 +11,27 @@ A deplacer dans ennemy manage,
 Quand les ennemies meurent, il looteront soit des munition soit de la vie
 
 */
-Bullet.prototype.createAmmo = function(position) {
+Bullet.prototype.createAmmo = function (position) {
 
     var cube_ammo = new THREE.CubeGeometry(3, 3, 5);
     var ammo = new Physijs.BoxMesh(cube_ammo,
-                            new THREE.MeshLambertMaterial({
-                                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-                            }),
-                            0);
+        new THREE.MeshLambertMaterial({
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+        }),
+        0);
     ammo.position = position;
     ammo.position.y += 1;
 
 
 
     ammo.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        var nbAmmo = Math.floor((Math.random()*10)+1);
-        console.log(nbAmmo);
-        if (game.localPlayer.get('_ammo')  < 100) {
+        var nbAmmo = Math.floor((Math.random() * 10) + 1);
+        if (game.localPlayer.get('_ammo') < 100) {
             scene.remove(this);
             if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
-                game.localPlayer.set('_ammo',game.localPlayer.get('_ammo') + nbAmmo);
-            }
-            else {
-                game.localPlayer.set('_ammo',100);
+                game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
+            } else {
+                game.localPlayer.set('_ammo', 100);
             }
         }
     });
@@ -49,29 +47,28 @@ A deplacer dans ennemy manage,
 Quand les ennemies meurent, il looteront soit des munition soit de la vie
 
 */
-Bullet.prototype.createLife = function(position) {
+Bullet.prototype.createLife = function (position) {
 
     var cube_life = new THREE.CubeGeometry(3, 3, 5);
     var life = new Physijs.BoxMesh(cube_life,
-                            new THREE.MeshLambertMaterial({
-                                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-                            }),
-                            0);
+        new THREE.MeshLambertMaterial({
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+        }),
+        0);
     life.position = position;
     life.position.y += 1;
 
 
 
     life.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        var nbLife = Math.floor((Math.random()*100)+30);
+        var nbLife = Math.floor((Math.random() * 100) + 30);
         console.log(nbLife);
-        if (game.localPlayer.get('_life')  < 100) {
+        if (game.localPlayer.get('_life') < 100) {
             scene.remove(this);
             if (game.localPlayer.get('_life') < (100 - nbLife)) {
-                game.localPlayer.set('_life',game.localPlayer.get('_life') + nbLife);
-            }
-            else {
-                game.localPlayer.set('_life',100);
+                game.localPlayer.set('_life', game.localPlayer.get('_life') + nbLife);
+            } else {
+                game.localPlayer.set('_life', 100);
             }
         }
     });
@@ -80,41 +77,41 @@ Bullet.prototype.createLife = function(position) {
     scene.add(life);
 }
 
-Bullet.prototype.position = function (position, camera){
-        
-        if (this.hasMunition()) {
-            game.localPlayer.set('_ammo',game.localPlayer.get('_ammo')-1);
-            var balle = new Physijs.BoxMesh(
-                new THREE.SphereGeometry(5),
-                new THREE.MeshBasicMaterial({ color: 0x888888 },0)
-            );
+Bullet.prototype.position = function (cameraCollider, camera) {
+    var loader = new THREE.JSONLoader();
 
-            balle.name="bullet";
-            balle.position.x = position.x;
-            balle.position.y = position.y;
-            balle.position.z = position.z;
+    if (this.hasMunition()) {
+        game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') - 1);
+        var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(2),
+            new THREE.MeshBasicMaterial({
+                color: 0x888888
+            }), 1
+        );
+        balle.__dirtyPosition = true;
+        var vector = new THREE.Vector3(0, 0, -1);
+        var pw = vector.applyMatrix4(cameraCollider.matrixWorld);
+        var dir = pw.sub(cameraCollider.position).normalize();
 
-
-            balle.movementSpeed = 100000000;
-            balle.setLinearVelocity({
-                x: balle.movementSpeed * 0,
-                y: balle.movementSpeed * 0,
-                z: balle.movementSpeed * 0
-            });
+        balle.name = "bullet";
+        balle.position.x = cameraCollider.position.x + 10;
+        balle.position.y = cameraCollider.position.y;
+        balle.position.z = cameraCollider.position.z + 10;
 
 
-         
-            // balle.ray = new THREE.Ray(
-            //         new THREE.Vector3({  x: position.x,
-            //                              y: position.y, 
-            //                              z: position.z }),
-            //        balle.position.sub(camera.lookAt).normalize()               
-            // );
+        balle.movementSpeed = 5000;
 
 
 
+        // balle.ray = new THREE.Ray(
+        //         new THREE.Vector3({  x: position.x,
+        //                              y: position.y,
+        //                              z: position.z }),
+        //        balle.position.sub(camera.lookAt).normalize()
+        // );
 
-           //console.log((camera.lookAt));
+
+
+        //console.log((camera.lookAt));
         // proj = new THREE.Projector();
         // proj.projectVector(position, camera);
         // var vector = new THREE.Vector3(mouseX, mouseY, 1);
@@ -124,29 +121,69 @@ Bullet.prototype.position = function (position, camera){
         //         );
         // balle.applyCentralImpulse(10);
 
-    //position.applyMatrix4( balle.matrixWorld );
+        //position.applyMatrix4( balle.matrixWorld );
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-            //console.log("balle touche");
-            scene.remove(this);
+            // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+            scene.remove(this.id);
+            if (other_object.name === "asteroid") {
+                scene.remove(other_object);
+
+                var scale = parseInt(other_object.scale.x);
+                if (scale < 50) {
+
+                    loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+                        var asteroidCount = 3;
+
+                        var weight = scale;
+                        while (asteroidCount--) {
+
+                            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000 * (weight / 3));
+                            mesh.position.x = other_object.position.x;
+                            mesh.position.y = other_object.position.y;
+                            mesh.position.z = other_object.position.z;
+                            mesh.rotation.x = Math.random();
+                            mesh.rotation.y = Math.random();
+                            mesh.rotation.z = Math.random();
+
+                            mesh.receiveShadow = true;
+                            mesh.castShadow = true;
+                            mesh.scale.x = mesh.scale.y = mesh.scale.z = weight / 3;
+
+                            mesh.name = "asteroid";
+                            mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                                // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                            });
+                            scene.add(mesh);
+                        }
+                    });
+
+
+
+                }
+            }
         });
-        
-            scene.add(balle);
-        }
 
+        scene.add(balle);
+
+        balle.setLinearVelocity({
+            x: balle.movementSpeed * dir.x,
+            y: balle.movementSpeed * dir.y,
+            z: balle.movementSpeed * dir.z
+        });
     }
 
-    Bullet.prototype.hasMunition= function () {
+}
 
-        if( game.localPlayer.get('_ammo') > 0) {
-            return true;  
-        }
-        else {
-            return false;
-        }
+Bullet.prototype.hasMunition = function () {
 
+    if (game.localPlayer.get('_ammo') > 0) {
+        return true;
+    } else {
+        return false;
     }
+
+}
 
 // a modifier
 /*

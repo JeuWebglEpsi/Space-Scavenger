@@ -7,17 +7,14 @@
     Game.prototype.createPlayer = function (s) {
         var game = this;
         if (s === 'local') {
-            var nom = prompt("Saisisez votre nom");
-            if (nom != null) {
-                var p = new Player(window.socketId, nom, 100, 'feu', 'player');
-                game.localPlayer = p;
-                p.set('_life', 100);
-                game.biome.personnages.push({
-                    player: p,
-                    type: 'player'
-                });
-                game.localPlayer.init(window.scene);
-            }
+            var p = new Player(window.socketId, 'player', 100, 'feu', 'player');
+            game.localPlayer = p;
+            p.set('_life', 100);
+            game.biome.personnages.push({
+                player: p,
+                type: 'player'
+            });
+            game.localPlayer.init(window.scene);
         }
     }
 
