@@ -582,7 +582,7 @@
 
             params = params || {};
             params.ammo = Physijs.scripts.ammo || 'ammo.js';
-            params.fixedTimeStep = params.fixedTimeStep || 1 / 400;
+            params.fixedTimeStep = params.fixedTimeStep || 1 / 60;
             params.rateLimit = params.rateLimit || true;
             this.execute('init', params);
         };
