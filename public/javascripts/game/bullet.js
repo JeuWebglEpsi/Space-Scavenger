@@ -125,10 +125,19 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-            scene.remove(this.id);
+            scene.remove(this);
+
             if (other_object.name === "asteroid") {
                 scene.remove(other_object);
-
+                var popItem = parseInt(Math.random() * 10);
+                if (popItem > 5) {
+                    var item = parseInt(Math.random() * 10);
+                    if (item > 5) {
+                        new Bullet().createLife(other_object.position)
+                    } else {
+                        new Bullet().createAmmo(other_object.position);
+                    }
+                }
                 var scale = parseInt(other_object.scale.x);
                 if (scale < 50) {
 
@@ -157,9 +166,6 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                             scene.add(mesh);
                         }
                     });
-
-
-
                 }
             }
         });

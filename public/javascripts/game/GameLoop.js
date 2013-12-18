@@ -15,8 +15,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         //audio sampling.
         var audio5js = new Audio5js({
             ready: function () {
-                this.load('/Myst.mp3');
-                //  this.play();
+                this.load('/contact.mp3');
+                // this.play();
             }
         });
 
