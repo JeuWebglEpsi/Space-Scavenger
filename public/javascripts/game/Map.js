@@ -41,9 +41,9 @@ Map.prototype.space = function () {
                 weight = Math.abs(Math.random() * 50 - 1);
             }
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000 * weight);
-            mesh.position.x = Math.random() * 13000 - 8000;
+            mesh.position.x = Math.random() * 8000 - 4000;
             mesh.position.y = Math.random() * 1000 - 500;
-            mesh.position.z = Math.random() * 13000 - 8000;
+            mesh.position.z = Math.random() * 8000 - 4000;
             mesh.rotation.x = Math.random();
             mesh.rotation.y = Math.random();
             mesh.rotation.z = Math.random();
@@ -103,7 +103,7 @@ Map.prototype.space = function () {
 
     scene.add(directionalLight);
     // create the particle variables
-    var particleCount = 50000,
+    var particleCount = 20000,
         particles = new THREE.Geometry()
         // create the particle variables
         var pMaterial = new THREE.ParticleBasicMaterial({
@@ -400,10 +400,12 @@ Map.prototype.update = function () {
     scene.traverse(function (obj) {
         if (obj.name === "asteroid ") {
             if (i % 2 === 0) {
+                obj.__drityRotation = true;
                 obj.rotation.x += Math.random() * mult;
                 obj.rotation.y += Math.random() * mult;
                 obj.rotation.z += Math.random() * mult;
             } else {
+                obj.__drityRotation = true;
                 obj.rotation.x -= Math.random() * mult;
                 obj.rotation.y -= Math.random() * mult;
                 obj.rotation.z -= Math.random() * mult;
