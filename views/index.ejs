@@ -171,6 +171,10 @@ var DC = DC || {
         </ul>
 
     </div>
+    <svg class="athrenderer">
+        <rect x="50" y="50" width="50" height="50" style="stroke:#2FF;stroke-width:2px;fill:transparent;" />
+    </svg>
+
      <div class="ath">
         <div class="values">
             <div class="athlife">
@@ -195,12 +199,10 @@ var DC = DC || {
         <h4 class="modal-title" id="menuModal">Menu de jeu</h4>
       </div>
       <div class="modal-body">
-                <button class="btn btn-primary" onclick="window.fullScreen();">Plein ecran</button><br><br>
-
+                <button class="btn btn-primary" onclick="window.fullScreen();">Activer le mode plein ecran</button><br><br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -225,6 +227,33 @@ var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement
     })
 })
 
+</script>
+
+<script id="vertexShaderBullet" type="x-shader/x-vertex">
+varying vec3 vNormal;
+void main()
+{
+    vNormal = normalize( normalMatrix * normal );
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}
+</script>
+
+<script id="fragmentShaderBullet" type="x-shader/x-vertex">
+varying vec3 vNormal;
+void main()
+{
+
+float red = 1.0;
+
+    float green = 0.0 ;
+
+    float blue = 0.0;
+
+
+
+    float intensity = pow( 0.9 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 4.0 );
+    gl_FragColor = vec4( red, green, blue, 1.0 ) * intensity;
+}
 </script>
   </body>
 </html>

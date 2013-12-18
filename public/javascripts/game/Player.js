@@ -79,6 +79,9 @@ Player.prototype.motion = function () {
         return true;
     }
 }
+Player.prototype.update = function () {
+    this.ath.update();
+}
 
 Player.prototype.AI = function () {
     'use strict';

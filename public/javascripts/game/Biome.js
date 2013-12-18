@@ -39,9 +39,9 @@ Biome.prototype.delInBiome = function (idItemInBiome) {
 Biome.prototype.update = function () {
     var biome = this;
     //  console.log('Biome updating...');
-    var i = biome.personnages.length - 1;
+    var i = biome.personnages.length;
     while (i--) {
-        biome.personnages[i].update();
+        biome.personnages[i].player.update();
     }
 }
 

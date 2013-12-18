@@ -43,7 +43,10 @@ Personnage.prototype.init = function () {
 
     });
 }
-
+Personnage.prototype.update = function () {
+    console.log('pers updating');
+    this.ath.update();
+}
 
 // Test and avoid collisions
 Personnage.prototype.collision = function () {

@@ -19,6 +19,7 @@ Bullet.prototype.createAmmo = function (position) {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         0);
+    ammo.name = "toHighlight";
     ammo.position = position;
     ammo.position.y += 1;
 
@@ -57,6 +58,7 @@ Bullet.prototype.createLife = function (position) {
         0);
     life.position = position;
     life.position.y += 1;
+    life.name = "toHighlight";
 
 
 
@@ -82,9 +84,16 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
     if (this.hasMunition()) {
         game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') - 1);
-        var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(2),
-            new THREE.MeshBasicMaterial({
-                color: 0x888888
+        var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(1),
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    color: 0xFF0000
+                },
+                vertexShader: document.getElementById('vertexShaderBullet').textContent,
+                fragmentShader: document.getElementById('fragmentShaderBullet').textContent,
+                side: THREE.BackSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true
             }), 1
         );
         balle.__dirtyPosition = true;
@@ -98,7 +107,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         balle.position.z = cameraCollider.position.z + 10;
 
 
-        balle.movementSpeed = 5000;
+        balle.movementSpeed = 4000;
 
 
 
