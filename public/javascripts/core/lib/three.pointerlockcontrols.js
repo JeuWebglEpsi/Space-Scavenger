@@ -285,7 +285,6 @@ THREE.FirstPersonControls = function (object, domElement) {
             return;
 
         }
-
         if (this.heightSpeed) {
 
             var y = THREE.Math.clamp(this.object.position.y, this.heightMin, this.heightMax);

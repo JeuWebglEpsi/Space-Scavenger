@@ -1,5 +1,6 @@
 require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, Audio5js) {
     console.log(arguments);
+    console.log(FirstPersonControl);
     if ('webkitIsFullScreen' in document) {
         Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
         HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
@@ -20,14 +21,14 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         });
     }
 
-    //audio sampling.
+    
+//audio sampling.
     var audio5js = new Audio5js({
         ready: function () {
-            this.load('/contact.mp3');
-            //this.play();
+            this.load('/Myst.mp3');
+            this.play();
         }
     });
-
 
     window.isBlocked = true;
     //capture du pointeur.
@@ -45,10 +46,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
     //Initialisation du monde
     Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
-    window.scene = new Physijs.Scene({
-        reportsize: 2100,
-        fixedTimeStep: 1 / 200
-    });
+    window.scene = new Physijs.Scene({});
 
 
     scene.setGravity(new THREE.Vector3(0, 0, 0));
@@ -80,27 +78,26 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     debugaxis(10000);
 
     window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
-    camera.rotation.set(0, 0, 0);
     camera.position.set(0, 0, 0);
-
+    camera.rotation.set(0, 0, 0);
 
     var cameraCollider = new Physijs.SphereMesh(
-        new THREE.SphereGeometry(3),
+        new THREE.SphereGeometry(4),
         new THREE.MeshBasicMaterial({
             color: 0x888888
         })
     );
 
-    cameraCollider.addEventListener('collision', function (obj, relative_velocity, relative_rotation, contact_normal) {
+    cameraCollider.addEventListener('collision', function (obj) {
         game.localPlayer.set('_life', game.localPlayer.get('_life') - 10);
-
-        console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position) + ' with relative_velocity of ' + JSON.stringify(relative_velocity) + ' and relative_rotation of  ' + JSON.stringify(relative_rotation) + '  and contact_normal of ' + JSON.stringify(contact_normal));
+        console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
     });
-    cameraCollider.position.set(0, 0, 8000);
-
+    cameraCollider.position.set(0, 0, 0);
     cameraCollider.rotation.set(0, 0, 0);
+    cameraCollider.scale.y = 10;
+      cameraCollider.scale.x = 10;
+        cameraCollider.scale.z = 10;
     cameraCollider.add(camera);
-
     scene.add(cameraCollider);
     var controls = new FirstPersonControl(cameraCollider);
 
@@ -130,8 +127,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
     window.game = new Game();
-    game.map.space();
-    //game.map.ship();
+    //game.map.space();
+    game.map.ship();
+    console.log(game.map);
 
     window.game.createPlayer('local');
 
@@ -144,6 +142,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     WindowResize(renderer, camera);
 
     window.render = function () {
+        // cameraCollider.__dirtyRotation = true;
 
         //Game update loop
         game.update();
@@ -164,7 +163,21 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 //obj.scale.y= 10;
             }
         })
-        scene.simulate(undefined, 5);
+        scene.simulate();
+
+
+
+
+            // var balle = new Physijs.ConvexMesh(
+            //     new THREE.SphereGeometry(120000000),
+            //     new THREE.MeshBasicMaterial({ color: 0x888888 },0)
+            // );
+
+            // balle.position.x = camera.lookAt.x;
+            // balle.position.y = camera.lookAt.y;
+            // balle.position.z = camera.lookAt.z;
+
+            // scene.add(balle);   
 
         //Game render loop
         requestAnimationFrame(render);
@@ -172,12 +185,18 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         time = Date.now();
 
     };
+<<<<<<< HEAD
     window.render();
+=======
+
+
+>>>>>>> ec2cf37003ccbc0b72d37b0cc5599090f908bec8
     $(document).click(function (event) {
 
 
         var bullet = new Bullet();
-        bullet.position.set(position, camera);
+        //console.log("oueojtfod");
+        bullet.position(cameraCollider.position, camera);
 
     })
 })
