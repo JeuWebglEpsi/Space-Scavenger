@@ -1,6 +1,5 @@
     var Game = function () {
         var game = this;
-        game.socket = io.connect('http://' + location.host);
         game.biome = new Biome();
         game.map = new Map();
     }
@@ -11,11 +10,9 @@
             var nom = prompt("Saisisez votre nom");
             if (nom != null) {
                 var p = new Player(window.socketId, nom, 100, 'feu', 'player');
-                game.socket.emit('registerPlayer', p);
                 game.localPlayer = p;
                 p.set('_life', 100);
                 game.biome.personnages.push({
-                    id: window.socketId,
                     player: p,
                     type: 'player'
                 });

@@ -143,7 +143,11 @@ THREE.FirstPersonControls = function (object, domElement) {
         //event.preventDefault();
 
         switch (event.keyCode) {
-
+        case 27:
+            $('#menuModal').modal({
+                keyboard: false
+            });
+            break;
         case 38:
             /*up*/
         case 87:
