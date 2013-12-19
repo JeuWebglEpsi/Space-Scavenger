@@ -18,11 +18,10 @@ ATH.prototype.initialize = function (life, ammo) {
 
 }
 ATH.prototype.toScreenXY = function (position, camera, jqdiv) {
-
     var pos = position.clone();
     var projScreenMat = new THREE.Matrix4();
-    projScreenMat.multiply(camera.projectionMatrix, camera.matrixWorldInverse);
-    projScreenMat.multiplyVector3(pos);
+    projScreenMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    pos.applyProjection(projScreenMat);
 
     return {
         x: (pos.x + 1) * jqdiv.width() / 2 + jqdiv.offset().left,
@@ -82,7 +81,6 @@ ATH.prototype.update = function () {
             var o = ath.toScreenXY(obj.position, window.camera, $('.athrenderer'));
             if (o.x > 0 && o.x < c2d.width() && frustum.intersectsObject(obj)) {
                 ath.drawRect(obj, o);
-                console.log(o);
             }
         }
     })

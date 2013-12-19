@@ -75,7 +75,6 @@ Map.prototype.space = function () {
         scene.add(mesh);
     })
     // on ajoute un point de lumière
-    scene.add(this.addLensFlare(-2000, 0, -200, 16000, '/javascripts/Maps/lensflare0.png'))
 
     var hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x000000, .4);
     hemiLight.castShadow = false;
@@ -346,46 +345,11 @@ Map.prototype.ship = function () {
 }
 
 Map.prototype.addLensFlare = function (x, y, z, size, overrideImage) {
-    var flareColor = new THREE.Color(0xffffff);
 
-    lensFlare = new THREE.LensFlare(overrideImage, 700, 0.0, THREE.AdditiveBlending, flareColor);
-    var textureFlare1, textureFlare2;
-    textureFlare1 = THREE.ImageUtils.loadTexture('/javascripts/Maps/lensflare0.png')
-    textureFlare2 = THREE.ImageUtils.loadTexture('/javascripts/Maps/lensflare2.png')
-    //    we're going to be using multiple sub-lens-flare artifacts, each with a different size
-    lensFlare.add(textureFlare1, 4096, 0.0, THREE.AdditiveBlending);
-    lensFlare.add(textureFlare2, 512, 0.0, THREE.AdditiveBlending);
-    lensFlare.add(textureFlare2, 512, 0.0, THREE.AdditiveBlending);
-    lensFlare.add(textureFlare2, 512, 0.0, THREE.AdditiveBlending);
-
-    //    and run each through a function below
-    lensFlare.customUpdateCallback = this.lensFlareUpdateCallback;
-
-    lensFlare.position = new THREE.Vector3(x, y, z);
-    lensFlare.size = size ? size : 16000;
-    return lensFlare;
 }
 
 //  this function will operate over each lensflare artifact, moving them around the screen
-Map.prototype.lensFlareUpdateCallback = function (object) {
-    var f, fl = this.lensFlares.length;
-    var flare;
-    var vecX = -this.positionScreen.x * 2;
-    var vecY = -this.positionScreen.y * 2;
-    var size = object.size ? object.size : 16000;
-
-    var camDistance = window.camera.position.length();
-
-    for (f = 0; f < fl; f++) {
-        flare = this.lensFlares[f];
-
-        flare.x = this.positionScreen.x + vecX * flare.distance;
-        flare.y = this.positionScreen.y + vecY * flare.distance;
-
-        flare.scale = size / camDistance;
-        flare.rotation = 0;
-    }
-}
+Map.prototype.lensFlareUpdateCallback = function (object) { }
 //Map updating function
 Map.prototype.update = function () {
     var map = this;

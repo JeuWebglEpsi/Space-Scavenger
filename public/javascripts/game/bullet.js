@@ -84,6 +84,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
     if (this.hasMunition()) {
         game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') - 1);
+        var bulletCamera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
         var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(1),
             new THREE.ShaderMaterial({
                 uniforms: {
@@ -96,6 +97,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                 transparent: true
             }), 1
         );
+        balle.add(bulletCamera);
         balle.__dirtyPosition = true;
         var vector = new THREE.Vector3(0, 0, -1);
         var pw = vector.applyMatrix4(cameraCollider.matrixWorld);

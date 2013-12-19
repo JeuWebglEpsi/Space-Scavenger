@@ -3,8 +3,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     window.runGame = function () {
 
 
-        $('#game-opt').remove();
-        $('.athrenderer').show();
 
         var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
@@ -86,8 +84,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         scene.add(cameraCollider);
 
         var renderer = new THREE.WebGLRenderer({
-            antialias: false,
-            precision: 'lowp',
+            antialias: true,
+            precision: 'highp',
             alpha: true,
             premultiplyAlpha: true
         });
@@ -119,7 +117,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         window.game.createPlayer('local');
 
-
+        setTimeout(function () {
+            $(document).trigger('gameReady');
+        }, 4000)
 
         /*END MAYBE*/
 
@@ -145,7 +145,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
 
-            requestAnimationFrame(render);
+            window.isRendering = requestAnimationFrame(render);
             renderer.render(scene, camera);
             time = Date.now();
 

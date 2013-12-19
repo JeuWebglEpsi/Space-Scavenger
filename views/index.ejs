@@ -105,6 +105,44 @@ var DC = DC || {
     </script>
     <script async type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
     <script >
+    //shimming
+
+   window.onbeforeunload = function (e) {
+e = e || window.event;
+
+// For IE and Firefox prior to version 4
+if (e) {
+    e.returnValue = 'Etes-vous sure de vouloir quitter la page?';
+}
+
+// For Safari
+return 'Etes-vous sure de vouloir quitter la page?';
+};
+
+    (function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame =
+          window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
      if ('webkitIsFullScreen' in document) {
             Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
             HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
@@ -127,19 +165,49 @@ var DC = DC || {
         window.fullScreen= function(){
             document.body.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
         }
+         window.pointerLock= function(){
+var element = document.body;
+        element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+        element.requestPointerLock();
+                }
+        window.toMainMenu = function(){
+            if(window.isRendering){
+                window.cancelAnimationFrame(isRendering);
+                isRendering = undefined;
+            }
+            $('#rungame').button('reset')
+                $('#game-opt').fadeIn(1000);
+                $('canvas').remove();
+                $('.athrenderer').hide();
+                $('img.ship,img.hombre,#game-opt,.letter-broken').css({
+                    '-webkit-animation-play-state':'running'
+                   })
+                window.game = undefined;
+                setTimeout(function(){
+document.exitPointerLock = document.exitPointerLock ||
+               document.mozExitPointerLock ||
+               document.webkitExitPointerLock;
+
+              document.exitPointerLock();
+                },1000)
+
+
+        }
         </script>
   </head>
   <body id="mainContainer">
     <div id="game-opt">
+
         <div class="container text-center">
-            <h1>Space Scavenger</h1>
+            <h1>S<span class="letter-broken">p</span>ace Sca<span class="letter-broken">v</span>eng<span class="letter-broken">e</span>r</h1>
             <div class="col-lg-4 col-lg-offset-4">
-                <button class="btn btn-primary" onclick="window.runGame();">Jouer</button><br/><br/>
-            <button class="btn btn-primary" onclick="window.fullScreen();">Plein ecran</button><br><br>
+                <button type="button" id="rungame"  class="btn btn-primary" data-loading-text="Chargement . . ." data-complete-text="C'est parti !" >Jouer</button><br/><br/>
+            <button type="button" class="btn btn-primary" onclick="window.fullScreen();">Plein ecran</button><br><br>
 
             </div>
-
         </div>
+            <img src="/assets/2d/hombre.png" alt="" class="hombre"><img src="/assets/2d/ship.png" alt="" class="ship">
+
         <div class="container text-center names">
             <ul class="list-inline">
                 <li>Hugues Foucray</li>
@@ -200,6 +268,8 @@ var DC = DC || {
       </div>
       <div class="modal-body">
                 <button class="btn btn-primary" onclick="window.fullScreen();">Activer le mode plein ecran</button><br><br>
+                <button class="btn btn-primary" data-dismiss="modal" onclick="window.pointerLock();">Capturer le pointeur</button><br><br>
+                <button class="btn btn-primary" onclick="window.toMainMenu()" data-dismiss="modal">Quitter la partie</button><br><br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -209,6 +279,20 @@ var DC = DC || {
 </div><!-- /.modal -->
 <script>
 require(['jquery'],function($){
+    $('button#rungame').on('click',function(){
+        $(this).button('loading').promise().done(function(){
+            window.runGame();
+            $(document).on('gameReady',function(){
+                $(this).button('complete').promise().done(function(){
+                   $('#game-opt').fadeOut(1000);
+                   $('.athrenderer').show();
+                   $('img.ship,img.hombre,#game-opt,.letter-broken').css({
+                    '-webkit-animation-play-state':'paused'
+                   })
+                })
+            })
+        })
+    })
     $('.modal').on('show.bs.modal',function(){
         document.exitPointerLock = document.exitPointerLock ||
                document.mozExitPointerLock ||
