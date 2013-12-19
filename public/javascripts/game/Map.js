@@ -186,13 +186,13 @@ Map.prototype.ship = function () {
         [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
         [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, ],
         [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, ],
-        [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, ],
-        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, ],
+        [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 0, 0, 9, 0, 0, 0, 9, 1, 9, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, ],
+        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, ],
         [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, ],
         [1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, ],
         [1, 0, 0, 0, 1, 1, 1, 0, 1, 2, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, ],
-        [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 9, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
         [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
         [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, ],
         [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
@@ -243,7 +243,7 @@ Map.prototype.ship = function () {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/cube1.png')
+            map: THREE.ImageUtils.loadTexture('avascripts/Maps/metal_floor_texture-200513-SM.jpg')
         }),
     ];
     // Geometry: walls
@@ -253,7 +253,8 @@ Map.prototype.ship = function () {
     //var scene = new THREE.Object3D();
 
     //var correction = 212.5;
-    var correction = 100;
+    var correctionX = 100;
+    var correctionZ = 8000;
     var correctionY = 30;
 
     for (var i = mapW - 1; i >= 0; i--) {
@@ -263,15 +264,72 @@ Map.prototype.ship = function () {
 
                 if (map[i][j] === 9) {
 
+                    var loader = new THREE.JSONLoader();
+                    loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
+                        var mechant = new Physijs.BoxMesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
+                        mechant.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
+                        mechant.position.y = (FLOORHEIGHT / 2) - correctionY;
+                        mechant.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+
+                        mechant.scale.x = mechant.scale.y = mechant.scale.z = 50;
+
+                        console.log(mechant.position);
+                        mechant.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                //                     console.log('robot ' + this. id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                            if (other_object.name === "bullet") {
+                                var munition = new Bullet();
+
+                                munition.createLife(this.position);
+
+                                scene.remove(this);
+
+                            }
+
+                        });
+
+                        scene.add(mechant);
+                    });
+                    
+
+                // A Deplacer dans la detection de collision
+
+                //var munition = new Bullet();
+                //munition.createLife(floor.position);
+
+
+
+                
+            // var loader = new THREE.JSONLoader();
+            //  loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
+                       
+
+            //                 var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+            //                 mesh.__dirtyPosition = true;
+            //                 mesh.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
+            //                 mesh.position.y = 0;
+            //                 mesh.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+
+            //                 mesh.receiveShadow = true;
+            //                 mesh.castShadow = true;
+
+            //                 mesh.name = "robot";
+            //                 mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            //                     console.log('robot ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                            
+
+            //                 });
+            //                 scene.add(mesh);
+                        
+            //         });
 
                 } else {
-                    var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
-                    wall.position.x = ((i - units / 2) * UNITSIZE) - correction;
+                    var wall = new THREE.Mesh(cube, materials[map[i][j]], 0);
+                    wall.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
                     wall.position.y = (WALLHEIGHT / 2) - correctionY;
-                    wall.position.z = ((j - units / 2) * UNITSIZE) + correction;
+                    wall.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
                     wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                         // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                        //console.log("mur touche");
+                        console.log("mur touche");
                     });
                     scene.add(wall);
                 }
@@ -280,30 +338,35 @@ Map.prototype.ship = function () {
 
             if (map[i][j] === 0 || map[i][j] === 9) {
                 //génération du sol
-                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
-                floor.position.x = ((i - units / 2) * UNITSIZE) - correction;
+                var floor = new THREE.Mesh(cube_floor, materials[map[i][j]], 0);
+                floor.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
                 floor.position.y = (FLOORHEIGHT / 2) - correctionY;
-                floor.position.z = ((j - units / 2) * UNITSIZE) + correction;
-
+                floor.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
 
 
                 // A Deplacer dans la detection de collision
 
-                var munition = new Bullet();
-                munition.createLife(floor.position);
+                //var munition = new Bullet();
+                //munition.createLife(floor.position);
 
 
 
                 scene.add(floor);
 
                 //génération du plafond
-                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 0);
-                roof.position.x = ((i - units / 2) * UNITSIZE) - correction;
+                var roof = new THREE.Mesh(cube_roof, materials[map[i][j]], 0);
+                roof.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - correctionY;
-                roof.position.z = ((j - units / 2) * UNITSIZE) + correction;
+                roof.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
                 scene.add(roof);
 
             }
+
+
+
+
+
+
 
         }
 

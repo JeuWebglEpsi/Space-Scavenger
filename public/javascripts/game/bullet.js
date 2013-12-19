@@ -101,31 +101,9 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         balle.movementSpeed = 5000;
 
 
-
-        // balle.ray = new THREE.Ray(
-        //         new THREE.Vector3({  x: position.x,
-        //                              y: position.y,
-        //                              z: position.z }),
-        //        balle.position.sub(camera.lookAt).normalize()
-        // );
-
-
-
-        //console.log((camera.lookAt));
-        // proj = new THREE.Projector();
-        // proj.projectVector(position, camera);
-        // var vector = new THREE.Vector3(mouseX, mouseY, 1);
-        // balle.ray = new THREE.Ray(
-        //                         camera.position,
-        //                         position.sub(camera.position).normalize()
-        //         );
-        // balle.applyCentralImpulse(10);
-
-        //position.applyMatrix4( balle.matrixWorld );
-
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-            scene.remove(this.id);
+            scene.remove(balle);
             if (other_object.name === "asteroid") {
                 scene.remove(other_object);
 
