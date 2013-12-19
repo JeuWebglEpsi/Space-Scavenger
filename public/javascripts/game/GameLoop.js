@@ -128,7 +128,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         WindowResize(renderer, camera);
 
         window.render = function () {
-            // cameraCollider.__dirtyRotation = true;
 
             //Game update loop
             game.update();
@@ -140,31 +139,12 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 if (obj.name === "bgdCube") {
                     obj.position.set(cameraCollider.position.x, cameraCollider.position.y, cameraCollider.position.z);
                 }
-                if (obj.name === "arme") {
 
-                    obj.position.x = x;
-                    obj.position.y = y - 1.5;
-                    obj.position.z = z;
-                    // obj.scale.x = obj.scale.z = -10;
-                    //obj.scale.y= 10;
-                }
             })
             scene.simulate(undefined, 8);
 
 
 
-            // var balle = new Physijs.ConvexMesh(
-            //     new THREE.SphereGeometry(120000000),
-            //     new THREE.MeshBasicMaterial({ color: 0x888888 },0)
-            // );
-
-            // balle.position.x = camera.lookAt.x;
-            // balle.position.y = camera.lookAt.y;
-            // balle.position.z = camera.lookAt.z;
-
-            // scene.add(balle);
-
-            //Game render loop
             requestAnimationFrame(render);
             renderer.render(scene, camera);
             time = Date.now();
@@ -178,9 +158,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
             var bullet = new Bullet();
-            //console.log("oueojtfod");
             bullet.position(cameraCollider, camera);
-
         })
     }
 })
