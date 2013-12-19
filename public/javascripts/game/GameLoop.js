@@ -15,7 +15,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         var audio5js = new Audio5js({
             ready: function () {
                 this.load('/contact.mp3');
-                // this.play();
+                this.play();
             }
         });
 

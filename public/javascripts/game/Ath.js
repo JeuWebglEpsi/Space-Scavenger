@@ -63,7 +63,7 @@ ATH.prototype.update = function () {
     cartridge.find('font').text(game.localPlayer.get('_ammo'));
     cartridge.find('progress.ammo').val(game.localPlayer.get('_ammo'));
     var c2d = $('.athrenderer');
-    c2d.html('');
+    c2d.empty();
     window.scene.traverse(function (obj) {
         if (obj.name === "toHighlight") {
 
