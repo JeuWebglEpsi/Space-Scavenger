@@ -3,7 +3,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
     window.runGame = function () {
 
 
-        $('#game-opt').remove();
 
         var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
@@ -15,8 +14,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         //audio sampling.
         var audio5js = new Audio5js({
             ready: function () {
-                this.load('/Myst.mp3');
-                //  this.play();
+                this.load('/contact.mp3');
+                // this.play();
             }
         });
 
@@ -85,8 +84,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         scene.add(cameraCollider);
 
         var renderer = new THREE.WebGLRenderer({
-            antialias: false,
-            precision: 'lowp',
+            antialias: true,
+            precision: 'highp',
             alpha: true,
             premultiplyAlpha: true
         });
@@ -118,7 +117,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         window.game.createPlayer('local');
 
-
+        setTimeout(function () {
+            $(document).trigger('gameReady');
+        }, 4000)
 
         /*END MAYBE*/
 
@@ -127,7 +128,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         WindowResize(renderer, camera);
 
         window.render = function () {
-            // cameraCollider.__dirtyRotation = true;
 
             //Game update loop
             game.update();
@@ -139,32 +139,13 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 if (obj.name === "bgdCube") {
                     obj.position.set(cameraCollider.position.x, cameraCollider.position.y, cameraCollider.position.z);
                 }
-                if (obj.name === "arme") {
 
-                    obj.position.x = x;
-                    obj.position.y = y - 1.5;
-                    obj.position.z = z;
-                    // obj.scale.x = obj.scale.z = -10;
-                    //obj.scale.y= 10;
-                }
             })
             scene.simulate(undefined, 8);
 
 
 
-            // var balle = new Physijs.ConvexMesh(
-            //     new THREE.SphereGeometry(120000000),
-            //     new THREE.MeshBasicMaterial({ color: 0x888888 },0)
-            // );
-
-            // balle.position.x = camera.lookAt.x;
-            // balle.position.y = camera.lookAt.y;
-            // balle.position.z = camera.lookAt.z;
-
-            // scene.add(balle);
-
-            //Game render loop
-            requestAnimationFrame(render);
+            window.isRendering = requestAnimationFrame(render);
             renderer.render(scene, camera);
             time = Date.now();
 
@@ -177,9 +158,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
             var bullet = new Bullet();
-            //console.log("oueojtfod");
             bullet.position(cameraCollider, camera);
-
         })
     }
 })

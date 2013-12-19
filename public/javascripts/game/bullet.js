@@ -19,6 +19,7 @@ Bullet.prototype.createAmmo = function (position) {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         0);
+    ammo.name = "toHighlight";
     ammo.position = position;
     ammo.position.y += 1;
 
@@ -57,6 +58,7 @@ Bullet.prototype.createLife = function (position) {
         0);
     life.position = position;
     life.position.y += 1;
+    life.name = "toHighlight";
 
 
 
@@ -82,11 +84,20 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
     if (this.hasMunition()) {
         game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') - 1);
-        var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(2),
-            new THREE.MeshBasicMaterial({
-                color: 0x888888
+        var bulletCamera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
+        var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(1),
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    color: 0xFF0000
+                },
+                vertexShader: document.getElementById('vertexShaderBullet').textContent,
+                fragmentShader: document.getElementById('fragmentShaderBullet').textContent,
+                side: THREE.BackSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true
             }), 1
         );
+        balle.add(bulletCamera);
         balle.__dirtyPosition = true;
         var vector = new THREE.Vector3(0, 0, -1);
         var pw = vector.applyMatrix4(cameraCollider.matrixWorld);
@@ -98,15 +109,25 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         balle.position.z = cameraCollider.position.z + 10;
 
 
-        balle.movementSpeed = 5000;
+        balle.movementSpeed = 4000;
 
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-            scene.remove(balle);
+
+            scene.remove(this);
+
             if (other_object.name === "asteroid") {
                 scene.remove(other_object);
-
+                var popItem = parseInt(Math.random() * 10);
+                if (popItem > 5) {
+                    var item = parseInt(Math.random() * 10);
+                    if (item > 5) {
+                        new Bullet().createLife(other_object.position)
+                    } else {
+                        new Bullet().createAmmo(other_object.position);
+                    }
+                }
                 var scale = parseInt(other_object.scale.x);
                 if (scale < 50) {
 
@@ -135,9 +156,6 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                             scene.add(mesh);
                         }
                     });
-
-
-
                 }
             }
         });

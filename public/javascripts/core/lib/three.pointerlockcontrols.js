@@ -124,11 +124,11 @@ THREE.FirstPersonControls = function (object, domElement) {
             this.moveRight = true;
             break;
 
-        case 82:
+        case 32:
             /*R*/
             this.moveUp = true;
             break;
-        case 70:
+        case 17:
             /*F*/
             this.moveDown = true;
             break;
@@ -194,7 +194,7 @@ THREE.FirstPersonControls = function (object, domElement) {
             });
             break;
 
-        case 82:
+        case 32:
             /*R*/
             this.moveUp = false;
             this.object.setLinearVelocity({
@@ -203,7 +203,7 @@ THREE.FirstPersonControls = function (object, domElement) {
                 z: 0
             });
             break;
-        case 70:
+        case 17:
             /*F*/
             this.moveDown = false;
             this.object.setLinearVelocity({
