@@ -366,7 +366,7 @@ Map.prototype.ship = function () {
                    
                     robot.createEnemy(
                     (i - units / 2) * UNITSIZE,
-                    0,
+                    -12,
                     (j - units / 2) * UNITSIZE
 
                         )
