@@ -12,6 +12,7 @@ Map.prototype.space = function () {
     var map = this;
     'use strict';
     console.log('map initializing')
+    
     window.scene.setGravity(new THREE.Vector3(0, 0, 0));
     //maintenant on va ajouter un objet créé avec blender
     var loader = new THREE.JSONLoader();
@@ -133,20 +134,28 @@ Map.prototype.space = function () {
 
     // add it to the scene
     scene.add(map.particleSystem);
+
 }
+
+
+
 Map.prototype.ship = function () {
 
+
+    var map = this;
+    'use strict';
     window.scene.setGravity(new THREE.Vector3(0, -10, 0));
 
+    
     this.name = "ship";
 
 
     var spaceship = new Physijs.BoxMesh(
-                new THREE.CubeGeometry(0, 0, 0),'',0
+                new THREE.CubeGeometry(0, 0, 0)
                     );
    
 
-    var loader = new THREE.JSONLoader();
+   var loader = new THREE.JSONLoader();
 
     //background image
     loader.load("/javascripts/Maps/bgd2.js", function (geometry, materials) {
@@ -158,6 +167,39 @@ Map.prototype.ship = function () {
         scene.add(mesh);
     });
 
+
+    // loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+    //     var asteroidCount = 1000;
+    //     var veryBigAste = 1;
+    //     var bigAste = 200;
+    //     var weight;
+    //     while (asteroidCount--) {
+    //         if (veryBigAste-- > 0) {
+    //             weight = Math.abs(Math.random() * 500 - 250);
+    //         } else if (bigAste-- > 0) {
+    //             weight = Math.abs(Math.random() * 100 - 50);
+    //         } else {
+    //             weight = Math.abs(Math.random() * 50 - 1);
+    //         }
+    //         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000 * weight);
+    //         mesh.position.x = Math.random() * 12000 - 6000;
+    //         mesh.position.y = Math.random() * 1000000000000 - 500;
+    //         mesh.position.z = Math.random() * 12000 - 6000;
+    //         mesh.rotation.x = Math.random();
+    //         mesh.rotation.y = Math.random();
+    //         mesh.rotation.z = Math.random();
+
+    //         mesh.receiveShadow = true;
+    //         mesh.castShadow = true;
+    //         mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
+
+    //         mesh.name = "asteroid";
+    //         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+    //             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+    //         });
+    //         scene.add(mesh);
+    //     }
+    // });
 
     var hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x000000, .5);
     hemiLight.castShadow = false;
@@ -203,7 +245,7 @@ Map.prototype.ship = function () {
         [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
         [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
         [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
-        [1, 7, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
+        [1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
     ],
         mapW = map.length,
@@ -215,40 +257,37 @@ Map.prototype.ship = function () {
     var WALLHEIGHT = 100;
     var FLOORHEIGHT = 2;
 
-
-
     var materials = [
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
-
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/metal_floor_texture-200513-SM.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-raye.png')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull-raye.png')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('avascripts/Maps/metal_floor_texture-200513-SM.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/metal_floor_texture-200513-SM.jpg')
         }),
     ];
     // Geometry: walls
@@ -257,10 +296,8 @@ Map.prototype.ship = function () {
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
 
     //var correction = 212.5;
-    var correctionX = 0;
-    var correctionZ = 0;
-    var correctionY = 0;
- spaceship.position.set(0,0,0);
+
+    //spaceship.position.set(0,0,0);
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -268,12 +305,11 @@ Map.prototype.ship = function () {
 
                 if (map[i][j] === 9) {
 
-                    var loader = new THREE.JSONLoader();
                     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
                         var mechant = new Physijs.BoxMesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
-                        mechant.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
-                        mechant.position.y = (FLOORHEIGHT / 2) - correctionY;
-                        mechant.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+                        mechant.position.x = ((i - units / 2) * UNITSIZE);
+                        mechant.position.y = (FLOORHEIGHT / 2);
+                        mechant.position.z = ((j - units / 2) * UNITSIZE);
 
                         mechant.scale.x = mechant.scale.y = mechant.scale.z = 50;
 
@@ -296,9 +332,9 @@ Map.prototype.ship = function () {
         
                 } else {
                     var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
-                    wall.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
-                    wall.position.y = (WALLHEIGHT / 2) - correctionY;
-                    wall.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+                    wall.position.x = ((i - units / 2) * UNITSIZE);
+                    wall.position.y = (WALLHEIGHT / 2) ;
+                    wall.position.z = ((j - units / 2) * UNITSIZE);
                     wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                         // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
                         console.log("mur touche");
@@ -311,33 +347,25 @@ Map.prototype.ship = function () {
             if (map[i][j] === 0 || map[i][j] === 9) {
                 //génération du sol
                 var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
-                floor.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
-                floor.position.y = (FLOORHEIGHT / 2) - correctionY;
-                floor.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+                floor.position.x = ((i - units / 2) * UNITSIZE);
+                floor.position.y = (FLOORHEIGHT / 2);
+                floor.position.z = ((j - units / 2) * UNITSIZE);
 
                 spaceship.add(floor);
 
                 //génération du plafond
                 var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 0);
-                roof.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
-                roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - correctionY;
-                roof.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+                roof.position.x = ((i - units / 2) * UNITSIZE);
+                roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
+                roof.position.z = ((j - units / 2) * UNITSIZE);
                 spaceship.add(roof);
-
-            }
-            if (map[i][j] === 7) {
-               console.log(((i - units / 2) * UNITSIZE) - correctionX,(FLOORHEIGHT / 2) - correctionY,((j - units / 2) * UNITSIZE) + correctionZ);
-
 
             }
 
         }
 
-
     }
     scene.add(spaceship);
-  
-
 }
 
 Map.prototype.addLensFlare = function (x, y, z, size, overrideImage) {
