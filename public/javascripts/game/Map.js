@@ -168,38 +168,38 @@ Map.prototype.ship = function () {
     });
 
 
-    // loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-    //     var asteroidCount = 1000;
-    //     var veryBigAste = 1;
-    //     var bigAste = 200;
-    //     var weight;
-    //     while (asteroidCount--) {
-    //         if (veryBigAste-- > 0) {
-    //             weight = Math.abs(Math.random() * 500 - 250);
-    //         } else if (bigAste-- > 0) {
-    //             weight = Math.abs(Math.random() * 100 - 50);
-    //         } else {
-    //             weight = Math.abs(Math.random() * 50 - 1);
-    //         }
-    //         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000 * weight);
-    //         mesh.position.x = Math.random() * 12000 - 6000;
-    //         mesh.position.y = Math.random() * 1000000000000 - 500;
-    //         mesh.position.z = Math.random() * 12000 - 6000;
-    //         mesh.rotation.x = Math.random();
-    //         mesh.rotation.y = Math.random();
-    //         mesh.rotation.z = Math.random();
+    loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
+        var asteroidCount = 1000;
+        var veryBigAste = 1;
+        var bigAste = 200;
+        var weight;
+        while (asteroidCount--) {
+            if (veryBigAste-- > 0) {
+                weight = Math.abs(Math.random() * 500 - 250);
+            } else if (bigAste-- > 0) {
+                weight = Math.abs(Math.random() * 100 - 50);
+            } else {
+                weight = Math.abs(Math.random() * 50 - 1);
+            }
+            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 10000 * weight);
+            mesh.position.x = Math.random() * 12000 - 6000;
+            mesh.position.y = Math.random() * 1000000000000 - 500;
+            mesh.position.z = Math.random() * 12000 - 6000;
+            mesh.rotation.x = Math.random();
+            mesh.rotation.y = Math.random();
+            mesh.rotation.z = Math.random();
 
-    //         mesh.receiveShadow = true;
-    //         mesh.castShadow = true;
-    //         mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
+            mesh.receiveShadow = true;
+            mesh.castShadow = true;
+            mesh.scale.x = mesh.scale.y = mesh.scale.z = weight;
 
-    //         mesh.name = "asteroid";
-    //         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-    //             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-    //         });
-    //         scene.add(mesh);
-    //     }
-    // });
+            mesh.name = "asteroid";
+            mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+            });
+            scene.add(mesh);
+        }
+    });
 
     var hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x000000, .5);
     hemiLight.castShadow = false;
@@ -244,7 +244,7 @@ Map.prototype.ship = function () {
         [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, ],
         [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
         [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
-        [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
+        [1, 9, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
         [1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
     ],
@@ -298,6 +298,7 @@ Map.prototype.ship = function () {
     //var correction = 212.5;
 
     //spaceship.position.set(0,0,0);
+    var robot = new EnemyManage();
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -359,6 +360,20 @@ Map.prototype.ship = function () {
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
                 roof.position.z = ((j - units / 2) * UNITSIZE);
                 spaceship.add(roof);
+
+                if ( map[i][j] === 9) {
+
+                   
+                    robot.createEnemy(
+                    (i - units / 2) * UNITSIZE,
+                    0,
+                    (j - units / 2) * UNITSIZE
+
+                        )
+
+                 
+
+                }
 
             }
 
