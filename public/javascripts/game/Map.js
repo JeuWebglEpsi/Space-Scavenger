@@ -140,6 +140,11 @@ Map.prototype.ship = function () {
 
     this.name = "ship";
 
+    var spaceship = new Physijs.BoxMesh(
+                new THREE.CubeGeometry(0, 0, 0),'',0
+                    );
+   
+
     var loader = new THREE.JSONLoader();
 
     //background image
@@ -249,13 +254,12 @@ Map.prototype.ship = function () {
     var cube = new THREE.CubeGeometry(UNITSIZE, WALLHEIGHT, UNITSIZE);
     var cube_floor = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
-    //var scene = new THREE.Object3D();
 
     //var correction = 212.5;
     var correctionX = 100;
     var correctionZ = 8000;
     var correctionY = 30;
-
+ spaceship.position.set(0,0,0);
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -280,49 +284,17 @@ Map.prototype.ship = function () {
 
                                 munition.createLife(this.position);
 
-                                scene.remove(this);
+                                spaceship.remove(this);
 
                             }
 
                         });
 
-                        scene.add(mechant);
+                        spaceship.add(mechant);
                     });
-                    
-
-                // A Deplacer dans la detection de collision
-
-                //var munition = new Bullet();
-                //munition.createLife(floor.position);
-
-
-
-                
-            // var loader = new THREE.JSONLoader();
-            //  loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-                       
-
-            //                 var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-            //                 mesh.__dirtyPosition = true;
-            //                 mesh.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
-            //                 mesh.position.y = 0;
-            //                 mesh.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
-
-            //                 mesh.receiveShadow = true;
-            //                 mesh.castShadow = true;
-
-            //                 mesh.name = "robot";
-            //                 mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            //                     console.log('robot ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                            
-
-            //                 });
-            //                 scene.add(mesh);
-                        
-            //         });
-
+        
                 } else {
-                    var wall = new THREE.Mesh(cube, materials[map[i][j]], 0);
+                    var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
                     wall.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
                     wall.position.y = (WALLHEIGHT / 2) - correctionY;
                     wall.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
@@ -330,80 +302,35 @@ Map.prototype.ship = function () {
                         // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
                         console.log("mur touche");
                     });
-                    scene.add(wall);
+                    spaceship.add(wall);
                 }
 
             }
 
             if (map[i][j] === 0 || map[i][j] === 9) {
                 //génération du sol
-                var floor = new THREE.Mesh(cube_floor, materials[map[i][j]], 0);
+                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
                 floor.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
                 floor.position.y = (FLOORHEIGHT / 2) - correctionY;
                 floor.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
 
-
-                // A Deplacer dans la detection de collision
-
-                //var munition = new Bullet();
-                //munition.createLife(floor.position);
-
-
-
-                scene.add(floor);
+                spaceship.add(floor);
 
                 //génération du plafond
-                var roof = new THREE.Mesh(cube_roof, materials[map[i][j]], 0);
+                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 0);
                 roof.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - correctionY;
                 roof.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
-                scene.add(roof);
+                spaceship.add(roof);
 
             }
 
-
-
-
-
-
-
         }
 
-        // var i = 100;
-
-        // var cube_ammo = new THREE.CubeGeometry(1, 1, 2);
-        // while (i--) {
-
-
-
-        // }
-        //scene.add(group);
-        //console.log(Player);
-        //Player.set('_position', new THREE.Vector3(0,0,0));
 
     }
-
-    //lesméchants
-    // loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-    //     var count = 10;
-    //     while (count--) {
-
-    //         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-    //         mesh.name = "mechantrobot";
-    //          mesh.position.x = (i - units/2) * UNITSIZE;
-    //     mesh.position.y = 5;
-    //     mesh.position.z = (j - units/2) * UNITSIZE;
-    //         mesh.position.x = Math.random() * 1000 - 500;
-    //         mesh.position.y = 0;
-    //         mesh.position.z = Math.random() * 1000 - 500;
-    //         mesh.rotation.x = Math.random();
-    //         mesh.rotation.y = Math.random();
-    //         mesh.rotation.z = Math.random();
-    //         mesh.scale.x = mesh.scale.y = mesh.scale.z = 100;
-    //         scene.add(mesh);
-    //     }
-    // });
-
+    scene.add(spaceship);
+  
 
 }
 
