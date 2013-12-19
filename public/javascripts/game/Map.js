@@ -140,6 +140,7 @@ Map.prototype.ship = function () {
 
     this.name = "ship";
 
+
     var spaceship = new Physijs.BoxMesh(
                 new THREE.CubeGeometry(0, 0, 0),'',0
                     );
@@ -202,7 +203,7 @@ Map.prototype.ship = function () {
         [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
         [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
         [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
-        [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
+        [1, 7, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
     ],
         mapW = map.length,
@@ -256,9 +257,9 @@ Map.prototype.ship = function () {
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
 
     //var correction = 212.5;
-    var correctionX = 100;
-    var correctionZ = 8000;
-    var correctionY = 30;
+    var correctionX = 0;
+    var correctionZ = 0;
+    var correctionY = 0;
  spaceship.position.set(0,0,0);
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = map[i].length - 1; j >= 0; j--) {
@@ -322,6 +323,11 @@ Map.prototype.ship = function () {
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT) - correctionY;
                 roof.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
                 spaceship.add(roof);
+
+            }
+            if (map[i][j] === 7) {
+               console.log(((i - units / 2) * UNITSIZE) - correctionX,(FLOORHEIGHT / 2) - correctionY,((j - units / 2) * UNITSIZE) + correctionZ);
+
 
             }
 

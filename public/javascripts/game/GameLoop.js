@@ -65,6 +65,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
         camera.rotation.set(0, 0, 0);
+        camera.position.set(0,30,0);
 
         var cameraCollider = new Physijs.SphereMesh(
             new THREE.SphereGeometry(4),
@@ -78,8 +79,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
         });
         cameraCollider.rotation.set(0, 0, 0);
-        cameraCollider.position.set(0, 0, 8000);
-
+        //cameraCollider.position.set(0, 0, 8000);
+        cameraCollider.position.set(850,50,-950);
         cameraCollider.add(camera);
         scene.add(cameraCollider);
 
@@ -111,9 +112,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
         window.game = new Game();
-        game.map.space();
-        //game.map.ship();
-        console.log(game.map);
+        //game.map.space();
+        game.map.ship();
+        //console.log(game.map);
 
         window.game.createPlayer('local');
 
