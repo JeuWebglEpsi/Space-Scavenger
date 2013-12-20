@@ -69,8 +69,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         var cameraCollider = new Physijs.SphereMesh(
             new THREE.CylinderGeometry(4, 4, 60),
             new THREE.MeshBasicMaterial({
-                color: 0x888888,
-                wireframe: true
+                color: 0x888888
             })
         );
         cameraCollider.name = "cameraCollider";
