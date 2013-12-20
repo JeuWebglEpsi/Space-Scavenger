@@ -21,29 +21,6 @@ var Map = function () {
         goal: null,
         texts: null
     }
-    this.map =[
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, ],
-        [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, ],
-        [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 0, 0, 9, 0, 0, 0, 9, 1, 9, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, ],
-        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, ],
-        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, ],
-        [1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, ],
-        [1, 0, 0, 0, 1, 1, 1, 0, 1, 2, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, ],
-        [1, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 9, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
-        [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
-        [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-    ];
 };
 //space logic
 Map.prototype.progressSpace = function () {
@@ -202,12 +179,9 @@ Map.prototype.progressShip = function () {
 
 }
 Map.prototype.ship = function () {
-<<<<<<< HEAD
 
     window.controls.movementSpeed = 100;
 
-=======
->>>>>>> c58b47da0cbb2a55e613a407b6f02421ce3fb879
     this.currentProgress = {
         completed: -1,
         goal: null,
@@ -256,14 +230,36 @@ Map.prototype.ship = function () {
 
 
     // Creation map en 2d
-
-        var mapW = this.map.length;
-        var mapH = this.map[0].length;
+    var map = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, ],
+        [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+        [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+        [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, ],
+        [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 0, 0, 9, 0, 0, 0, 9, 1, 9, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, ],
+        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, ],
+        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, ],
+        [1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, ],
+        [1, 0, 0, 0, 1, 1, 1, 0, 1, 2, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, ],
+        [1, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 9, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
+        [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, ],
+        [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
+        [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
+        [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+    ],
+        mapW = map.length,
+        mapH = map[0].length;
 
 
     var units = mapW;
     var UNITSIZE = 100;
-    var WALLHEIGHT = 150;
+    var WALLHEIGHT = 100;
     var FLOORHEIGHT = 2;
 
 
@@ -271,35 +267,35 @@ Map.prototype.ship = function () {
     var materials = [
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
 
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull-raye.png')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-raye.png')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/metal_floor_texture-200513-SM.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg')
         }),
     ];
     // Geometry: walls
@@ -311,11 +307,10 @@ Map.prototype.ship = function () {
     var robot_mechant = new EnemyManage();
 
     for (var i = mapW - 1; i >= 0; i--) {
-        for (var j = this.map[i].length - 1; j >= 0; j--) {
+        for (var j = map[i].length - 1; j >= 0; j--) {
             //generation des murs
-            if (this.map[i][j] === 1 || this.map[i][j] === 2) {
+            if (map[i][j] === 1 || map[i][j] === 2) {
 
-<<<<<<< HEAD
                 var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
                 wall.position.x = ((i - units / 2) * UNITSIZE);
                 wall.position.y = (WALLHEIGHT / 2);
@@ -326,26 +321,14 @@ Map.prototype.ship = function () {
                 });
                 scene.add(wall);
 
-=======
-                    var wall = new Physijs.BoxMesh(cube, materials[this.map[i][j]], 0);
-                    wall.position.x = ((i - units / 2) * UNITSIZE) ;
-                    wall.position.y = (WALLHEIGHT / 2);
-                    wall.position.z = ((j - units / 2) * UNITSIZE);
-                    wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                        // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                        console.log("mur touche");
-                    });
-                    scene.add(wall);
-                
->>>>>>> c58b47da0cbb2a55e613a407b6f02421ce3fb879
 
             }
 
-            if (this.map[i][j] === 0 || this.map[i][j] === 9) {
+            if (map[i][j] === 0 || map[i][j] === 9) {
                 //génération du sol
-                var floor = new Physijs.BoxMesh(cube_floor, materials[this.map[i][j]], 0);
+                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
                 floor.position.x = ((i - units / 2) * UNITSIZE);
-                floor.position.y = 0;
+                floor.position.y = (FLOORHEIGHT / 2);
                 floor.position.z = ((j - units / 2) * UNITSIZE);
 
 
@@ -359,18 +342,14 @@ Map.prototype.ship = function () {
                 scene.add(floor);
 
                 //génération du plafond
-                var roof = new Physijs.BoxMesh(cube_roof, materials[this.map[i][j]], 0);
+                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 0);
                 roof.position.x = ((i - units / 2) * UNITSIZE);
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
                 roof.position.z = ((j - units / 2) * UNITSIZE);
                 scene.add(roof);
 
 
-<<<<<<< HEAD
                 if (map[i][j] === 9) {
-=======
-                if(this.map[i][j] === 9) {
->>>>>>> c58b47da0cbb2a55e613a407b6f02421ce3fb879
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                 }
@@ -383,11 +362,8 @@ Map.prototype.ship = function () {
 
     }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> c58b47da0cbb2a55e613a407b6f02421ce3fb879
 }
 
 Map.prototype.createLoot = function (parent_object, type) {
