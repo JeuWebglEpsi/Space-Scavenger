@@ -356,7 +356,7 @@ z-index: -2;
 }
 #gameover{
 	position: absolute;
-	z-index: 100000;
+	z-index: 100001;
 	display: none;
 	color:#4AD9EB;
 	font-size: 100px;
@@ -368,7 +368,7 @@ z-index: -2;
 }
 #youwin{
 	position: absolute;
-	z-index: 100000;
+	z-index: 100001;
 	display: none;
 	color:#4AD9EB;
 	font-size: 100px;
@@ -380,7 +380,7 @@ z-index: -2;
 }
 .loading{
 	position: absolute;
-	z-index: 100000;
+	z-index: 100001;
 	display: none;
 	color:#4AD9EB;
 	font-size: 100px;

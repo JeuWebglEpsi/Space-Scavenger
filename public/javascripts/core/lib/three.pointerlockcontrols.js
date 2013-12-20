@@ -38,6 +38,8 @@ THREE.FirstPersonControls = function (object, domElement) {
     this.phi = 0;
     this.theta = 0;
 
+    this.canMoveVertical = true;
+
     this.moveForward = false;
     this.moveBackward = false;
     this.moveLeft = false;
@@ -293,11 +295,16 @@ THREE.FirstPersonControls = function (object, domElement) {
             if (this.moveDown) {
                 toY = -1;
             }
+
+            if (!this.canMoveVertical) {
+                toY = 0;
+            }
             this.object.setLinearVelocity({
                 x: this.movementSpeed * toX,
                 y: this.movementSpeed * toY,
                 z: this.movementSpeed * toZ
             });
+
         }
 
         var actualLookSpeed = delta * this.lookSpeed;

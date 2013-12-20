@@ -194,11 +194,10 @@ document.exitPointerLock = document.exitPointerLock ||
                document.webkitExitPointerLock;
 
               document.exitPointerLock();
-              console.log(hide);
               if(hide){
-                    setTimeout(function(){
-                        $('#game-opt').first('container').hide();
                         $('.loading').show();
+
+                    setTimeout(function(){
                         window.runGame(2);
                     },3000)
 
