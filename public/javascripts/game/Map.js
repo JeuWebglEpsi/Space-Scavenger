@@ -317,8 +317,6 @@ Map.prototype.ship = function () {
                         console.log("mur touche");
                     });
                     scene.add(wall);
-                
-
             }
 
             if (this.map[i][j] === 0 || this.map[i][j] === 9) {
@@ -331,11 +329,6 @@ Map.prototype.ship = function () {
 
                 // A Deplacer dans la detection de collision
 
-                //var munition = new Bullet();
-                //munition.createLife(floor.position);
-
-
-
                 scene.add(floor);
 
                 //génération du plafond
@@ -344,7 +337,6 @@ Map.prototype.ship = function () {
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
                 roof.position.z = ((j - units / 2) * UNITSIZE);
                 scene.add(roof);
-
 
                 if(this.map[i][j] === 9) {
                     robot_mechant.createEnemy(
