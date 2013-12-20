@@ -32,7 +32,6 @@ Player.prototype.set = function (prop, value) {
 
 Player.prototype.init = function (scene) {
     var bullets = new Bullet();
-    console.log('bullets ' + bullets);
     if (window.game.map.currentLevel === "space")
         window.game.map.progressSpace();
 }

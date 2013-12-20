@@ -16,7 +16,6 @@
                 type: 'player'
             });
             game.localPlayer.init(window.scene);
-            console.log(game.biome.personnages);
         }
     }
     Game.prototype.YouWin = function () {

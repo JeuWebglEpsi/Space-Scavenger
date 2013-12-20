@@ -221,6 +221,7 @@ document.exitPointerLock = document.exitPointerLock ||
             <div class="col-lg-4 col-lg-offset-4">
                 <button type="button" id="rungame"  class="btn btn-primary" data-loading-text="Chargement . . ." data-complete-text="C'est parti !" >Jouer</button><br/><br/>
             <button type="button" class="btn btn-primary" onclick="window.fullScreen();">Plein ecran</button><br><br>
+            <button type="button" id="credits"class="btn btn-primary" >Credits</button><br><br>
 
             </div>
         </div>
@@ -269,7 +270,7 @@ document.exitPointerLock = document.exitPointerLock ||
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="menuModal">Menu de jeu</h4>
+        <h4 class="modal-title" id="">Menu de jeu</h4>
       </div>
       <div class="modal-body">
                 <button class="btn btn-primary" onclick="window.fullScreen();">Activer le mode plein ecran</button><br><br>
@@ -277,13 +278,33 @@ document.exitPointerLock = document.exitPointerLock ||
                 <button class="btn btn-primary" onclick="window.toMainMenu()" data-dismiss="modal">Quitter la partie</button><br><br>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="creditModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Crédits</h4>
+      </div>
+      <div class="modal-body">
+        <p class="white"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
 require(['jquery'],function($){
+    $('button#credits').on('click',function(){
+        $('#creditModal').modal();
+    })
     $('button#rungame').on('click',function(){
         $(this).button('loading').promise().done(function(){
             window.runGame(1);
@@ -307,7 +328,7 @@ require(['jquery'],function($){
               document.exitPointerLock();
 
     })
-    $('.modal').on('hide.bs.modal',function(){
+    $('#menuModal').on('hide.bs.modal',function(){
 var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
 

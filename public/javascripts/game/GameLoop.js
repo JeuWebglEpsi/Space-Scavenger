@@ -61,7 +61,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         };
 
         //To use enter the axis length
-        debugaxis(10000);
+        //debugaxis(10000);
 
         window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
         camera.rotation.set(0, 0, 0);
@@ -75,7 +75,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         cameraCollider.name = "cameraCollider";
         cameraCollider.addEventListener('collision', function (obj) {
             window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 10);
-            console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
         });
         cameraCollider.rotation.set(0, 0, 0);
         if (level === 1)
@@ -121,7 +120,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         else if (level === 2)
             game.map.ship();
 
-        console.log(game.map);
 
         window.game.createPlayer('local');
 

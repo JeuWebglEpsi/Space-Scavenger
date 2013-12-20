@@ -46,7 +46,6 @@ Map.prototype.space = function () {
         texts: null
     }
     this.currentLevel = 'space';
-    console.log('map initializing')
     window.scene.setGravity(new THREE.Vector3(0, 0, 0));
     //maintenant on va ajouter un objet créé avec blender
     var loader = new THREE.JSONLoader();
@@ -89,7 +88,7 @@ Map.prototype.space = function () {
 
             mesh.name = "asteroid";
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+
             });
             scene.add(mesh);
         }
@@ -315,10 +314,7 @@ Map.prototype.ship = function () {
                 wall.position.x = ((i - units / 2) * UNITSIZE);
                 wall.position.y = (WALLHEIGHT / 2);
                 wall.position.z = ((j - units / 2) * UNITSIZE);
-                wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                    // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                    console.log("mur touche");
-                });
+                wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {});
                 scene.add(wall);
 
 
@@ -385,7 +381,6 @@ Map.prototype.createLoot = function (parent_object, type) {
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             var nbLife = Math.floor((Math.random() * 100) + 30);
-            console.log(nbLife);
             if (game.localPlayer.get('_life') < 100) {
                 scene.remove(this);
                 if (game.localPlayer.get('_life') < (100 - nbLife)) {
