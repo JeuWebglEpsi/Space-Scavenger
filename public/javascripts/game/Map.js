@@ -264,35 +264,35 @@ Map.prototype.ship = function () {
     var materials = [
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
 
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-raye.png')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull-raye.png')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull.jpg')
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg')
+            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/metal_floor_texture-200513-SM.jpg')
         }),
     ];
     // Geometry: walls
@@ -325,7 +325,7 @@ Map.prototype.ship = function () {
                 //génération du sol
                 var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
                 floor.position.x = ((i - units / 2) * UNITSIZE);
-                floor.position.y = (FLOORHEIGHT / 2);
+                floor.position.y = 0;
                 floor.position.z = ((j - units / 2) * UNITSIZE);
 
 
