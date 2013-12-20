@@ -23,7 +23,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
                             if (other_object.name === "bullet") {
                                 var munition = new Bullet();
 
-                                munition.createLife(this.position);
+                                //munition.createLife(this.position);
 
                                scene.remove(this);
 
