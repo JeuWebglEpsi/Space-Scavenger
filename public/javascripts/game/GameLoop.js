@@ -74,7 +74,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         );
         cameraCollider.name = "cameraCollider";
         cameraCollider.addEventListener('collision', function (obj) {
-            game.localPlayer.set('_life', game.localPlayer.get('_life') - 10);
             console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
         });
         cameraCollider.rotation.set(0, 0, 0);
