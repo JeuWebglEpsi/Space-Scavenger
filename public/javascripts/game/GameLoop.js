@@ -67,13 +67,15 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         camera.rotation.set(0, 0, 0);
 
         var cameraCollider = new Physijs.SphereMesh(
-            new THREE.SphereGeometry(4),
+            new THREE.CylinderGeometry(4, 4, 60),
             new THREE.MeshBasicMaterial({
-                color: 0x888888
+                color: 0x888888,
+                wireframe: true
             })
         );
         cameraCollider.name = "cameraCollider";
         cameraCollider.addEventListener('collision', function (obj) {
+            window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
             console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
         });
         cameraCollider.rotation.set(0, 0, 0);
@@ -81,14 +83,14 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             cameraCollider.position.set(0, 0, 8000);
         else if (level === 2)
             cameraCollider.position.set(850, 30, -950);
-        
+
 
         cameraCollider.add(camera);
         scene.add(cameraCollider);
 
         var renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            precision: 'highp',
+            antialias: false,
+            precision: 'lowp',
             alpha: true,
             premultiplyAlpha: true
         });
@@ -110,7 +112,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         $('body').append(renderer.domElement);
 
 
-        var controls = new FirstPersonControl(cameraCollider);
+        window.controls = new FirstPersonControl(cameraCollider);
 
 
         window.game = new Game();
@@ -148,7 +150,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 }
 
             })
-            scene.simulate(undefined, 2);
+            scene.simulate(undefined, 8);
 
 
 

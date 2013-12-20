@@ -25,14 +25,15 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         );
         balle.add(bulletCamera);
         balle.__dirtyPosition = true;
+
         var vector = new THREE.Vector3(0, 0, -1);
         var pw = vector.applyMatrix4(cameraCollider.matrixWorld);
         var dir = pw.sub(cameraCollider.position).normalize();
 
         balle.name = "bullet";
-        balle.position.x = cameraCollider.position.x + 10;
-        balle.position.y = cameraCollider.position.y;
-        balle.position.z = cameraCollider.position.z + 10;
+        balle.position.x = cameraCollider.position.x + 20 * dir.x;
+        balle.position.y = cameraCollider.position.y + 20 * dir.y;
+        balle.position.z = cameraCollider.position.z + 20 * dir.z;
 
 
         balle.movementSpeed = 4000;

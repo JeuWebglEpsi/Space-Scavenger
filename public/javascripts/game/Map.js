@@ -62,6 +62,7 @@ Map.prototype.progressSpace = function () {
 Map.prototype.space = function () {
     var map = this;
     'use strict';
+    window.controls.canMoveVertival = true;
     this.currentProgress = {
         completed: -1,
         goal: null,
@@ -201,6 +202,10 @@ Map.prototype.progressShip = function () {
 
 }
 Map.prototype.ship = function () {
+
+
+    window.controls.movementSpeed = 100;
+
     this.currentProgress = {
         completed: -1,
         goal: null,
@@ -208,7 +213,7 @@ Map.prototype.ship = function () {
     }
     this.currentLevel = 'ship';
 
-    window.scene.setGravity(new THREE.Vector3(0, -10, 0));
+    window.scene.setGravity(new THREE.Vector3(0, -30, 0));
 
     this.name = "ship";
 
@@ -308,6 +313,7 @@ Map.prototype.ship = function () {
             //generation des murs
             if (this.map[i][j] === 1 || this.map[i][j] === 2) {
 
+
                     var wall = new Physijs.BoxMesh(cube, materials[this.map[i][j]], 0);
                     wall.position.x = ((i - units / 2) * UNITSIZE) ;
                     wall.position.y = (WALLHEIGHT / 2);
@@ -317,6 +323,8 @@ Map.prototype.ship = function () {
                         console.log("mur touche");
                     });
                     scene.add(wall);
+
+
             }
 
             if (this.map[i][j] === 0 || this.map[i][j] === 9) {
@@ -338,21 +346,20 @@ Map.prototype.ship = function () {
                 roof.position.z = ((j - units / 2) * UNITSIZE);
                 scene.add(roof);
 
+
                 if(this.map[i][j] === 9) {
                     robot_mechant.createEnemy(
-                        (i - units / 2) * UNITSIZE,
-                        0,
-                        (j - units / 2) * UNITSIZE
-                       );
+                        (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                 }
 
-            }
+            
 
-
+}
 
         }
 
     }
+
 
 }
 
