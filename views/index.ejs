@@ -186,8 +186,13 @@ var element = document.body;
                 $('.athrenderer').hide();
                 $('img.ship,img.hombre,#game-opt,.letter-broken').css({
                     '-webkit-animation-play-state':'running'
-                   })
+                })
+
                 window.game = undefined;
+                window.controls = undefined;
+                window.scene = undefined;
+                window.render=undefined;
+
                 setTimeout(function(){
 document.exitPointerLock = document.exitPointerLock ||
                document.mozExitPointerLock ||

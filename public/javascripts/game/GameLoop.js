@@ -67,14 +67,14 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         camera.rotation.set(0, 0, 0);
 
         var cameraCollider = new Physijs.SphereMesh(
-            new THREE.CylinderGeometry(4, 4, 60),
+            new THREE.CylinderGeometry(.4, .4, 60),
             new THREE.MeshBasicMaterial({
                 color: 0x888888
             })
         );
         cameraCollider.name = "cameraCollider";
         cameraCollider.addEventListener('collision', function (obj) {
-            window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
+            window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 10);
             console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
         });
         cameraCollider.rotation.set(0, 0, 0);
@@ -151,20 +151,15 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             })
             scene.simulate(undefined, 8);
 
-
-
             window.isRendering = requestAnimationFrame(render);
             renderer.render(scene, camera);
             time = Date.now();
-
         };
         window.render();
 
 
 
         $(document).click(function (event) {
-
-
             var bullet = new Bullet();
             bullet.position(cameraCollider, camera);
         })

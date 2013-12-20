@@ -365,6 +365,8 @@ z-index: -2;
 	height: 100%;
 	text-align: center;
 	padding-top:20%;
+	top:0px;
+	left:0px;
 }
 #youwin{
 	position: absolute;
@@ -377,6 +379,8 @@ z-index: -2;
 	height: 100%;
 	text-align: center;
 	padding-top:20%;
+	top:0px;
+	left:0px;
 }
 .loading{
 	position: absolute;
@@ -389,4 +393,6 @@ z-index: -2;
 	height: 100%;
 	text-align: center;
 	padding-top:20%;
+	top:0px;
+	left:0px;
 }
