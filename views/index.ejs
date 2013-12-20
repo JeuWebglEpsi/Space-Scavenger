@@ -43,7 +43,8 @@ var DC = DC || {
         bullet:'game/Bullet',
         game:'game/Game',
         biome:'game/Biome',
-        audiojs:'core/lib/audio5.min'
+        audiojs:'core/lib/audio5.min',
+        enemyManage: 'game/EnemyManage'
     },
     shim: {
         three:{
@@ -76,7 +77,7 @@ var DC = DC || {
             exports:'window.Ath'
         },
         map:{
-            deps:['three'],
+            deps:['three', 'enemyManage'],
             exports:'window.Map'
         },
         personnage:{
@@ -95,9 +96,12 @@ var DC = DC || {
             deps:['personnage','player'],
             exports:'window.Biome'
         },
-
+        enemyManage:{
+            deps:['personnage'],
+            exports:'window.EnemyManage'
+        },
         game:{
-            deps:['three','ath','map','personnage','player','biome','socket','bullet'],
+            deps:['three','ath','map','personnage','player','biome','socket','bullet','enemyManage'],
             exports:'window.Game'
         }
     }

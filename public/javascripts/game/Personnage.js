@@ -3,11 +3,11 @@ var Personnage = function (id, name, life, element, type) {
     //id de socket(selecteur unique)
     this._socketId = id;
     //position en cour
-    this._position = {
+    /*this._position = {
         x: 0,
         y: 0,
         z: 0
-    };
+    };*/
     this._name = name;
     this._life = life;
     this._element = element;
@@ -29,17 +29,16 @@ Personnage.prototype.set = function (prop, value) {
     this.ath.update();
 }
 
-Personnage.prototype.init = function () {
+Personnage.prototype.init = function (x, y, z) {
     var loader = new THREE.JSONLoader();
-
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
 
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.position.x = 0;
-        mesh.position.y = 0;
-        mesh.position.z = 0;
-        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 10 - 1;
-        //   scene.add(mesh);
+        mesh.position.x = x;
+        mesh.position.y = y;
+        mesh.position.z = z;
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 3;
+        scene.add(mesh);
 
     });
 }
