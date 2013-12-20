@@ -27,6 +27,17 @@ ATH.prototype.toScreenXY = function (position, camera, jqdiv) {
         x: (pos.x + 1) * jqdiv.width() / 2 + jqdiv.offset().left,
         y: (-pos.y + 1) * jqdiv.height() / 2 + jqdiv.offset().top
     };
+}
+ATH.prototype.drawGoals = function (progress) {
+    var toWrite = progress.texts;
+    $('#goals').animate({
+        right: -300
+    }, 1000).promise().done(function () {
+        $('#goals').html(toWrite)
+            .animate({
+                right: 20
+            }, 1000)
+    })
 
 }
 ATH.prototype.drawRect = function (obj, o) {
@@ -50,7 +61,6 @@ ATH.prototype.drawRect = function (obj, o) {
 //draw ath
 ATH.prototype.update = function () {
     var ath = this;
-
     var frustum = new THREE.Frustum();
     var cameraViewProjectionMatrix = new THREE.Matrix4();
 
@@ -67,16 +77,10 @@ ATH.prototype.update = function () {
     window.scene.traverse(function (obj) {
         if (obj.name === "toHighlight") {
 
-
-
-            // every time the camera or objects change position (or every frame)
-
-            window.camera.updateMatrixWorld(); // make sure the camera matrix is updated
+            window.camera.updateMatrixWorld();
             window.camera.matrixWorldInverse.getInverse(window.camera.matrixWorld);
             cameraViewProjectionMatrix.multiplyMatrices(window.camera.projectionMatrix, window.camera.matrixWorldInverse);
             frustum.setFromMatrix(cameraViewProjectionMatrix);
-
-
 
             var o = ath.toScreenXY(obj.position, window.camera, $('.athrenderer'));
             if (o.x > 0 && o.x < c2d.width() && frustum.intersectsObject(obj)) {

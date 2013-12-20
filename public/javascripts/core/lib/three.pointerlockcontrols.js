@@ -253,35 +253,26 @@ THREE.FirstPersonControls = function (object, domElement) {
             toZ = 0;
 
         if (this.moveBackward || this.moveForward || this.moveLeft || this.moveRight || this.moveUp || this.moveDown || this.autoForward) {
-            vector = null;
-            px = null;
-            dir = null;
-            vector = new THREE.Vector3(0, 0, -1);
+
+            vector = new THREE.Vector3(0, 0, 1);
             pw = vector.applyMatrix4(this.object.matrixWorld);
             dir = pw.sub(this.object.position).normalize();
 
-            if (this.moveForward || (this.autoForward && !this.moveBackward)) {
-                toX += dir.x;
-                toY += dir.y;
-                toZ += dir.z;
-            }
-
-            if (this.moveBackward) {
+            if (this.moveForward) {
                 toX += -dir.x;
                 toY += -dir.y;
                 toZ += -dir.z;
             }
 
+            if (this.moveBackward) {
+                toX += dir.x;
+                toY += dir.y;
+                toZ += dir.z;
+            }
+
             if (this.moveLeft) {
 
-                var dirLeft = new THREE.Vector3(1, 0, 0);
-
-                var axis = pw;
-                var angle = Math.PI / 2;
-                var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
-
-                dirLeft.applyMatrix4(matrix);
-
+                var axis = new THREE.Vector3(1, 0, 0);
 
                 toX += dirLeft.x;
                 toY += 0;

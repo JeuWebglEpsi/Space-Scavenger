@@ -170,13 +170,14 @@ var element = document.body;
         element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
         element.requestPointerLock();
                 }
-        window.toMainMenu = function(){
+        window.toMainMenu = function(hide){
             if(window.isRendering){
                 window.cancelAnimationFrame(isRendering);
                 isRendering = undefined;
             }
             $('#rungame').button('reset')
                 $('#game-opt').fadeIn(1000);
+
                 $('canvas').remove();
                 $('.athrenderer').hide();
                 $('img.ship,img.hombre,#game-opt,.letter-broken').css({
@@ -189,6 +190,15 @@ document.exitPointerLock = document.exitPointerLock ||
                document.webkitExitPointerLock;
 
               document.exitPointerLock();
+              console.log(hide);
+              if(hide){
+                    setTimeout(function(){
+                        $('#game-opt').first('container').hide();
+                        $('.loading').show();
+                        window.runGame(2);
+                    },3000)
+
+                }
                 },1000)
 
 
@@ -219,25 +229,10 @@ document.exitPointerLock = document.exitPointerLock ||
     <div id="blocker">
         <div class="reticule">+</div>
         <div class="arme1"><img src="/assets/2d/arme1.png" align = "right"/></div>
-          <div class="menu"  style="display:none">
-            <ul>
-                <li><a href="">Jouer</a></li>
-                <li><a href="">Options</a></li>
-                <li><a href="">Quitter</a></li>
-                <li><a href=""></a></li>
-            </ul>
-        </div>
+
     </div>
     <div id="instructions"></div>
-    <div class="players">
-      <ul class="playerlist"></ul>
-    </div>
-    <div class="overlay">
-        <ul class="level">
-            <li><a href="#" id="space">Space</a></li>
-            <li><a href="#" id="ship">Ship</a></li>
-        </ul>
-
+    <div id="goals">
     </div>
     <svg class="athrenderer">
         <rect x="50" y="50" width="50" height="50" style="stroke:#2FF;stroke-width:2px;fill:transparent;" />
@@ -256,7 +251,9 @@ document.exitPointerLock = document.exitPointerLock ||
         </div>
         </div>
 
-
+<div id="gameover">GAME OVER</div>
+<div id="youwin">Niveau Terminé</div>
+<div class="loading"> Chargement...</div>
 
 <!-- MODALS -->
 <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
@@ -281,7 +278,7 @@ document.exitPointerLock = document.exitPointerLock ||
 require(['jquery'],function($){
     $('button#rungame').on('click',function(){
         $(this).button('loading').promise().done(function(){
-            window.runGame();
+            window.runGame(1);
             $(document).on('gameReady',function(){
                 $(this).button('complete').promise().done(function(){
                    $('#game-opt').fadeOut(1000);
@@ -289,6 +286,7 @@ require(['jquery'],function($){
                    $('img.ship,img.hombre,#game-opt,.letter-broken').css({
                     '-webkit-animation-play-state':'paused'
                    })
+                   $('#youwin,.loading,#blocker').hide();
                 })
             })
         })
@@ -324,8 +322,7 @@ void main()
 
 <script id="fragmentShaderBullet" type="x-shader/x-vertex">
 varying vec3 vNormal;
-void main()
-{
+void main(){
 
 float red = 1.0;
 
@@ -333,9 +330,7 @@ float red = 1.0;
 
     float blue = 0.0;
 
-
-
-    float intensity = pow( 0.9 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 4.0 );
+    float intensity = pow( 2.9 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 4.0 );
     gl_FragColor = vec4( red, green, blue, 1.0 ) * intensity;
 }
 </script>

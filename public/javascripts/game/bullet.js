@@ -4,80 +4,6 @@ var Bullet = function () {
 }
 
 
-/*
-
-
-A deplacer dans ennemy manage,
-Quand les ennemies meurent, il looteront soit des munition soit de la vie
-
-*/
-Bullet.prototype.createAmmo = function (position) {
-
-    var cube_ammo = new THREE.CubeGeometry(3, 3, 5);
-    var ammo = new Physijs.BoxMesh(cube_ammo,
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-        }),
-        0);
-    ammo.name = "toHighlight";
-    ammo.position = position;
-    ammo.position.y += 1;
-
-
-
-    ammo.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        var nbAmmo = Math.floor((Math.random() * 10) + 1);
-        if (game.localPlayer.get('_ammo') < 100) {
-            scene.remove(this);
-            if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
-                game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
-            } else {
-                game.localPlayer.set('_ammo', 100);
-            }
-        }
-    });
-
-
-    scene.add(ammo);
-}
-
-/*
-
-
-A deplacer dans ennemy manage,
-Quand les ennemies meurent, il looteront soit des munition soit de la vie
-
-*/
-Bullet.prototype.createLife = function (position) {
-
-    var cube_life = new THREE.CubeGeometry(3, 3, 5);
-    var life = new Physijs.BoxMesh(cube_life,
-        new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-        }),
-        0);
-    life.position = position;
-    life.position.y += 1;
-    life.name = "toHighlight";
-
-
-
-    life.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        var nbLife = Math.floor((Math.random() * 100) + 30);
-        console.log(nbLife);
-        if (game.localPlayer.get('_life') < 100) {
-            scene.remove(this);
-            if (game.localPlayer.get('_life') < (100 - nbLife)) {
-                game.localPlayer.set('_life', game.localPlayer.get('_life') + nbLife);
-            } else {
-                game.localPlayer.set('_life', 100);
-            }
-        }
-    });
-
-
-    scene.add(life);
-}
 
 Bullet.prototype.position = function (cameraCollider, camera) {
     var loader = new THREE.JSONLoader();
@@ -123,10 +49,12 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                 if (popItem > 5) {
                     var item = parseInt(Math.random() * 10);
                     if (item > 5) {
-                        new Bullet().createLife(other_object.position)
+                        window.game.map.createLoot(other_object, 'life')
                     } else {
-                        new Bullet().createAmmo(other_object.position);
+                        window.game.map.createLoot(other_object, 'ammo');
                     }
+                } else {
+                    window.game.map.createLoot(other_object, 'levier');
                 }
                 var scale = parseInt(other_object.scale.x);
                 if (scale < 50) {

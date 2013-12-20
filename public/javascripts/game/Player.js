@@ -33,38 +33,10 @@ Player.prototype.set = function (prop, value) {
 Player.prototype.init = function (scene) {
     var bullets = new Bullet();
     console.log('bullets ' + bullets);
+    if (window.game.map.currentLevel === "space")
+        window.game.map.progressSpace();
 }
 
-// Test and avoid collisions
-Player.prototype.collision = function () {
-    'use strict';
-    var collisions, i,
-        // Maximum distance from the origin before we consider collision
-        distance = 32,
-        // Get the obstacles array from our world
-        obstacles = window.map.getObstacles();
-    // For each ray
-    for (i = 0; i < this.rays.length; i += 1) {
-        // We reset the raycaster to this direction
-        this.caster.set(this.mesh.position, this.rays[i]);
-        // Test if we intersect with any obstacle mesh
-        collisions = this.caster.intersectObjects(obstacles);
-        // And disable that direction if we do
-        if (collisions.length > 0 && collisions[0].distance <= distance) {
-            // Yep, this.rays[i] gives us : 0 => up, 1 => up-left, 2 => left, ...
-            if ((i === 0 || i === 1 || i === 7) && this.direction.z === 1) {
-                this.direction.setZ(0);
-            } else if ((i === 3 || i === 4 || i === 5) && this.direction.z === -1) {
-                this.direction.setZ(0);
-            }
-            if ((i === 1 || i === 2 || i === 3) && this.direction.x === 1) {
-                this.direction.setX(0);
-            } else if ((i === 5 || i === 6 || i === 7) && this.direction.x === -1) {
-                this.direction.setX(0);
-            }
-        }
-    }
-},
 // Process the character motions
 Player.prototype.motion = function () {
     'use strict';
@@ -80,7 +52,11 @@ Player.prototype.motion = function () {
     }
 }
 Player.prototype.update = function () {
-    this.ath.update();
+    if (this._life <= 0) {
+        window.game.GameOver();
+    } else {
+        this.ath.update();
+    }
 }
 
 Player.prototype.AI = function () {

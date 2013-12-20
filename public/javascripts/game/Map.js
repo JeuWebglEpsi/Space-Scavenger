@@ -1,16 +1,50 @@
 var Map = function () {
     var map = this;
+    var initialized = false;
+    var currentLevel;
     var walls = [];
     var obstacles = [];
     this.asteroids = [];
     this.particleSystem;
-
-    /* ... */
+    this.increment = -1;
+    //map logic
+    this.levelSpace = {
+        goals: ['reach', 'collect', 'reach2', 'win'],
+        texts: ['Atteignez la porte du vaisseau.', 'Trouvez un levier dans les astéroïdes', 'Rejoignez le vaisseau', '']
+    }
+    this.levelShip = {
+        goals: ['reach', 'collect', 'reach2', 'win'],
+        texts: ['Atteignez la porte du vaisseau.', 'Trouvez un levier dans les astéroïdes', 'Rejoignez le vaisseau']
+    }
+    this.currentProgress = {
+        completed: -1,
+        goal: null,
+        texts: null
+    }
 };
+//space logic
+Map.prototype.progressSpace = function () {
+    var map = this;
+
+    this.currentProgress.completed++;
+    this.currentProgress.goal = this.levelSpace.goals[this.currentProgress.completed];
+    this.currentProgress.texts = this.levelSpace.texts[this.currentProgress.completed];
+
+    if (this.currentProgress.goal === "win") {
+        window.game.YouWin();
+    }
+    window.game.localPlayer.ath.drawGoals(this.currentProgress);
+}
 
 Map.prototype.space = function () {
     var map = this;
     'use strict';
+    this.currentProgress = {
+        completed: -1,
+        goal: null,
+        texts: null
+    }
+    this.currentLevel = 'space';
     console.log('map initializing')
     window.scene.setGravity(new THREE.Vector3(0, 0, 0));
     //maintenant on va ajouter un objet créé avec blender
@@ -28,7 +62,7 @@ Map.prototype.space = function () {
 
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-        var asteroidCount = 1000;
+        var asteroidCount = 800;
         var veryBigAste = 1;
         var bigAste = 200;
         var weight;
@@ -73,6 +107,12 @@ Map.prototype.space = function () {
         mesh.castShadow = true;
         mesh.position.set(0, 0, -3000);
         scene.add(mesh);
+        mesh.addEventListener('collision', function (other_object) {
+            if (other_object.name === "cameraCollider") {
+                if (map.currentProgress.goal === 'reach' || map.currentProgress.goal === 'reach2')
+                    map.progressSpace();
+            }
+        })
     })
     // on ajoute un point de lumière
 
@@ -134,7 +174,17 @@ Map.prototype.space = function () {
     // add it to the scene
     scene.add(map.particleSystem);
 }
+Map.prototype.progressShip = function () {
+
+}
 Map.prototype.ship = function () {
+
+    this.currentProgress = {
+        completed: -1,
+        goal: null,
+        texts: null
+    }
+    this.currentLevel = 'ship';
 
     window.scene.setGravity(new THREE.Vector3(0, -10, 0));
 
@@ -274,7 +324,7 @@ Map.prototype.ship = function () {
 
                         console.log(mechant.position);
                         mechant.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                //                     console.log('robot ' + this. id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                            //                     console.log('robot ' + this. id + ' in collision with ' + other_object.id + ' ' + other_object.name);
                             if (other_object.name === "bullet") {
                                 var munition = new Bullet();
 
@@ -288,38 +338,37 @@ Map.prototype.ship = function () {
 
                         scene.add(mechant);
                     });
-                    
-
-                // A Deplacer dans la detection de collision
-
-                //var munition = new Bullet();
-                //munition.createLife(floor.position);
 
 
+                    // A Deplacer dans la detection de collision
 
-                
-            // var loader = new THREE.JSONLoader();
-            //  loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-                       
+                    //var munition = new Bullet();
+                    //munition.createLife(floor.position);
 
-            //                 var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
-            //                 mesh.__dirtyPosition = true;
-            //                 mesh.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
-            //                 mesh.position.y = 0;
-            //                 mesh.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
 
-            //                 mesh.receiveShadow = true;
-            //                 mesh.castShadow = true;
 
-            //                 mesh.name = "robot";
-            //                 mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            //                     console.log('robot ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                            
+                    // var loader = new THREE.JSONLoader();
+                    //  loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
 
-            //                 });
-            //                 scene.add(mesh);
-                        
-            //         });
+
+                    //                 var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials));
+                    //                 mesh.__dirtyPosition = true;
+                    //                 mesh.position.x = ((i - units / 2) * UNITSIZE) - correctionX;
+                    //                 mesh.position.y = 0;
+                    //                 mesh.position.z = ((j - units / 2) * UNITSIZE) + correctionZ;
+
+                    //                 mesh.receiveShadow = true;
+                    //                 mesh.castShadow = true;
+
+                    //                 mesh.name = "robot";
+                    //                 mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                    //                     console.log('robot ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+
+
+                    //                 });
+                    //                 scene.add(mesh);
+
+                    //         });
 
                 } else {
                     var wall = new THREE.Mesh(cube, materials[map[i][j]], 0);
@@ -363,10 +412,6 @@ Map.prototype.ship = function () {
 
 
 
-
-
-
-
         }
 
         // var i = 100;
@@ -407,25 +452,83 @@ Map.prototype.ship = function () {
 
 }
 
-Map.prototype.addLensFlare = function (x, y, z, size, overrideImage) {
+Map.prototype.createLoot = function (parent_object, type) {
+    var map = this;
+    var item, mesh, position, cube;
 
+    position = parent_object.position;
+    cube = new THREE.CubeGeometry(3, 3, 5);
+
+    if (type === "life") {
+        mesh = new Physijs.BoxMesh(cube,
+            new THREE.MeshLambertMaterial({
+                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            }),
+            0);
+        mesh.position = position;
+        mesh.position.y += 1;
+        mesh.name = "toHighlight";
+
+        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            var nbLife = Math.floor((Math.random() * 100) + 30);
+            console.log(nbLife);
+            if (game.localPlayer.get('_life') < 100) {
+                scene.remove(this);
+                if (game.localPlayer.get('_life') < (100 - nbLife)) {
+                    game.localPlayer.set('_life', game.localPlayer.get('_life') + nbLife);
+                } else {
+                    game.localPlayer.set('_life', 100);
+                }
+            }
+        });
+    } else if (type === "ammo") {
+        mesh = new Physijs.BoxMesh(cube,
+            new THREE.MeshLambertMaterial({
+                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            }),
+            0);
+        mesh.name = "toHighlight";
+        mesh.position = position;
+        mesh.position.y += 1;
+
+        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            var nbAmmo = Math.floor((Math.random() * 10) + 1);
+            if (game.localPlayer.get('_ammo') < 100) {
+                scene.remove(this);
+                if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
+                    game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
+                } else {
+                    game.localPlayer.set('_ammo', 100);
+                }
+            }
+        });
+
+    } else if (type === "levier") {
+        mesh = new Physijs.BoxMesh(cube,
+            new THREE.MeshLambertMaterial({
+                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            }),
+            0);
+        mesh.name = "toHighlight";
+        mesh.position = position;
+        mesh.position.y += 1;
+
+        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            if (map.currentProgress.goal === 'collect' && other_object.name === "cameraCollider")
+                map.progressSpace();
+        });
+
+    }
+    scene.add(mesh);
 }
 
-//  this function will operate over each lensflare artifact, moving them around the screen
-Map.prototype.lensFlareUpdateCallback = function (object) { }
 //Map updating function
 Map.prototype.update = function () {
     var map = this;
     if (typeof map.particleSystem !== 'undefined')
         map.particleSystem.rotation.y += 0.0002;
-
-    // console.log('Map updating...');
 }
 
-Map.prototype.getObstacles = function () {
-    'use strict';
-    return map.obstacles.concat(map.walls);
-}
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = Map;
 else

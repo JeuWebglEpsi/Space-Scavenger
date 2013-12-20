@@ -2,6 +2,7 @@
         var game = this;
         game.biome = new Biome();
         game.map = new Map();
+
     }
     //creation de personnage en fonction du type.
     Game.prototype.createPlayer = function (s) {
@@ -18,7 +19,20 @@
             console.log(game.biome.personnages);
         }
     }
-
+    Game.prototype.YouWin = function () {
+        $('#youwin').show();
+        setTimeout(function () {
+            $('#youwin').hide();
+            window.toMainMenu(2);
+        }, 4000);
+    }
+    Game.prototype.GameOver = function () {
+        $('#gameover').show();
+        setTimeout(function () {
+            $('#gameover').hide();
+            window.toMainMenu();
+        }, 4000)
+    }
     //Game updating function
     Game.prototype.update = function () {
         var game = this;

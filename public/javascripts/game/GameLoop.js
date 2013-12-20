@@ -1,8 +1,8 @@
 require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, Audio5js) {
     console.log(arguments);
-    window.runGame = function () {
+    window.runGame = function (level) {
 
-
+        console.log('Running game ' + level)
 
         var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
@@ -31,7 +31,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
         window.scene = new Physijs.Scene({
             reportsize: 2100,
-            fixedTimeStep: 1 / 200
+            fixedTimeStep: 1 / 90
         });
 
 
@@ -72,7 +72,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 color: 0x888888
             })
         );
-
+        cameraCollider.name = "cameraCollider";
         cameraCollider.addEventListener('collision', function (obj) {
             game.localPlayer.set('_life', game.localPlayer.get('_life') - 10);
             console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
@@ -111,8 +111,12 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
 
         window.game = new Game();
-        game.map.space();
-        //game.map.ship();
+
+        if (level === 1)
+            game.map.space();
+        else if (level === 2)
+            game.map.ship();
+
         console.log(game.map);
 
         window.game.createPlayer('local');
@@ -141,7 +145,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 }
 
             })
-            scene.simulate(undefined, 8);
+            scene.simulate(undefined, 3);
 
 
 
