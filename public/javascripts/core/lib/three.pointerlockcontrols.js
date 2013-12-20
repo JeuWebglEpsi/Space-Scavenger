@@ -254,9 +254,11 @@ THREE.FirstPersonControls = function (object, domElement) {
 
         if (this.moveBackward || this.moveForward || this.moveLeft || this.moveRight || this.moveUp || this.moveDown || this.autoForward) {
 
+
             vector = new THREE.Vector3(0, 0, 1);
             pw = vector.applyMatrix4(this.object.matrixWorld);
             dir = pw.sub(this.object.position).normalize();
+
 
             if (this.moveForward) {
                 toX += -dir.x;
