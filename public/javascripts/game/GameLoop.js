@@ -65,7 +65,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
         camera.rotation.set(0, 0, 0);
-        camera.position.set(0,30,0);
+        camera.position.set(0, 30, 0);
 
         var cameraCollider = new Physijs.SphereMesh(
             new THREE.SphereGeometry(4),
@@ -80,7 +80,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         });
         cameraCollider.rotation.set(0, 0, 0);
         //cameraCollider.position.set(0, 0, 8000);
-        cameraCollider.position.set(850,50,-950);
+        cameraCollider.position.set(850, 50, -950);
         cameraCollider.add(camera);
         scene.add(cameraCollider);
 
@@ -111,20 +111,18 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         var controls = new FirstPersonControl(cameraCollider);
 
 
-        window.game = new Game();
-<<<<<<< HEAD
+        window.game = new Game(); << << << < HEAD
 
         if (level === 1)
             game.map.space();
         else if (level === 2)
             game.map.ship();
 
-        console.log(game.map);
-=======
+        console.log(game.map); === === =
         //game.map.space();
         game.map.ship();
         //console.log(game.map);
->>>>>>> cb2d0e55571fb1f26378dc86fa2736e0318cfe24
+        >>> >>> > cb2d0e55571fb1f26378dc86fa2736e0318cfe24
 
         window.game.createPlayer('local');
 
