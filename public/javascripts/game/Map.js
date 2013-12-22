@@ -1,3 +1,6 @@
+/**
+ * Classe de gesion des maps
+ */
 var Map = function () {
     var map = this;
     var initialized = false;
@@ -22,7 +25,10 @@ var Map = function () {
         texts: null
     }
 };
-//space logic
+/**
+ * Fonction de logique de jeu niveau 1
+ * @return {nothing}
+ */
 Map.prototype.progressSpace = function () {
     var map = this;
 
@@ -35,7 +41,10 @@ Map.prototype.progressSpace = function () {
     }
     window.game.localPlayer.ath.drawGoals(this.currentProgress);
 }
-
+/**
+ * Fonction de génération de l'espace
+ * @return {nothing}
+ */
 Map.prototype.space = function () {
     var map = this;
     'use strict';
@@ -174,9 +183,17 @@ Map.prototype.space = function () {
     // add it to the scene
     scene.add(map.particleSystem);
 }
+/**
+ * Fonction de logique de jeu du niveau 2
+ * @return {[nothing]}
+ */
 Map.prototype.progressShip = function () {
 
 }
+/**
+ * Fonction de génération du niveau 2
+ * @return {nothing}
+ */
 Map.prototype.ship = function () {
 
     window.controls.movementSpeed = 100;
@@ -361,7 +378,7 @@ Map.prototype.ship = function () {
 
 
 }
-
+//à déplacer dans Utils
 Map.prototype.createLoot = function (parent_object, type) {
     var map = this;
     var item, mesh, position, cube;
@@ -431,7 +448,10 @@ Map.prototype.createLoot = function (parent_object, type) {
     scene.add(mesh);
 }
 
-//Map updating function
+/**
+ * Fonction de mise a jour
+ * @return {nothing}
+ */
 Map.prototype.update = function () {
     var map = this;
     if (typeof map.particleSystem !== 'undefined')
@@ -441,4 +461,4 @@ Map.prototype.update = function () {
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = Map;
 else
-    window.Map = Map;
+    window.Map = Map; * /

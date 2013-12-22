@@ -1,10 +1,16 @@
+/**
+ * Classe de balle
+ */
 var Bullet = function () {
     var bullet = this;
     this.name = 'bullet';
 }
-
-
-
+/**
+ * Fonctio nde création balle
+ * @param  {Mesh} cameraCollider Point de départ de la balle
+ * @param  {[Camera]} camera         Caméra du joueur
+ * @return {nothing}
+ */
 Bullet.prototype.position = function (cameraCollider, camera) {
     var loader = new THREE.JSONLoader();
 

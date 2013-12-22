@@ -1,3 +1,11 @@
+/**
+ * Classe de représentation du joueur
+ * @param {string} id      identifiant unique
+ * @param {String} name    Nom du joueur
+ * @param {Number} life    Vie
+ * @param {String} element Classe élémentaire
+ * @param {String} type    Type de personnage (joueur/pnj)
+ */
 var Player = function (id, name, life, element, type) {
     var player = this;
     //id de socket(selecteur unique)
@@ -29,7 +37,11 @@ Player.prototype.set = function (prop, value) {
     this[prop] = value;
     this.ath.update();
 }
-
+/**
+ * Initialisation  a la création
+ * @param  {[type]} scene [description]
+ * @return {[type]}       [description]
+ */
 Player.prototype.init = function (scene) {
     var bullets = new Bullet();
     if (window.game.map.currentLevel === "space")
@@ -50,6 +62,10 @@ Player.prototype.motion = function () {
         return true;
     }
 }
+/**
+ * Fonction de mise a jour
+ * @return {[nothing]}
+ */
 Player.prototype.update = function () {
     if (this._life <= 0) {
         window.game.GameOver();

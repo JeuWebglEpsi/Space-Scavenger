@@ -1,3 +1,7 @@
+/**
+ * Affichage tête haute
+ * gère l'affichage 2D en web
+ */
 var ATH = function () {
     var ath = this;
     this.lifebar = 0;
@@ -15,8 +19,14 @@ ATH.prototype.set = function (prop, value) {
 ATH.prototype.initialize = function (life, ammo) {
     this.lifebar = life;
     this.ammo = ammo;
-
 }
+/**
+ * Fonction de projection 3D -> 2D
+ * @param  {number} position tableau de position
+ * @param  {Camera} camera   object caméra permetant la vue
+ * @param  {DomElement} jqdiv    élement cible pour l'affichage
+ * @return {nothing}
+ */
 ATH.prototype.toScreenXY = function (position, camera, jqdiv) {
     var pos = position.clone();
     var projScreenMat = new THREE.Matrix4();
@@ -28,6 +38,11 @@ ATH.prototype.toScreenXY = function (position, camera, jqdiv) {
         y: (-pos.y + 1) * jqdiv.height() / 2 + jqdiv.offset().top
     };
 }
+/**
+ * fonction de dessin des objectifs à l'écran
+ * @param  {Object} progress objet représentant la progression actuelle
+ * @return {nothing}
+ */
 ATH.prototype.drawGoals = function (progress) {
     var toWrite = progress.texts;
     $('#goals').animate({
@@ -40,6 +55,12 @@ ATH.prototype.drawGoals = function (progress) {
     })
 
 }
+/**
+ * Fonction de dessin SVG sur l'ATH
+ * @param  {Object} obj représente l'objet à dessiner et ses attributs
+ * @param  {SVGElement} o   représente l'objet SVG à dessiner et ses attributs
+ * @return {nothing}
+ */
 ATH.prototype.drawRect = function (obj, o) {
     var r = document.getElementById('rect_' + obj.id);
     if (r) {
@@ -58,7 +79,10 @@ ATH.prototype.drawRect = function (obj, o) {
         $('.athrenderer').append(rect);
     }
 }
-//draw ath
+/**
+ * Fonction de mise a jour de l'ath
+ * @return {nothing}
+ */
 ATH.prototype.update = function () {
     var ath = this;
     var frustum = new THREE.Frustum();
@@ -89,9 +113,7 @@ ATH.prototype.update = function () {
         }
     })
 }
-ATH.prototype.highlightItem = function (item) {
-    //TODO
-}
+
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = ATH;

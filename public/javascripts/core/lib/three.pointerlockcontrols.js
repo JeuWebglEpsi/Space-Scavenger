@@ -1,9 +1,8 @@
 /**
- * @author mrdoob / http://mrdoob.com/
- * @author alteredq / http://alteredqualia.com/
- * @author paulirish / http://paulirish.com/
+ * Classe de controle de l'avatar
+ * @param {Object} object     Mesh à controler
+ * @param {DOMElement} domElement Object ou capturer les INPUT
  */
-
 THREE.FirstPersonControls = function (object, domElement) {
     this.object = object;
     this.target = new THREE.Vector3(0, 0, 0);
@@ -76,7 +75,11 @@ THREE.FirstPersonControls = function (object, domElement) {
     };
 
 
-
+    /**
+     * Capture mouvement pointeur
+     * @param  {Event} event evenement
+     * @return {nothing}
+     */
     this.onMouseMove = function (event) {
         this.mouseX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
         this.mouseY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
@@ -88,6 +91,11 @@ THREE.FirstPersonControls = function (object, domElement) {
 
     };
 
+    /**
+     * Handler touche clavier
+     * @param  {Event} event evenemnt clavier
+     * @return {nothing}
+     */
     this.onKeyDown = function (event) {
 
         //event.preventDefault();
@@ -229,6 +237,11 @@ THREE.FirstPersonControls = function (object, domElement) {
         return direction;
 
     }
+    /**
+     * Fonction mise a jour
+     * @param  {TimeStamp} delta
+     * @return {nothing}
+     */
     this.update = function (delta) {
         if (this.freeze) {
 
