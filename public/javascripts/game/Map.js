@@ -179,10 +179,7 @@ Map.prototype.progressShip = function () {
 
 }
 Map.prototype.ship = function () {
-<<<<<<< HEAD
 
-=======
->>>>>>> b4d3a53c0524f90a7ed2defdd1b8994e45d7f790
 
     window.controls.movementSpeed = 100;
 
@@ -315,7 +312,6 @@ Map.prototype.ship = function () {
             //generation des murs
             if (map[i][j] === 1 || map[i][j] === 2) {
 
-<<<<<<< HEAD
 
                     var wall = new Physijs.BoxMesh(cube, materials[this.map[i][j]], 0);
                     wall.position.x = ((i - units / 2) * UNITSIZE) ;
@@ -326,17 +322,6 @@ Map.prototype.ship = function () {
                         console.log("mur touche");
                     });
                     scene.add(wall);
-=======
-                var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
-                wall.position.x = ((i - units / 2) * UNITSIZE);
-                wall.position.y = (WALLHEIGHT / 2);
-                wall.position.z = ((j - units / 2) * UNITSIZE);
-                wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                    // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                    console.log("mur touche");
-                });
-                scene.add(wall);
->>>>>>> b4d3a53c0524f90a7ed2defdd1b8994e45d7f790
 
 
             }
@@ -361,27 +346,20 @@ Map.prototype.ship = function () {
                 scene.add(roof);
 
 
-<<<<<<< HEAD
-                if(this.map[i][j] === 9) {
-=======
                 if (map[i][j] === 9) {
->>>>>>> b4d3a53c0524f90a7ed2defdd1b8994e45d7f790
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                 }
 
             
 
-}
+            }
 
         }
 
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> b4d3a53c0524f90a7ed2defdd1b8994e45d7f790
 
 }
 
