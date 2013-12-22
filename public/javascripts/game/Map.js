@@ -461,4 +461,4 @@ Map.prototype.update = function () {
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = Map;
 else
-    window.Map = Map; * /
+    window.Map = Map;

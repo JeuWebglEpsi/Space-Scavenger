@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>JeuWebGlProjet</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/javascripts/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/javascripts/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+
+
+    <!-- prefetching textures ans mesh for speed -->
+    <link rel="prefetch" href="/javascripts/Maps/bgd2.js" />
+    <link rel="prefetch" href="/javascripts/Maps/ship.js" />
+    <link rel="prefetch" href="/javascripts/Maps/asteroid.js" />
+    <link rel="prefetch" href="/javascripts/Maps/cube1.png" />
+    <link rel="prefetch" href="/javascripts/Maps/particle.png" />
+
+
+    <!--Scripts files-->
+    <script type="text/javascript" src="/javascripts/core/lib/require.js"></script>
+    <script type="text/javascript">
+
+    require.config({
+    baseUrl: '/javascripts/',
+    paths: {
+        jquery: 'core/lib/jquery',
+        bootstrap:'bootstrap/js/bootstrap.min',
+        socket: 'core/lib/socket.io.min',
+        keydrown: 'core/lib/keydrown',
+        three:'core/lib/three.min',
+      //  clock:'core/lib/three.clock',
+        pointerlockcontrols:'core/lib/three.pointerlockcontrols',
+        physi: 'core/lib/physi',
+        orbit: 'core/lib/orbitcontrol',
+        resize:'core/lib/threex.windowresize',
+        ath:'game/Ath',
+        map:'game/Map',
+        personnage:'game/Personnage',
+        player:'game/Player',
+        bullet:'game/Bullet',
+        game:'game/Game',
+        biome:'game/Biome',
+        audiojs:'core/lib/audio5.min',
+        enemyManage: 'game/EnemyManage'
+    },
+    shim: {
+        three:{
+            deps: [],
+            exports: 'THREE'
+        },
+        audiojs:{
+            exports:'Audio5js'
+        },
+        bootstrap:{
+            deps:['jquery']
+        },
+        pointerlockcontrols:{
+            deps:['three','bootstrap'],
+            exports:'THREE.FirstPersonControls'
+        },
+        resize:{
+            deps:['three'],
+            exports:'THREEx.WindowResize'
+        },
+        physi: {
+            deps:['three'],
+            exports : 'Physijs'
+        },
+        orbit:['three'],
+        keydrown:['jquery'],
+        orbit:['three'],
+        ath:{
+            deps:[''],
+            exports:'window.Ath'
+        },
+        map:{
+            deps:['three', 'enemyManage'],
+            exports:'window.Map'
+        },
+        personnage:{
+            deps:['three','ath'],
+            exports:'window.Personnage'
+        },
+         player:{
+            deps:['three','ath', 'bullet'],
+            exports:'window.Player'
+        },
+        bullet:{
+            deps:['three','ath'],
+            exports:'window.Bullet'
+        },
+        biome:{
+            deps:['personnage','player'],
+            exports:'window.Biome'
+        },
+        enemyManage:{
+            deps:['personnage'],
+            exports:'window.EnemyManage'
+        },
+        game:{
+            deps:['three','ath','map','personnage','player','biome','socket','bullet','enemyManage'],
+            exports:'window.Game'
+        }
+    }
+});
+    </script>
+    <script async type="text/javascript" src='/javascripts/game/GameLoop.js'></script>
+    <script >
+    //shimming
+
+   window.onbeforeunload = function (e) {
+e = e || window.event;
+
+// For IE and Firefox prior to version 4
+if (e) {
+    e.returnValue = 'Etes-vous sure de vouloir quitter la page?';
+}
+
+// For Safari
+return 'Etes-vous sure de vouloir quitter la page?';
+};
+
+    (function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame =
+          window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+     if ('webkitIsFullScreen' in document) {
+            Document.prototype.cancelFullScreen = Document.prototype.webkitCancelFullScreen;
+            HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.webkitRequestFullScreen;
+            document.__defineGetter__("isFullScreen", function () {
+                return document.webkitIsFullScreen;
+            });
+            document.__defineGetter__("fullScreen", function () {
+                return document.webkitIsFullScreen;
+            });
+        } else if ('mozFullScreen' in document) {
+            Document.prototype.cancelFullScreen = document.mozCancelFullScreen;
+            HTMLElement.prototype.requestFullScreen = HTMLElement.prototype.mozRequestFullScreen;
+            document.__defineGetter__("isFullScreen", function () {
+                return document.mozFullScreen;
+            });
+            document.__defineGetter__("fullScreen", function () {
+                return document.mozFullScreen;
+            });
+        }
+        window.fullScreen= function(){
+            document.body.requestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+         window.pointerLock= function(){
+var element = document.body;
+        element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+        element.requestPointerLock();
+                }
+        window.toMainMenu = function(hide){
+            if(window.isRendering){
+                window.cancelAnimationFrame(isRendering);
+                isRendering = undefined;
+            }
+            $('#rungame').button('reset')
+                $('#game-opt').fadeIn(1000);
+
+                $('canvas').remove();
+                $('.athrenderer').hide();
+                $('img.ship,img.hombre,#game-opt,.letter-broken').css({
+                    '-webkit-animation-play-state':'running'
+                })
+
+                window.game = undefined;
+                window.controls = undefined;
+                window.scene = undefined;
+                window.render=undefined;
+
+                setTimeout(function(){
+document.exitPointerLock = document.exitPointerLock ||
+               document.mozExitPointerLock ||
+               document.webkitExitPointerLock;
+
+              document.exitPointerLock();
+              if(hide){
+                        $('.loading').show();
+
+                    setTimeout(function(){
+                        window.runGame(2);
+                    },3000)
+
+                }
+                },1000)
+
+
+        }
+        </script>
+  </head>
+  <body id="mainContainer">
+    <div id="game-opt">
+
+        <div class="container text-center">
+            <h1>S<span class="letter-broken">p</span>ace Sca<span class="letter-broken">v</span>eng<span class="letter-broken">e</span>r</h1>
+            <div class="col-lg-4 col-lg-offset-4">
+                <button type="button" id="rungame"  class="btn btn-primary" data-loading-text="Chargement . . ." data-complete-text="C'est parti !" >Jouer</button><br/><br/>
+            <button type="button" class="btn btn-primary" onclick="window.fullScreen();">Plein ecran</button><br><br>
+            <button type="button" id="credits"class="btn btn-primary" >Credits</button><br><br>
+
+            </div>
+        </div>
+            <img src="/assets/2d/hombre.png" alt="" class="hombre"><img src="/assets/2d/ship.png" alt="" class="ship">
+
+        <div class="container text-center names">
+            <ul class="list-inline">
+                <li>Hugues Foucray</li>
+                <li>Joseph Rouffet</li>
+                <li>Tommy Boucher</li>
+            </ul>
+        </div>
+    </div>
+    <div id="blocker">
+        <div class="reticule">+</div>
+        <div class="arme1"><img src="/assets/2d/arme1.png" align = "right"/></div>
+
+    </div>
+    <div id="instructions"></div>
+    <div id="goals">
+    </div>
+    <svg class="athrenderer">
+        <rect x="50" y="50" width="50" height="50" style="stroke:#2FF;stroke-width:2px;fill:transparent;" />
+    </svg>
+
+     <div class="ath">
+        <div class="values">
+            <div class="athlife">
+                <font></font>
+                <progress class="life" value="" max="100"></progress>
+            </div>
+            <div class="athammo">
+                <font></font>
+                <progress class="ammo" value="" max="100"></progress>
+            </div>
+        </div>
+        </div>
+
+<div id="gameover">GAME OVER</div>
+<div id="youwin">Niveau Terminé</div>
+<div class="loading"> Chargement...</div>
+
+<!-- MODALS -->
+<div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Menu de jeu</h4>
+      </div>
+      <div class="modal-body">
+                <button class="btn btn-primary" onclick="window.fullScreen();">Activer le mode plein ecran</button><br><br>
+                <button class="btn btn-primary" data-dismiss="modal" onclick="window.pointerLock();">Capturer le pointeur</button><br><br>
+                <button class="btn btn-primary" onclick="window.toMainMenu()" data-dismiss="modal">Quitter la partie</button><br><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="creditModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Crédits</h4>
+      </div>
+      <div class="modal-body">
+        <p class="white">opp</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+require(['jquery'],function($){
+    $('button#credits').on('click',function(){
+        $('#creditModal').modal();
+    })
+    $('button#rungame').on('click',function(){
+        $(this).button('loading').promise().done(function(){
+            window.runGame(1);
+            $(document).on('gameReady',function(){
+                $(this).button('complete').promise().done(function(){
+                   $('#game-opt').fadeOut(1000);
+                   $('.athrenderer').show();
+                   $('img.ship,img.hombre,#game-opt,.letter-broken').css({
+                    '-webkit-animation-play-state':'paused'
+                   })
+                   $('#youwin,.loading,#blocker').hide();
+                })
+            })
+        })
+    })
+    $('.modal').on('show.bs.modal',function(){
+        document.exitPointerLock = document.exitPointerLock ||
+               document.mozExitPointerLock ||
+               document.webkitExitPointerLock;
+
+              document.exitPointerLock();
+
+    })
+    $('#menuModal').on('hide.bs.modal',function(){
+var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+
+            var element = document.body;
+            element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+            element.requestPointerLock();
+    })
+})
+
+</script>
+
+<script id="vertexShaderBullet" type="x-shader/x-vertex">
+varying vec3 vNormal;
+void main()
+{
+    vNormal = normalize( normalMatrix * normal );
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}
+</script>
+
+<script id="fragmentShaderBullet" type="x-shader/x-vertex">
+varying vec3 vNormal;
+void main(){
+
+float red = 1.0;
+
+    float green = 0.0 ;
+
+    float blue = 0.0;
+
+    float intensity = pow( 2.9 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 4.0 );
+    gl_FragColor = vec4( red, green, blue, 1.0 ) * intensity;
+}
+</script>
+  </body>
+</html>

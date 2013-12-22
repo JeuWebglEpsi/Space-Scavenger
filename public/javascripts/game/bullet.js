@@ -108,7 +108,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
 Bullet.prototype.hasMunition = function () {
 
-    if (game.localPlayer.get('_ammo') > 0) {
+    if (window.game.localPlayer.get('_ammo') > 0) {
         return true;
     } else {
         return false;
