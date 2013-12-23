@@ -105,7 +105,19 @@ Map.prototype.space = function () {
 
 
     loader.load('/javascripts/Maps/ship.js', function (geometry, materials) {
+
+        var mirrorCamera = new THREE.CubeCamera(0.1, 5000, 512);
+        var mirrorMaterial = new THREE.MeshPhongMaterial({
+            emissive: 0x111111,
+            envMap: mirrorCamera.renderTarget
+        });
+        materials.push(mirrorMaterial);
+        console.log(materials);
+
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 1e10);
+
+
+
         mesh.rotation.z += 2;
         mesh.rotation.y += 2;
         mesh.rotation.x = 0;
