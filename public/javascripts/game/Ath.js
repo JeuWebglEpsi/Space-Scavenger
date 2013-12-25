@@ -72,6 +72,11 @@ ATH.prototype.update = function () {
     var cartridge = $('.athammo');
     cartridge.find('font').text(game.localPlayer.get('_ammo'));
     cartridge.find('progress.ammo').val(game.localPlayer.get('_ammo'));
+
+    var stock_energy = $('.athenergy');
+    cartridge.find('font').text(game.localPlayer.get('_energy'));
+    cartridge.find('progress.energy').val(game.localPlayer.get('_energy'));
+
     var c2d = $('.athrenderer');
     c2d.empty();
     window.scene.traverse(function (obj) {

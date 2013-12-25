@@ -11,6 +11,7 @@ var Player = function (id, name, life, element, type) {
     this._name = name;
     this._life = life;
     this._ammo = 100;
+    this._energy = 0;
     this._element = element;
     this._type = type;
     this._items = [];
@@ -35,6 +36,8 @@ Player.prototype.init = function (scene) {
     console.log('bullets ' + bullets);
     if (window.game.map.currentLevel === "space")
         window.game.map.progressSpace();
+    else if (window.game.map.currentLevel === "ship")
+        window.game.map.progressShip();
 }
 
 // Process the character motions

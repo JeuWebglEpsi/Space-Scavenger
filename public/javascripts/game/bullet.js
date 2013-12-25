@@ -86,6 +86,37 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                         }
                     });
                 }
+            } else if (other_object.name === "wall_breakable") {
+
+                        var i=5;
+                                while(i--){
+                                    var miniwall = new Physijs.BoxMesh(
+                                        new THREE.CubeGeometry(10, 10, 10),
+                                        new THREE.MeshLambertMaterial({
+                                                map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull-Porte2.jpg')
+                                            }),
+                                        10
+                                        );
+                                    var nb = Math.random();
+                                    var signe = "";
+                                    if (nb >= 0.5)
+                                        signe = 1;
+                                    else
+                                        signe = -1
+
+                                    miniwall.position.x = other_object.position.x + (Math.random() * signe) ;
+                                    miniwall.position.y = other_object.position.y + (Math.random() * signe) ;
+                                    miniwall.position.z = other_object.position.z + (Math.random() * signe) ;
+
+                                    miniwall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                                        console.log("miniwall colision with" + other_object.name);
+                                        if (other_object.name  === 'bullet')
+                                            scene.remove(this);
+                                    });
+                                    console.log("miniwall creation");
+                                    scene.add(miniwall);
+                                }
+
             }
         });
 

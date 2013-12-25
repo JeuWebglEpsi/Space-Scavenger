@@ -7,14 +7,16 @@ var Map = function () {
     this.asteroids = [];
     this.particleSystem;
     this.increment = -1;
+    this.ship_map = [];
+    this.command_wall = []; 
     //map logic
     this.levelSpace = {
         goals: ['reach', 'collect', 'reach2', 'win'],
         texts: ['Atteignez la porte du vaisseau.', 'Trouvez un levier dans les astéroïdes', 'Rejoignez le vaisseau', '']
     }
     this.levelShip = {
-        goals: ['reach', 'collect', 'reach2', 'win'],
-        texts: ['Atteignez la porte du vaisseau.', 'Trouvez un levier dans les astéroïdes', 'Rejoignez le vaisseau']
+        goals: ['collect', 'escape', 'reach', 'desactivate', 'escape2', 'win'],
+        texts: ['Récupérer suffisamment d\'énergie', 'Vous avez asser d/énergie, vous pouvez sortir du vaisseau', 'La porte est verrouillée. Trouvez la salle des commandes et déverrouillez la porte.', 'La porte est déverrouillée, vous pouvez sortir du vaisseau','']
     }
     this.currentProgress = {
         completed: -1,
@@ -90,6 +92,10 @@ Map.prototype.space = function () {
             mesh.name = "asteroid";
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                 // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                if (other_object.name === "cameraCollider")
+                    window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
+
+
             });
             scene.add(mesh);
         }
@@ -175,11 +181,25 @@ Map.prototype.space = function () {
     // add it to the scene
     scene.add(map.particleSystem);
 }
+
+
+
 Map.prototype.progressShip = function () {
+    var map = this;
 
+    this.currentProgress.completed++;
+    this.currentProgress.goal = this.levelShip.goals[this.currentProgress.completed];
+    this.currentProgress.texts = this.levelShip.texts[this.currentProgress.completed];
+
+    if (this.currentProgress.goal === "win") {
+        window.game.YouWin();
+    }
+    window.game.localPlayer.ath.drawGoals(this.currentProgress);
 }
-Map.prototype.ship = function () {
 
+
+Map.prototype.ship = function () {  
+    var map = this;
 
     window.controls.movementSpeed = 100;
 
@@ -188,6 +208,7 @@ Map.prototype.ship = function () {
         goal: null,
         texts: null
     }
+
     this.currentLevel = 'ship';
 
     window.scene.setGravity(new THREE.Vector3(0, -30, 0));
@@ -231,31 +252,31 @@ Map.prototype.ship = function () {
 
 
     // Creation map en 2d
-    var map = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, ],
-        [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, ],
-        [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 0, 0, 9, 0, 0, 0, 9, 1, 9, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, ],
-        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, ],
-        [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, ],
-        [1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, ],
-        [1, 0, 0, 0, 1, 1, 1, 0, 1, 2, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, ],
-        [1, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 9, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, ],
-        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
-        [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, ],
-        [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-    ],
-        mapW = map.length,
-        mapH = map[0].length;
+    this.ship_map = [
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 0, 8, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+[1, 1, 0, 0, 0, 1, 1, 1, 9, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, ],
+[1, 1, 1, 4, 1, 1, 1, 1, 0, 1, 1, 0, 9, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 9, 1, 0, 9, 1, 0, 0, 9, 1, 0, 9, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 9, 0, 5, 0, 0, 0, 0, 9, 0, 6, 0, 9, 0, 0, 1, ],
+[1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 9, 0, 9, 0, 0, 0, 1, ],
+[1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+[1, 1, 1, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 0, 8, 0, 4, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 0, 0, 0, 1, 1, 1, 9, 1, 1, 0, 0, 0, 9, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, ],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, ],
+[1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
+[1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
+[1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+];
+        var mapH = this.ship_map[0].length;
+        var mapW = this.ship_map.length;
 
 
     var units = mapW;
@@ -268,36 +289,35 @@ Map.prototype.ship = function () {
     var materials = [
         // new THREE.MeshLambertMaterial({color: 0xEDCBA0}),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg'),
-
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg') //0 Sol + plafond
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') //1 Mur normal
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-raye.png')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-raye.png') //2 Mur raye
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte1.jpg') //3 Porte D'entrée
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte2.jpg') //4 Porte cassable
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte3.jpg') //5 Porte cible
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 6 super mechant
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 7 poste de controle
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 8 energy
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg')
-        }),
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg') // Méchant
+        })
     ];
     // Geometry: walls
     var cube = new THREE.CubeGeometry(UNITSIZE, WALLHEIGHT, UNITSIZE);
@@ -308,53 +328,117 @@ Map.prototype.ship = function () {
     var robot_mechant = new EnemyManage();
 
     for (var i = mapW - 1; i >= 0; i--) {
-        for (var j = map[i].length - 1; j >= 0; j--) {
+        for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
-            if (map[i][j] === 1 || map[i][j] === 2) {
+            if (this.ship_map[i][j] === 1 
+                || this.ship_map[i][j] === 2 
+                || this.ship_map[i][j] === 3 // Porte d'entrée
+                || this.ship_map[i][j] === 4 //Porte fragile
+                || this.ship_map[i][j] === 5)// Porte sécurisé 
+            {
 
-
-                    var wall = new Physijs.BoxMesh(cube, materials[this.map[i][j]], 0);
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+                    wall.name = 'wall';
                     wall.position.x = ((i - units / 2) * UNITSIZE) ;
                     wall.position.y = (WALLHEIGHT / 2);
                     wall.position.z = ((j - units / 2) * UNITSIZE);
-                    wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                        // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                        console.log("mur touche");
-                    });
+
+                    if (this.ship_map[i][j] === 3) {
+                        wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                            // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                            
+                            if (other_object.name === 'cameraCollider') {
+
+                                if (map.currentProgress.goal === 'escape') {
+                                    map.progressShip(); //et ensuite détruire la porte finale
+
+                                    while(map.command_wall.length > 0) {
+                                        scene.remove(map.command_wall[0]);
+                                        map.command_wall.shift();
+                                    }
+                                } else if (map.currentProgress.goal === 'escape2') {
+                                    map.progressShip(); //et fin de la partie
+                                }
+                            }
+                            
+                        });
+                    } else if (this.ship_map[i][j] === 4) {
+                        wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                            // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                                 wall.name = 'wall_breakable';
+                                 scene.remove(this);
+                            
+                        });
+                    }else if (this.ship_map[i][j] === 5) {
+                        wall.name = "LockedDoor";   
+                        map.command_wall.push(wall);
+                    }
                     scene.add(wall);
 
 
             }
+            if (   this.ship_map[i][j] === 0 
+                || this.ship_map[i][j] === 4
+                || this.ship_map[i][j] === 5
+                || this.ship_map[i][j] === 6 
+                || this.ship_map[i][j] === 7 
+                || this.ship_map[i][j] === 8
+                || this.ship_map[i][j] === 9 
 
-            if (map[i][j] === 0 || map[i][j] === 9) {
+                ){
                 //génération du sol
-                var floor = new Physijs.BoxMesh(cube_floor, materials[map[i][j]], 0);
+                var floor = new Physijs.BoxMesh(cube_floor, materials[0], 0);
                 floor.position.x = ((i - units / 2) * UNITSIZE);
                 floor.position.y = (FLOORHEIGHT / 2);
                 floor.position.z = ((j - units / 2) * UNITSIZE);
 
-
-                // A Deplacer dans la detection de collision
-
-                scene.add(floor);
-
+         
                 //génération du plafond
-                var roof = new Physijs.BoxMesh(cube_roof, materials[map[i][j]], 0);
+                var roof = new Physijs.BoxMesh(cube_roof, materials[0], 0);
                 roof.position.x = ((i - units / 2) * UNITSIZE);
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
                 roof.position.z = ((j - units / 2) * UNITSIZE);
-                scene.add(roof);
+                
 
-
-                if (map[i][j] === 9) {
+                if (this.ship_map[i][j] === 9) { //creation mechant
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
+                } else if (this.ship_map[i][j] === 6) { // creation super mechant
+                    robot_mechant.createSuperEnemy(
+                        (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
+                } else if (this.ship_map[i][j] === 8) { // creation cellule energie
+
+                    this.createLoot(floor, 'energy');
+                } else if (this.ship_map[i][j] === 7) { // creation du poste de control
+
+
+                    var computer = new Physijs.BoxMesh(
+                        new THREE.CubeGeometry(10, 30, 10),
+                        new THREE.MeshLambertMaterial({
+                            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte2.jpg') //4 Porte cassable
+                        }), 0);
+
+                    computer.position = floor.position;
+                    computer.position.y += 1;
+
+                    computer.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                        if (other_object.name === "cameraCollider") {
+                            if (map.currentProgress.goal === 'desactivate')
+                                map.progressShip();
+                        }
+
+                    });
+
+                    scene.add(computer);
                 }
 
+
+                scene.add(roof);
+                scene.add(floor);
             
 
             }
-
+            
         }
 
     }
@@ -412,6 +496,37 @@ Map.prototype.createLoot = function (parent_object, type) {
                     game.localPlayer.set('_ammo', 100);
                 }
             }
+        });
+
+    } else if (type === "energy") {
+        mesh = new Physijs.BoxMesh(cube,
+            new THREE.MeshLambertMaterial({
+                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+            }),
+            0);
+        mesh.name = "toHighlight";
+        mesh.position = position;
+        mesh.position.y += 1;
+
+        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            var nbEnergy = 120;
+            console.log("colision energy");
+            if (game.localPlayer.get('_energy') < 100) {
+                scene.remove(this);
+                if (game.localPlayer.get('_energy') < (100 - nbEnergy)) {
+                    game.localPlayer.set('_energy', game.localPlayer.get('_energy') + nbEnergy);
+                } else {
+                    game.localPlayer.set('_energy', 100);
+                }
+            } 
+
+            if (game.localPlayer.get('_energy') >= 100) {
+                console.log()
+                map.progressShip();
+            }
+
+
+            console.log("nb energy "+ game.localPlayer.get('_energy'));
         });
 
     } else if (type === "levier") {
