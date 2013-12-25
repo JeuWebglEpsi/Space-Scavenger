@@ -357,7 +357,6 @@ Map.prototype.ship = function () {
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
-<<<<<<< HEAD
             if (this.ship_map[i][j] === 1 
                 || this.ship_map[i][j] === 2 
                 || this.ship_map[i][j] === 3 // Porte d'entrée
@@ -402,7 +401,6 @@ Map.prototype.ship = function () {
                         map.command_wall.push(wall);
                     }
                     scene.add(wall);
-=======
             if (map[i][j] === 1 || map[i][j] === 2) {
 
                 var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
@@ -411,7 +409,6 @@ Map.prototype.ship = function () {
                 wall.position.z = ((j - units / 2) * UNITSIZE);
                 wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {});
                 scene.add(wall);
->>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
 
 
             }
@@ -430,9 +427,6 @@ Map.prototype.ship = function () {
                 floor.position.y = (FLOORHEIGHT / 2);
                 floor.position.z = ((j - units / 2) * UNITSIZE);
 
-<<<<<<< HEAD
-         
-=======
 
                 // A Deplacer dans la detection de collision
 
@@ -443,7 +437,6 @@ Map.prototype.ship = function () {
 
                 scene.add(floor);
 
->>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
                 //génération du plafond
                 var roof = new Physijs.BoxMesh(cube_roof, materials[0], 0);
                 roof.position.x = ((i - units / 2) * UNITSIZE);
@@ -451,12 +444,7 @@ Map.prototype.ship = function () {
                 roof.position.z = ((j - units / 2) * UNITSIZE);
                 
 
-<<<<<<< HEAD
-                if (this.ship_map[i][j] === 9) { //creation mechant
-=======
-
                 if (map[i][j] === 9) {
->>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
@@ -488,16 +476,12 @@ Map.prototype.ship = function () {
                     scene.add(computer);
                 }
 
-<<<<<<< HEAD
-
                 scene.add(roof);
                 scene.add(floor);
             
-=======
+
             }
 
-
->>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
 
             }
             
