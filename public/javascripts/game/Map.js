@@ -1,3 +1,6 @@
+/**
+ * Classe de gesion des maps
+ */
 var Map = function () {
     var map = this;
     var initialized = false;
@@ -24,7 +27,10 @@ var Map = function () {
         texts: null
     }
 };
-//space logic
+/**
+ * Fonction de logique de jeu niveau 1
+ * @return {nothing}
+ */
 Map.prototype.progressSpace = function () {
     var map = this;
 
@@ -37,7 +43,10 @@ Map.prototype.progressSpace = function () {
     }
     window.game.localPlayer.ath.drawGoals(this.currentProgress);
 }
-
+/**
+ * Fonction de génération de l'espace
+ * @return {nothing}
+ */
 Map.prototype.space = function () {
     var map = this;
     'use strict';
@@ -48,7 +57,6 @@ Map.prototype.space = function () {
         texts: null
     }
     this.currentLevel = 'space';
-    console.log('map initializing')
     window.scene.setGravity(new THREE.Vector3(0, 0, 0));
     //maintenant on va ajouter un objet créé avec blender
     var loader = new THREE.JSONLoader();
@@ -91,10 +99,10 @@ Map.prototype.space = function () {
 
             mesh.name = "asteroid";
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+
                 // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
                 if (other_object.name === "cameraCollider")
                     window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
-
 
             });
             scene.add(mesh);
@@ -103,7 +111,19 @@ Map.prototype.space = function () {
 
 
     loader.load('/javascripts/Maps/ship.js', function (geometry, materials) {
+
+        var mirrorCamera = new THREE.CubeCamera(0.1, 5000, 512);
+        var mirrorMaterial = new THREE.MeshPhongMaterial({
+            emissive: 0x111111,
+            envMap: mirrorCamera.renderTarget
+        });
+        materials.push(mirrorMaterial);
+        console.log(materials);
+
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 1e10);
+
+
+
         mesh.rotation.z += 2;
         mesh.rotation.y += 2;
         mesh.rotation.x = 0;
@@ -182,8 +202,10 @@ Map.prototype.space = function () {
     scene.add(map.particleSystem);
 }
 
-
-
+/**
+ * Fonction de logique de jeu du niveau 2
+ * @return {[nothing]}
+ */
 Map.prototype.progressShip = function () {
     var map = this;
 
@@ -198,9 +220,14 @@ Map.prototype.progressShip = function () {
 }
 
 
-Map.prototype.ship = function () {  
-    var map = this;
 
+
+/**
+ * Fonction de génération du niveau 2
+ * @return {nothing}
+ */
+Map.prototype.ship = function () {
+    var map = this;
     window.controls.movementSpeed = 100;
 
     this.currentProgress = {
@@ -330,6 +357,7 @@ Map.prototype.ship = function () {
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
+<<<<<<< HEAD
             if (this.ship_map[i][j] === 1 
                 || this.ship_map[i][j] === 2 
                 || this.ship_map[i][j] === 3 // Porte d'entrée
@@ -374,6 +402,16 @@ Map.prototype.ship = function () {
                         map.command_wall.push(wall);
                     }
                     scene.add(wall);
+=======
+            if (map[i][j] === 1 || map[i][j] === 2) {
+
+                var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
+                wall.position.x = ((i - units / 2) * UNITSIZE);
+                wall.position.y = (WALLHEIGHT / 2);
+                wall.position.z = ((j - units / 2) * UNITSIZE);
+                wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {});
+                scene.add(wall);
+>>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
 
 
             }
@@ -392,7 +430,20 @@ Map.prototype.ship = function () {
                 floor.position.y = (FLOORHEIGHT / 2);
                 floor.position.z = ((j - units / 2) * UNITSIZE);
 
+<<<<<<< HEAD
          
+=======
+
+                // A Deplacer dans la detection de collision
+
+                //var munition = new Bullet();
+                //munition.createLife(floor.position);
+
+
+
+                scene.add(floor);
+
+>>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
                 //génération du plafond
                 var roof = new Physijs.BoxMesh(cube_roof, materials[0], 0);
                 roof.position.x = ((i - units / 2) * UNITSIZE);
@@ -400,7 +451,12 @@ Map.prototype.ship = function () {
                 roof.position.z = ((j - units / 2) * UNITSIZE);
                 
 
+<<<<<<< HEAD
                 if (this.ship_map[i][j] === 9) { //creation mechant
+=======
+
+                if (map[i][j] === 9) {
+>>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
@@ -432,10 +488,16 @@ Map.prototype.ship = function () {
                     scene.add(computer);
                 }
 
+<<<<<<< HEAD
 
                 scene.add(roof);
                 scene.add(floor);
             
+=======
+            }
+
+
+>>>>>>> 9d422f23987c7697ad79dc9e83d4766cd22d9034
 
             }
             
@@ -446,7 +508,7 @@ Map.prototype.ship = function () {
 
 
 }
-
+//à déplacer dans Utils
 Map.prototype.createLoot = function (parent_object, type) {
     var map = this;
     var item, mesh, position, cube;
@@ -466,7 +528,6 @@ Map.prototype.createLoot = function (parent_object, type) {
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             var nbLife = Math.floor((Math.random() * 100) + 30);
-            console.log(nbLife);
             if (game.localPlayer.get('_life') < 100) {
                 scene.remove(this);
                 if (game.localPlayer.get('_life') < (100 - nbLife)) {
@@ -548,7 +609,10 @@ Map.prototype.createLoot = function (parent_object, type) {
     scene.add(mesh);
 }
 
-//Map updating function
+/**
+ * Fonction de mise a jour
+ * @return {nothing}
+ */
 Map.prototype.update = function () {
     var map = this;
     if (typeof map.particleSystem !== 'undefined')

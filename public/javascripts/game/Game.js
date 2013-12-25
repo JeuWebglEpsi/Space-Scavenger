@@ -1,10 +1,17 @@
+    /**
+     * Classe de jeu principale
+     */
     var Game = function () {
         var game = this;
         game.biome = new Biome();
         game.map = new Map();
 
     }
-    //creation de personnage en fonction du type.
+    /**
+     * Génération d'un personnage
+     * @param  {string} s Type de personnage (pnj/joueur)
+     * @return {nothing}
+     */
     Game.prototype.createPlayer = function (s) {
         var game = this;
         if (s === 'local') {
@@ -16,9 +23,11 @@
                 type: 'player'
             });
             game.localPlayer.init(window.scene);
-            console.log(game.biome.personnages);
         }
     }
+    /**
+     * Fonction de gain
+     */
     Game.prototype.YouWin = function () {
         $('#youwin').show();
         setTimeout(function () {
@@ -26,6 +35,9 @@
             window.toMainMenu(2);
         }, 4000);
     }
+    /**
+     * Fonction de perte
+     */
     Game.prototype.GameOver = function () {
         $('#gameover').show();
         setTimeout(function () {
@@ -33,7 +45,10 @@
             window.toMainMenu();
         }, 4000)
     }
-    //Game updating function
+    /**
+     * fonction de mise à jour
+     * @return {nothing}
+     */
     Game.prototype.update = function () {
         var game = this;
         //     console.log('Game updating...');

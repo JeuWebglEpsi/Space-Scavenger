@@ -1,3 +1,6 @@
+/**
+ * Classe de représentation du Biome
+ */
 var Biome = function () {
     var biome = this;
     this.personnages = [];

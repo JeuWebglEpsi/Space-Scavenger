@@ -61,13 +61,13 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         };
 
         //To use enter the axis length
-        debugaxis(10000);
+        //debugaxis(10000);
 
         window.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
         camera.rotation.set(0, 0, 0);
 
         var cameraCollider = new Physijs.SphereMesh(
-            new THREE.CylinderGeometry(4, 4, 60),
+            new THREE.CylinderGeometry(.4, .4, 60),
             new THREE.MeshBasicMaterial({
                 color: 0x888888
             })
@@ -121,7 +121,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         else if (level === 2)
             game.map.ship();
 
-        console.log(game.map);
 
         window.game.createPlayer('local');
 
@@ -151,20 +150,15 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             })
             scene.simulate(undefined, 8);
 
-
-
             window.isRendering = requestAnimationFrame(render);
             renderer.render(scene, camera);
             time = Date.now();
-
         };
         window.render();
 
 
 
         $(document).click(function (event) {
-
-
             var bullet = new Bullet();
             bullet.position(cameraCollider, camera);
         })
