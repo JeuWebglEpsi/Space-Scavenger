@@ -354,7 +354,7 @@ Map.prototype.ship = function () {
 
     var robot_mechant = new EnemyManage();
 
-    for (var i = mapW - 1; i >= 0; i--) {
+    for (var i = mapW-1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
             if (this.ship_map[i][j] === 1 
@@ -401,9 +401,9 @@ Map.prototype.ship = function () {
                         map.command_wall.push(wall);
                     }
                     scene.add(wall);
-            if (map[i][j] === 1 || map[i][j] === 2) {
+            if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) {
 
-                var wall = new Physijs.BoxMesh(cube, materials[map[i][j]], 0);
+                var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
                 wall.position.x = ((i - units / 2) * UNITSIZE);
                 wall.position.y = (WALLHEIGHT / 2);
                 wall.position.z = ((j - units / 2) * UNITSIZE);
@@ -412,6 +412,7 @@ Map.prototype.ship = function () {
 
 
             }
+        }
             if (   this.ship_map[i][j] === 0 
                 || this.ship_map[i][j] === 4
                 || this.ship_map[i][j] === 5
@@ -426,15 +427,6 @@ Map.prototype.ship = function () {
                 floor.position.x = ((i - units / 2) * UNITSIZE);
                 floor.position.y = (FLOORHEIGHT / 2);
                 floor.position.z = ((j - units / 2) * UNITSIZE);
-
-
-                // A Deplacer dans la detection de collision
-
-                //var munition = new Bullet();
-                //munition.createLife(floor.position);
-
-
-
                 scene.add(floor);
 
                 //génération du plafond
@@ -442,9 +434,9 @@ Map.prototype.ship = function () {
                 roof.position.x = ((i - units / 2) * UNITSIZE);
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
                 roof.position.z = ((j - units / 2) * UNITSIZE);
-                
+                scene.add(roof);
 
-                if (map[i][j] === 9) {
+                if (this.ship_map[i][j] === 9) {
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
@@ -476,11 +468,10 @@ Map.prototype.ship = function () {
                     scene.add(computer);
                 }
 
-                scene.add(roof);
-                scene.add(floor);
+                
             
 
-            }
+            
 
 
             }
