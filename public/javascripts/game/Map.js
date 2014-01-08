@@ -337,7 +337,7 @@ Map.prototype.ship = function () {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 6 super mechant
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 7 poste de controle
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/console.jpg') // 7 poste de controle
         }),
         new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 8 energy
