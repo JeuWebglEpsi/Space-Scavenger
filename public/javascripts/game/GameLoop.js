@@ -138,7 +138,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
             //Game update loop
             game.update();
-
             controls.update(Date.now() - time);
 
 
