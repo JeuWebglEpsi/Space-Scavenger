@@ -37,9 +37,9 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         var dir = pw.sub(cameraCollider.position).normalize();
 
         balle.name = "bullet";
-        balle.position.x = cameraCollider.position.x + cameraCollider.scale.x * dir.x;
+        balle.position.x = cameraCollider.position.x + cameraCollider.scale.x * dir.x*5;
         balle.position.y = cameraCollider.position.y + cameraCollider.scale.y * dir.y;
-        balle.position.z = cameraCollider.position.z + cameraCollider.scale.z * dir.z;
+        balle.position.z = cameraCollider.position.z + cameraCollider.scale.z * dir.z*5;
 
 
         balle.movementSpeed = 4000;

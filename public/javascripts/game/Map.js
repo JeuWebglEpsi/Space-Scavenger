@@ -19,7 +19,7 @@ var Map = function () {
     }
     this.levelShip = {
         goals: ['collect', 'escape', 'reach', 'desactivate', 'escape2', 'win'],
-        texts: ['Récupérer suffisamment d\'énergie', 'Vous avez asser d/énergie, vous pouvez sortir du vaisseau', 'La porte est verrouillée. Trouvez la salle des commandes et déverrouillez la porte.', 'La porte est déverrouillée, vous pouvez sortir du vaisseau','']
+        texts: ['Récupérer suffisamment d\'énergie', 'Vous avez assez d\'énergie, vous pouvez sortir du vaisseau', 'La porte est verrouillée. Trouvez la salle des commandes et déverrouillez la porte.', 'La porte est déverrouillée, vous pouvez sortir du vaisseau','']
     }
     this.currentProgress = {
         completed: -1,
@@ -254,30 +254,6 @@ Map.prototype.ship = function () {
         scene.add(mesh);
     });
 
-
-    var hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x000000, .5);
-    hemiLight.castShadow = false;
-    scene.add(hemiLight);
-
-    var directionalLight = new THREE.DirectionalLight(0xffffff, .5);
-    directionalLight.position.set(0, -2000, 0);
-    directionalLight.castShadow = true;
-    directionalLight.shadowMapWidth = directionalLight.shadowMapHeight = 1024 * 2;
-
-    var d = 300;
-
-    directionalLight.shadowCameraLeft = -d;
-    directionalLight.shadowCameraRight = d;
-    directionalLight.shadowCameraTop = d;
-    directionalLight.shadowCameraBottom = -d;
-
-    directionalLight.shadowCameraFar = 3500;
-    directionalLight.shadowBias = -0.0001;
-    directionalLight.shadowDarkness = 0.35;
-
-    scene.add(directionalLight);
-
-
     // Creation map en 2d
     this.ship_map = [
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
@@ -297,7 +273,7 @@ Map.prototype.ship = function () {
 [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, ],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, ],
-[1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
+[1, 9, 0, 0, 8, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
 [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
 [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
 [1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
@@ -369,6 +345,7 @@ Map.prototype.ship = function () {
                     wall.position.x = ((i - units / 2) * UNITSIZE) ;
                     wall.position.y = (WALLHEIGHT / 2);
                     wall.position.z = ((j - units / 2) * UNITSIZE);
+                    
 
                     if (this.ship_map[i][j] === 3) {
                         wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
@@ -390,10 +367,14 @@ Map.prototype.ship = function () {
                             
                         });
                     } else if (this.ship_map[i][j] === 4) {
+                        wall.life = 3;
                         wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                                
                                  wall.name = 'wall_breakable';
-                                 scene.remove(this);
+
+                                 if (--this.life === 0)
+                                    scene.remove(this);
                             
                         });
                     }else if (this.ship_map[i][j] === 5) {
@@ -439,6 +420,8 @@ Map.prototype.ship = function () {
                 if (this.ship_map[i][j] === 9) {
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
+
+                        
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
                     robot_mechant.createSuperEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
@@ -489,7 +472,7 @@ Map.prototype.createLoot = function (parent_object, type) {
     var item, mesh, position, cube;
 
     position = parent_object.position;
-    cube = new THREE.CubeGeometry(3, 3, 5);
+    cube = new THREE.CubeGeometry(20, 20, 35);
 
     if (type === "life") {
         mesh = new Physijs.BoxMesh(cube,
@@ -537,7 +520,7 @@ Map.prototype.createLoot = function (parent_object, type) {
     } else if (type === "energy") {
         mesh = new Physijs.BoxMesh(cube,
             new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
+                map: THREE.ImageUtils.loadTexture('javascripts/Maps/energy.jpg')
             }),
             0);
         mesh.name = "toHighlight";
@@ -545,7 +528,7 @@ Map.prototype.createLoot = function (parent_object, type) {
         mesh.position.y += 1;
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            var nbEnergy = 120;
+            var nbEnergy = 20;
             console.log("colision energy");
             if (game.localPlayer.get('_energy') < 100) {
                 scene.remove(this);

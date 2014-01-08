@@ -98,8 +98,8 @@ ATH.prototype.update = function () {
     cartridge.find('progress.ammo').val(game.localPlayer.get('_ammo'));
 
     var stock_energy = $('.athenergy');
-    cartridge.find('font').text(game.localPlayer.get('_energy'));
-    cartridge.find('progress.energy').val(game.localPlayer.get('_energy'));
+    stock_energy.find('font').text('E');
+    stock_energy.find('progress.energy').val(game.localPlayer.get('_energy'));
 
     var c2d = $('.athrenderer');
     c2d.empty();

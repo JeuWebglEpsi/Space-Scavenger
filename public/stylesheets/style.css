@@ -63,6 +63,14 @@ a {
 	float: left;
 	color:rgba(59,238,255,.9);
 }
+
+.ath .athenergy{
+	position: absolute;
+	bottom: 80px;
+	left:20px;
+	float: left;
+	color:rgba(59,238,255,.9);
+}
 .ath font{
 	font-size: 30px;
 	font-family: Helvetica;
@@ -106,6 +114,7 @@ a {
 	background:rgba(59,238,255,.9);
 	box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
 }
+
 #blocker{
 	position: absolute;
 	z-index: 10000;
