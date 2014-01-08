@@ -47,8 +47,12 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+            if (other_object.name !== "cameraCollider")
+                scene.remove(this);
 
-            scene.remove(this);
+            if (other_object.name === "mechant_robot") 
+                console.log("collision balle / mechant_robot");
+
 
             if (other_object.name === "asteroid") {
                 scene.remove(other_object);

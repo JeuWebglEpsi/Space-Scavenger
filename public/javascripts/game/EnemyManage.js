@@ -15,13 +15,12 @@ var EnemyManage = function () {
  * @return {[nothing]}
  */
 EnemyManage.prototype.createEnemy = function (x, y, z) {
-    var EnemyManage = this;
+    //var EnemyManage = this;
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
         var mechant = new Physijs.BoxMesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
-
         // Définition de la vie du robot
-       //mechant.life = 5;
+       
 
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
@@ -39,7 +38,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
                // console.log("Vie : "+this.life);
                this.life--;
                console.log("vie robot " + this.life);
-                if (this.life === 0)
+               if (this.life === 0)
                     scene.remove(this);
             }
         });
