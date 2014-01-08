@@ -289,11 +289,10 @@ THREE.FirstPersonControls = function (object, domElement) {
 
             if (this.moveLeft) {
 
-                var axis = new THREE.Vector3(1, 0, 0);
 
-                toX += dirLeft.x;
+                toX += dir.x;
                 toY += 0;
-                toZ += dirLeft.z;
+                toZ += dir.z;
 
             }
             if (this.moveRight) {
