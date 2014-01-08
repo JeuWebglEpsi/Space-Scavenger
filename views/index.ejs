@@ -212,9 +212,9 @@ document.exitPointerLock = document.exitPointerLock ||
         </script>
   </head>
   <body id="mainContainer">
-    <div id="game-opt">
+    <div id="game-opt" >
 
-        <div class="container text-center">
+        <div class="container text-center" style="display:none;">
             <h1>S<span class="letter-broken">p</span>ace Sca<span class="letter-broken">v</span>eng<span class="letter-broken">e</span>r</h1>
             <div class="col-lg-4 col-lg-offset-4">
                 <button type="button" id="rungame"  class="btn btn-primary" data-loading-text="Chargement . . ." data-complete-text="C'est parti !" >Jouer</button><br/><br/>
@@ -225,7 +225,7 @@ document.exitPointerLock = document.exitPointerLock ||
         </div>
             <img src="/assets/2d/hombre.png" alt="" class="hombre"><img src="/assets/2d/ship.png" alt="" class="ship">
 
-        <div class="container text-center names">
+        <div class="container text-center names" style="display:none;">
             <ul class="list-inline">
                 <li>Hugues Foucray</li>
                 <li>Joseph Rouffet</li>
@@ -233,7 +233,7 @@ document.exitPointerLock = document.exitPointerLock ||
             </ul>
         </div>
     </div>
-    <div id="blocker">
+    <div id="blocker" style="display:none;">
         <div class="reticule">+</div>
         <div class="arme1"><img src="/assets/2d/arme1.png" align = "right"/></div>
 
@@ -265,7 +265,23 @@ document.exitPointerLock = document.exitPointerLock ||
 <div id="gameover">GAME OVER</div>
 <div id="youwin">Niveau Terminé</div>
 <div class="loading"> Chargement...</div>
+<div id="story" class="text-center">
+    <div id="titles">
 
+        <div id="titlecontent">
+            <h1 class="text-center">Space Scavenger</h1>
+
+    <div>
+        <p class="lead">Une guerre spaciale fait rage ! </p><br/>
+        <p>Vous tentez de survivre en tant que pillard.</p>
+        <p>Votre seule chance de survie est de récupérer des cellules d'énergie sur les épaves de champs de bataille. <br/>
+Malheureusement, votre tâche ne sera pas aisée du fait que ces épaves sont envahis de robots d'une origine inconnue...</p>
+    </div>
+
+    </div>
+
+</div>
+</div>
 <!-- MODALS -->
 <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
   <div class="modal-dialog">
@@ -291,10 +307,23 @@ document.exitPointerLock = document.exitPointerLock ||
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="">Crédits</h4>
+        <h4 class="modal-title" id="">Credits</h4>
       </div>
       <div class="modal-body">
-        <p class="white">opp</p>
+        <p class="white">
+        <dl id="creator" class="dl-horizontal">
+            <dt>Joseph ROUFFET</dt> <dd> Concepteur & Développeur Niveau 2</dd>
+            <dt>Hugues FOUCRAY</dt> <dd> Concepteur & Développeur IA & Game Logic </dd>
+            <dt>Tommy BOUCHER</dt> <dd> Concepteur & Développeur Niveau 1 & Bootstrap</dd>
+        </dl>
+
+         <dl id="others" class="dl-horizontal">
+            <dt>GIT</dt> <dd> <a href="https://github.com/JeuWebglEpsi/Space-Scavenger" target="_blank">Space Scavenger</a></dd>
+            <dt>EPSI Lyon</dt> <dd>École Privée des Sciences Informatiques</dd>
+        </dl>
+        <p class="licence small">Ce logiciel peut comporter des données sous droits d'auteurs et ne peut en aucun cas être vendu.</p>
+        <p class="small text-center">© Tous droits réservés.</p>
+        </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
@@ -304,6 +333,12 @@ document.exitPointerLock = document.exitPointerLock ||
 </div><!-- /.modal -->
 <script>
 require(['jquery'],function($){
+$(document).ready(function(){
+    setTimeout(function(){
+        $('#game-opt > .container').show();
+        $('#story').fadeOut().promise().done(function(){ $('#story').remove();});
+    },60000);
+})
     $('button#credits').on('click',function(){
         $('#creditModal').modal();
     })
