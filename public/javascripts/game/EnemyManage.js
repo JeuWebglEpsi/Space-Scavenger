@@ -3,7 +3,7 @@
  */
 var EnemyManage = function () {
     var EnemyManage = this;
-    this.personnages = [];
+    this.enemy = [];
     this.perso = new Personnage();
 }
 
@@ -169,8 +169,8 @@ EnemyManage.prototype.init = function (x, y, z) {
     //var robotCount =10;
     //var enemyCount = 0;
     // while (robotCount--){
-    var perso = new Personnage();
-    perso.init(x, y, z);
+  //  var perso = new Personnage();
+   // perso.init(x, y, z);
     /*   enemyManage.personnages[enemyCount] = perso.id;
              enemyCount++;
              console.log ('Nombre de perso = ' + enemyCount);
