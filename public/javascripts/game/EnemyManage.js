@@ -14,7 +14,7 @@ var EnemyManage = function () {
  * @param  {number} z
  * @return {[nothing]}
  */
-EnemyManage.prototype.createEnemy = function (x, y, z) {
+EnemyManage.prototype.createEnemy = function (x, y, z, i) {
     var EnemyManage = this;
     var cameraRobot = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
      var cameraViewProjectionMatrix = new THREE.Matrix4();
