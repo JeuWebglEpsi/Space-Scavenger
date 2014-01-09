@@ -20,24 +20,10 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
      var cameraViewProjectionMatrix = new THREE.Matrix4();
      var frustum = new THREE.Frustum();
 
-    //var map = ship_map
-    //console.log("map is : " + map);
-    //var plane = new THREE.PlaneGeometry()
-    //camera.updateMatrix(); // make sure camera's local matrix is updated
-//camera.updateMatrixWorld(); // make sure camera's world matrix is updated
-//camera.matrixWorldInverse.getInverse( camera.matrixWorld );
-//plane.updateMatrix(); // make sure plane's local matrix is updated
-//plane.updateMatrixWorld(); // make sure plane's world matrix is updated
-
     cameraRobot.updateMatrixWorld() // = window.camera.updateMatrixWorld();
     cameraRobot.matrixWorldInverse.getInverse(cameraRobot.matrixWorld);
     cameraViewProjectionMatrix.multiplyMatrices(cameraRobot.projectionMatrix, cameraRobot.matrixWorldInverse);
     frustum.setFromMatrix(cameraViewProjectionMatrix);
-
-//frustum.setFromMatrix(map);
-//frustum.setFromMatrix( new THREE.Matrix4().multiply( camera.projectionMatrix, camera.matrixWorldInverse ) );
-//alert( frustum.contains( plane ) );
-
 
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
@@ -156,31 +142,12 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 }
 
 
-/**
- * Fonction d'initialisation
- * @param  {[type]} x [description]
- * @param  {[type]} y [description]
- * @param  {[type]} z [description]
- * @return {[type]}   [description]
- */
+
 EnemyManage.prototype.init = function (x, y, z) {
-    // lesméchants
-    // robotCount permet de créer un nombre de robot enemycount permet de leur donner un id
-    //var robotCount =10;
-    //var enemyCount = 0;
-    // while (robotCount--){
-  //  var perso = new Personnage();
-   // perso.init(x, y, z);
-    /*   enemyManage.personnages[enemyCount] = perso.id;
-             enemyCount++;
-             console.log ('Nombre de perso = ' + enemyCount);
-             console.log('identifiant du dernier perso = ' + perso.id);
-        }*/
+   
 
 }
-//setangulareVellocity
-//__dirtyrotation
-//__dirtyposition
+
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = EnemyManage;
 else
