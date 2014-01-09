@@ -32,7 +32,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
     cameraRobot.updateMatrixWorld() // = window.camera.updateMatrixWorld();
     cameraRobot.matrixWorldInverse.getInverse(cameraRobot.matrixWorld);
     cameraViewProjectionMatrix.multiplyMatrices(cameraRobot.projectionMatrix, cameraRobot.matrixWorldInverse);
-    //frustum.setFromMatrix(cameraViewProjectionMatrix);
+    frustum.setFromMatrix(cameraViewProjectionMatrix);
 
 //frustum.setFromMatrix(map);
 //frustum.setFromMatrix( new THREE.Matrix4().multiply( camera.projectionMatrix, camera.matrixWorldInverse ) );
