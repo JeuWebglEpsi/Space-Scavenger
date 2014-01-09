@@ -42,7 +42,8 @@
         game:'game/Game',
         biome:'game/Biome',
         audiojs:'core/lib/audio5.min',
-        enemyManage: 'game/EnemyManage'
+        enemyManage: 'game/EnemyManage',
+        astar: 'game/Astar'
     },
     shim: {
         three:{
@@ -98,8 +99,12 @@
             deps:['personnage'],
             exports:'window.EnemyManage'
         },
+        astar:{
+            deps:['three'],
+            exports:'window.Astar'
+        },
         game:{
-            deps:['three','ath','map','personnage','player','biome','socket','bullet','enemyManage'],
+            deps:['three','ath','map','personnage','player','biome','socket','bullet','enemyManage','astar'],
             exports:'window.Game'
         }
     }
