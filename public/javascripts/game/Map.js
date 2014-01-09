@@ -228,8 +228,11 @@ Map.prototype.progressShip = function () {
  */
 Map.prototype.ship = function () {
     var map = this;
+
+    // Modification de la vitesse de déplacement
     window.controls.movementSpeed = 150;
 
+    // Initialisation de la progression 
     this.currentProgress = {
         completed: -1,
         goal: null,
@@ -240,19 +243,6 @@ Map.prototype.ship = function () {
 
     window.scene.setGravity(new THREE.Vector3(0, -30, 0));
 
-    this.name = "ship";
-
-    var loader = new THREE.JSONLoader();
-
-    //background image
-    loader.load("/javascripts/Maps/bgd2.js", function (geometry, materials) {
-        var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.name = "bgdCube";
-        mesh.material.depthWrite = false;
-        mesh.receiveShadow = false;
-        mesh.scale.set(-2000, -2000, -2000);
-        scene.add(mesh);
-    });
 
     // Creation map en 2d
     this.ship_map = [
@@ -278,8 +268,10 @@ Map.prototype.ship = function () {
 [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
 [1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
 ];
-        var mapH = this.ship_map[0].length;
-        var mapW = this.ship_map.length;
+        
+    // Initialisation des variables de dimension pour la création des mesh de terrains
+    var mapH = this.ship_map[0].length;
+    var mapW = this.ship_map.length;
 
 
     var units = mapW;
@@ -322,6 +314,8 @@ Map.prototype.ship = function () {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/metal_floor_texture-200513-SM.jpg') // Méchant
         })
     ];
+
+
     // Geometry: walls
     var cube = new THREE.CubeGeometry(UNITSIZE, WALLHEIGHT, UNITSIZE);
     var cube_floor = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
@@ -339,9 +333,6 @@ Map.prototype.ship = function () {
                 || this.ship_map[i][j] === 4 //Porte fragile
                 || this.ship_map[i][j] === 5)// Porte sécurisé 
             {
-
-                    
-                    
 
                     if (this.ship_map[i][j] === 3) {
                         var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
