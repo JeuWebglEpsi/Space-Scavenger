@@ -42,6 +42,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
         var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
+
     
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
@@ -58,6 +59,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
                 opacity: 0
             }),0
             );
+    robotCollider.life = 5;
 
         robotCollider.position.x = x;
         robotCollider.position.y = y;
@@ -69,8 +71,19 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
         robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
             console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
-            if (other_object === 'bullet')
+            if (other_object.name === "bullet"){
+                this.life--;
+                if (this.life === 0) {
+                var luck = Math.floor((Math.random() * 100));
+                if (luck > 60)
+                    window.game.map.createLoot(other_object, "ammo");
+                else if (luck > 30)
+                    window.game.map.createLoot(other_object, "life");
+
+
                 scene.remove(this);
+            }
+            }
 
         }); 
 

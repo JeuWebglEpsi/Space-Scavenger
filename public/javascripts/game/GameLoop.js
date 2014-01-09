@@ -31,7 +31,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
         window.scene = new Physijs.Scene({
             reportsize: 2100,
-            fixedTimeStep: 1 / 90
+            fixedTimeStep: 1 / 100
         });
 
 
@@ -82,8 +82,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             cameraCollider.position.set(0, 0, 8000);
         else if (level === 2) {
             cameraCollider.position.set(850, 30, -950);
-            var flash = new THREE.PointLight( 0xFFFFFF, 2, 400 );
-            flash.position.set( 0, 0, 0 );
+            var flash = new THREE.PointLight(0xFFFFFF, 2, 400);
+            flash.position.set(0, 0, 0);
             cameraCollider.add(flash);
         }
 

@@ -12,6 +12,7 @@ var Bullet = function () {
  * @return {nothing}
  */
 Bullet.prototype.position = function (cameraCollider, camera) {
+
     var loader = new THREE.JSONLoader();
 
     if (this.hasMunition()) {
@@ -37,12 +38,12 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         var dir = pw.sub(cameraCollider.position).normalize();
 
         balle.name = 'bullet';
-        balle.position.x = cameraCollider.position.x + cameraCollider.scale.x * dir.x;
-        balle.position.y = cameraCollider.position.y + cameraCollider.scale.y * dir.y;
-        balle.position.z = cameraCollider.position.z + cameraCollider.scale.z * dir.z;
+        balle.position.x = cameraCollider.position.x + (1.20 * dir.x) + cameraCollider.scale.x * dir.x;
+        balle.position.y = cameraCollider.position.y + (1.20 * dir.y) + cameraCollider.scale.y * dir.y;
+        balle.position.z = cameraCollider.position.z + (1.20 * dir.z) + cameraCollider.scale.z * dir.z;
 
 
-        balle.movementSpeed = 4000;
+        balle.movementSpeed = 1000;
 
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
@@ -50,8 +51,6 @@ Bullet.prototype.position = function (cameraCollider, camera) {
             if (other_object.name !== "cameraCollider")
                 scene.remove(this);
 
-            if (other_object.name === "mechant_robot") 
-                console.log("collision balle / mechant_robot");
 
 
             if (other_object.name === "asteroid") {
@@ -96,45 +95,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                         }
                     });
                 }
-            } else if (other_object.name === "wall_breakable") {
-
-                        var i=5;
-                                while(i--){
-                                    var miniwall = new Physijs.BoxMesh(
-                                        new THREE.CubeGeometry(10, 10, 10),
-                                        new THREE.MeshLambertMaterial({
-                                                map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull-Porte2.jpg')
-                                            }),
-                                        10
-                                        );
-                                    var nb = Math.random();
-                                    var signe = "";
-                                    if (nb >= 0.5)
-                                        signe = 1;
-                                    else
-                                        signe = -1
-
-                                    miniwall.position.x = other_object.position.x + (Math.random() * signe) ;
-                                    miniwall.position.y = other_object.position.y + (Math.random() * signe) ;
-                                    miniwall.position.z = other_object.position.z + (Math.random() * signe) ;
-
-                                    miniwall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                                        //console.log("miniwall colision with" + other_object.name);
-                                        if (other_object.name  === 'bullet')
-                                            scene.remove(this);
-                                    });
-                                    scene.add(miniwall);
-                                }
-
-            } else if (other_object.name === "robotCollider") {
-                //générer bullet
-                var luck = Math.floor((Math.random() * 100));
-                if (luck > 75)
-                    window.game.map.createLoot(other_object, "ammo");
-                else if (luck > 50)
-                window.game.map.createLoot(other_object, "life");
-                scene.remove(other_object);
-            }
+            } 
         });
 
         scene.add(balle);

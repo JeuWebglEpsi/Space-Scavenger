@@ -96,8 +96,8 @@ Utils.prototype.createLoot = function (position, rotation, scale, type, collisio
     mesh.scale = scale;
     mesh.position.y += 1;
 
-    mesh.addEventListener('collision', function (other_object) {
-        utils.collision_action_perform(this, other_object);
+    mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+        utils.collision_action_perform(this, other_object, relative_velocity, relative_rotation, contact_normal);
     })
 
     window.scene.add(mesh);
@@ -109,9 +109,57 @@ Utils.prototype.createLoot = function (position, rotation, scale, type, collisio
  * @param  {Mesh} second_object Object en relation avec l'appelant
  * @return {nothing}
  */
-Utils.prototype.collision_action_perform = function (first_object, second_object) {
+Utils.prototype.collision_action_perform = function (first_object, second_object, relative_velocity, relative_rotation, contact_normal) {
     var utils = this;
     //TODO big switch
+
+    if (first_object.name === "asteroid"){
+        if (second_object.name === "bullet") {
+
+        }
+    }
+
+    if (first_object.name === "wall_breakable"){
+        if (second_object.name === "bullet") {
+            first_object.life--;
+            if (first_object.life === 0) {
+                window.scene.remove(first_object); 
+                //Création de petit bout de mur
+                var i = 5;
+                while (i--) {
+                    var miniwall = new Physijs.BoxMesh(
+                        new THREE.CubeGeometry(10, 10, 10),
+                        new THREE.MeshLambertMaterial({
+                            map: THREE.ImageUtils.loadTexture('/javascripts/Maps/shiphull-Porte2.jpg')
+                        }),
+                        10
+                    );
+                    var nb = Math.random();
+                    var signe = "";
+                    if (nb >= 0.5)
+                        signe = 1;
+                    else
+                        signe = -1
+
+                    miniwall.position.x = first_object.position.x + (Math.random() * signe);
+                    miniwall.position.y = first_object.position.y + (Math.random() * signe);
+                    miniwall.position.z = first_object.position.z + (Math.random() * signe);
+                    
+                    scene.add(miniwall);
+                }
+            }
+        } 
+    }
+
+    if (first_object.name === "mechant_robot"){
+        if (second_object.name === "bullet") 
+    }
+
+    if (first_object.name === "super_mechant_robot"){
+        if (second_object.name === "bullet") 
+    }
+
+    
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
