@@ -50,7 +50,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
 
- var cube = new THREE.CubeGeometry(50, 60, 50);
+ var cube = new THREE.CylinderGeometry(20, 20, 90);
 
     var robotCollider = new Physijs.BoxMesh(cube,
             new THREE.MeshBasicMaterial({
@@ -108,26 +108,49 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
         mechant.name = "super_mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
-        mechant.position.x = x;
-        mechant.position.y = y;
-        mechant.position.z = z;
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 20;
+        var cube = new THREE.CylinderGeometry(30, 30, 120);
+        var robotCollider = new Physijs.BoxMesh(cube,
+                new THREE.MeshBasicMaterial({
+                    color: 0x888888,
+                    transparent: true,
+                    opacity: 0
+                }),0
+                );
+        robotCollider.life = 20;
 
-        mechant.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            // console.log('robot ' + this. id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-            if (other_object.name === "bullet") {
-                var munition = new Bullet();
+            robotCollider.position.x = x;
+            robotCollider.position.y = y;
+            robotCollider.position.z = z;
 
-                //munition.createLife(this.position);
+            robotCollider.__dirtyposition = true;
+            robotCollider.__dirtyrotation = true;
+            robotCollider.name = "robotCollider";
+            robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
+                console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+                if (other_object.name === "bullet"){
+                    this.life--;
+                    console.log(this.life);
+                    if (this.life === 0) {
+                    var luck = Math.floor((Math.random() * 100));
+                    if (luck > 60)
+                        window.game.map.createLoot(other_object, "ammo");
+                    if (luck > 30)
+                        window.game.map.createLoot(other_object, "life");
 
-               scene.remove(this);
 
-            }
+                    scene.remove(this);
+                }
+                }
 
-        });
+            }); 
 
-        scene.add(mechant);
+        robotCollider.rotation.set(0, 0, 0);
+        robotCollider.add(mechant);
+
+        scene.add(robotCollider);
     });
 
 }
