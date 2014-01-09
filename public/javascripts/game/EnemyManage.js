@@ -45,12 +45,11 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
-        mechant.position.x = x;
-        mechant.position.y = y;
-        mechant.position.z = z;
+        mechant.position.x = 0;
+        mechant.position.y = 0;
+        mechant.position.z = 0;
 
-        // Définition de la vie du robot
-        mechant.life = 5;
+
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
 
@@ -58,17 +57,32 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
             console.log('robot ' + this. id + ' in collision with ' + other_object.id + ' ' + other_object.name);
             // si le robot collisionne avec une balle
             if (other_object.name === "bullet") {
-               // Il perd de la vie et meurt
-               this.life--;
-               console.log("vie robot " + this.life);
-               if (this.life === 0) {
+  
+
                     scene.remove(this);
                     // chance de loot
 
-               }
+               
             }
         });
-        window.scene.add(mechant);
+
+        var robotCollider = new Physijs.SphereMesh(
+            new THREE.CylinderGeometry(.4, .4, 1),
+            new THREE.MeshBasicMaterial({
+                color: 0x888888
+            })
+        );
+        robotCollider.position.x = x;
+        robotCollider.position.y = y;
+        robotCollider.position.z = z;
+        robotCollider.name = "robotCollider";
+        robotCollider.addEventListener('collision', function (obj) {
+            //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
+            console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
+        }); 
+        robotCollider.rotation.set(0, 0, 0);
+        robotCollider.add(mechant);
+        window.scene.add(robotCollider);
     });
 }
 

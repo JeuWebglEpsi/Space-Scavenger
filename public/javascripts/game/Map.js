@@ -340,14 +340,16 @@ Map.prototype.ship = function () {
                 || this.ship_map[i][j] === 5)// Porte sécurisé 
             {
 
-                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
                     
-                    wall.position.x = ((i - units / 2) * UNITSIZE) ;
-                    wall.position.y = (WALLHEIGHT / 2);
-                    wall.position.z = ((j - units / 2) * UNITSIZE);
                     
 
                     if (this.ship_map[i][j] === 3) {
+                        var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+                    
+                        wall.position.x = ((i - units / 2) * UNITSIZE) ;
+                        wall.position.y = (WALLHEIGHT / 2);
+                        wall.position.z = ((j - units / 2) * UNITSIZE);
+
                         wall.name = 'Door';
                         wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
@@ -367,30 +369,50 @@ Map.prototype.ship = function () {
                             }
                             
                         });
+                        scene.add(wall);
                     } else if (this.ship_map[i][j] === 4) {
+                        var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+                    
+                        wall.position.x = ((i - units / 2) * UNITSIZE) ;
+                        wall.position.y = (WALLHEIGHT / 2);
+                        wall.position.z = ((j - units / 2) * UNITSIZE);
+
                         wall.life = 3;
                         wall.name = 'wall_breakable';
                         wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                            // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                                 
-                            if (other_object === 'bullet')
-                                 if (--this.life === 0)
+                            //console.log('mur cassable ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+
                                     scene.remove(this);
                             
                         });
+                        scene.add(wall);
                     }else if (this.ship_map[i][j] === 5) {
+                        var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+                    
+                        wall.position.x = ((i - units / 2) * UNITSIZE) ;
+                        wall.position.y = (WALLHEIGHT / 2);
+                        wall.position.z = ((j - units / 2) * UNITSIZE);
+
                         wall.name = "LockedDoor";   
                         map.command_wall.push(wall);
+                        scene.add(wall);
                     }
 
             if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) {
+                var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+                    
+                wall.position.x = ((i - units / 2) * UNITSIZE) ;
+                wall.position.y = (WALLHEIGHT / 2);
+                wall.position.z = ((j - units / 2) * UNITSIZE);
+
                 wall.name = 'wall';
                 // wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                 //     console.log("mur touche");
                 // });
+                scene.add(wall);
             }
 
-            scene.add(wall);
+            
         }
             if (   this.ship_map[i][j] === 0 
                 || this.ship_map[i][j] === 4

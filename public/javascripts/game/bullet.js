@@ -36,7 +36,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         var pw = vector.applyMatrix4(cameraCollider.matrixWorld);
         var dir = pw.sub(cameraCollider.position).normalize();
 
-        balle.name = "bullet";
+        balle.name = 'bullet';
         balle.position.x = cameraCollider.position.x + cameraCollider.scale.x * dir.x;
         balle.position.y = cameraCollider.position.y + cameraCollider.scale.y * dir.y;
         balle.position.z = cameraCollider.position.z + cameraCollider.scale.z * dir.z;
@@ -119,14 +119,16 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                                     miniwall.position.z = other_object.position.z + (Math.random() * signe) ;
 
                                     miniwall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                                        console.log("miniwall colision with" + other_object.name);
+                                        //console.log("miniwall colision with" + other_object.name);
                                         if (other_object.name  === 'bullet')
                                             scene.remove(this);
                                     });
-                                    console.log("miniwall creation");
                                     scene.add(miniwall);
                                 }
 
+            } else if (other_object.name === "robotCollider") {
+
+                scene.remove(other_object);
             }
         });
 
