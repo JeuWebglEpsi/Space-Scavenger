@@ -460,12 +460,12 @@ p.white{
 	position: absolute;
 	text-align: justify;
 	top: 100%;
-	-webkit-animation: scroll 60s linear 0s 1;
+	-webkit-animation: scroll 30s linear 0s 1;
 }
 
 @-webkit-keyframes scroll {
 	0% { top: 100%; }
-	100% { top: -50%; }
+	100% { top: -90%; }
 }
 #story *{
 	text-shadow: 0px 5px 20px #4BD9EC;
