@@ -286,6 +286,7 @@ Malheureusement, votre tâche ne sera pas aisée du fait que ces épaves sont en
     </div>
 
 </div>
+<button id="skip-strory" class="btn btn-primary">Passer</button>
 </div>
 <!-- MODALS -->
 <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
@@ -344,6 +345,9 @@ $(document).ready(function(){
         $('#story').fadeOut().promise().done(function(){ $('#story').remove();});
     },30000);
 })
+$('button#skip-strory').on('click',function(){
+    $('#story').remove();$('#game-opt .container').show();
+})
     $('button#credits').on('click',function(){
         $('#creditModal').modal();
     })
@@ -382,6 +386,7 @@ var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement
 
 </script>
 
+<!-- ---------------- Custom Shader Code ------------------------ -->
 <script id="vertexShaderBullet" type="x-shader/x-vertex">
 varying vec3 vNormal;
 void main()
@@ -391,18 +396,13 @@ void main()
 }
 </script>
 
+<!-- fragment shader a.k.a. pixel shader -->
 <script id="fragmentShaderBullet" type="x-shader/x-vertex">
 varying vec3 vNormal;
-void main(){
-
-float red = 1.0;
-
-    float green = 0.0 ;
-
-    float blue = 0.0;
-
-    float intensity = pow( 2.9 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 4.0 );
-    gl_FragColor = vec4( red, green, blue, 1.0 ) * intensity;
+void main()
+{
+    float intensity = pow( 0.5 - dot( vNormal, vec3( 0.0, 0.0, 1) ), 4.0 );
+    gl_FragColor = vec4( 1.0, 1.0, 0.8,1.0 ) * intensity;
 }
 </script>
   </body>

@@ -11,7 +11,7 @@ var Map = function () {
     this.particleSystem;
     this.increment = -1;
     this.ship_map = [];
-    this.command_wall = []; 
+    this.command_wall = [];
     //map logic
     this.levelSpace = {
         goals: ['reach', 'collect', 'reach2', 'win'],
@@ -19,7 +19,7 @@ var Map = function () {
     }
     this.levelShip = {
         goals: ['collect', 'escape', 'reach', 'desactivate', 'escape2', 'win'],
-        texts: ['Récupérer suffisamment d\'énergie', 'Vous avez assez d\'énergie, vous pouvez sortir du vaisseau', 'La porte est verrouillée. Trouvez la salle des commandes et déverrouillez la porte.', 'La porte est déverrouillée, vous pouvez sortir du vaisseau','']
+        texts: ['Récupérer suffisamment d\'énergie', 'Vous avez assez d\'énergie, vous pouvez sortir du vaisseau', 'La porte est verrouillée. Trouvez la salle des commandes et déverrouillez la porte.', 'La porte est déverrouillée, vous pouvez sortir du vaisseau', '']
     }
     this.currentProgress = {
         completed: -1,
@@ -71,6 +71,20 @@ Map.prototype.space = function () {
         scene.add(mesh);
     });
 
+    var planete = new THREE.Mesh(new THREE.SphereGeometry(4000, 64, 64),
+        new THREE.ShaderMaterial({
+            uniforms: {
+                color: 0xffd700
+            },
+            vertexShader: document.getElementById('vertexShaderBullet').textContent,
+            fragmentShader: document.getElementById('fragmentShaderBullet').textContent,
+            side: THREE.BackSide,
+            blending: THREE.AdditiveBlending,
+            transparent: true
+        }));
+
+    planete.position.set(-8000, 0, -200);
+    scene.add(planete);
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
         var asteroidCount = 800;
@@ -221,7 +235,6 @@ Map.prototype.progressShip = function () {
 
 
 
-
 /**
  * Fonction de génération du niveau 2
  * @return {nothing}
@@ -256,30 +269,30 @@ Map.prototype.ship = function () {
 
     // Creation map en 2d
     this.ship_map = [
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 0, 8, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-[1, 1, 0, 0, 0, 1, 1, 1, 9, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, ],
-[1, 1, 1, 4, 1, 1, 1, 1, 0, 1, 1, 0, 9, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 9, 1, 0, 9, 1, 0, 0, 9, 1, 0, 9, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 9, 0, 5, 0, 0, 0, 0, 9, 0, 6, 0, 9, 0, 0, 1, ],
-[1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 9, 0, 9, 0, 0, 0, 1, ],
-[1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-[1, 1, 1, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 0, 8, 0, 4, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 0, 0, 0, 1, 1, 1, 9, 1, 1, 0, 0, 0, 9, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, ],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, ],
-[1, 4, 0, 0, 8, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
-[1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
-[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
-[1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
-];
-        var mapH = this.ship_map[0].length;
-        var mapW = this.ship_map.length;
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 0, 8, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+        [1, 1, 0, 0, 0, 1, 1, 1, 9, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, ],
+        [1, 1, 1, 4, 1, 1, 1, 1, 0, 1, 1, 0, 9, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 9, 1, 0, 9, 1, 0, 0, 9, 1, 0, 9, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 9, 0, 5, 0, 0, 0, 0, 9, 0, 6, 0, 9, 0, 0, 1, ],
+        [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 9, 0, 9, 0, 0, 0, 1, ],
+        [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
+        [1, 1, 1, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 0, 8, 0, 4, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 0, 0, 0, 1, 1, 1, 9, 1, 1, 0, 0, 0, 9, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, ],
+        [1, 4, 0, 0, 8, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
+        [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
+        [1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+    ];
+    var mapH = this.ship_map[0].length;
+    var mapW = this.ship_map.length;
 
 
     var units = mapW;
@@ -330,101 +343,95 @@ Map.prototype.ship = function () {
 
     var robot_mechant = new EnemyManage();
 
-    for (var i = mapW-1; i >= 0; i--) {
+    for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
-            if (this.ship_map[i][j] === 1 
-                || this.ship_map[i][j] === 2 
-                || this.ship_map[i][j] === 3 // Porte d'entrée
+            if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2 || this.ship_map[i][j] === 3 // Porte d'entrée
                 || this.ship_map[i][j] === 4 //Porte fragile
-                || this.ship_map[i][j] === 5)// Porte sécurisé 
+                || this.ship_map[i][j] === 5) // Porte sécurisé
             {
 
-                    
-                    
 
-                    if (this.ship_map[i][j] === 3) {
-                        var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-                    
-                        wall.position.x = ((i - units / 2) * UNITSIZE) ;
-                        wall.position.y = (WALLHEIGHT / 2);
-                        wall.position.z = ((j - units / 2) * UNITSIZE);
 
-                        wall.name = 'Door';
-                        wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                            // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                            
-                            if (other_object.name === 'cameraCollider') {
+                if (this.ship_map[i][j] === 3) {
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
 
-                                if (map.currentProgress.goal === 'escape') {
-                                    map.progressShip(); //et ensuite détruire la porte finale
+                    wall.position.x = ((i - units / 2) * UNITSIZE);
+                    wall.position.y = (WALLHEIGHT / 2);
+                    wall.position.z = ((j - units / 2) * UNITSIZE);
 
-                                    while(map.command_wall.length > 0) {
-                                        scene.remove(map.command_wall[0]);
-                                        map.command_wall.shift();
-                                    }
-                                } else if (map.currentProgress.goal === 'escape2') {
-                                    map.progressShip(); //et fin de la partie
+                    wall.name = 'Door';
+                    wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                        // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+
+                        if (other_object.name === 'cameraCollider') {
+
+                            if (map.currentProgress.goal === 'escape') {
+                                map.progressShip(); //et ensuite détruire la porte finale
+
+                                while (map.command_wall.length > 0) {
+                                    scene.remove(map.command_wall[0]);
+                                    map.command_wall.shift();
                                 }
+                            } else if (map.currentProgress.goal === 'escape2') {
+                                map.progressShip(); //et fin de la partie
                             }
-                            
-                        });
-                        scene.add(wall);
-                    } else if (this.ship_map[i][j] === 4) {
-                        var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-                    
-                        wall.position.x = ((i - units / 2) * UNITSIZE) ;
-                        wall.position.y = (WALLHEIGHT / 2);
-                        wall.position.z = ((j - units / 2) * UNITSIZE);
+                        }
 
-                        wall.life = 3;
-                        wall.name = 'wall_breakable';
-                        wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                            //console.log('mur cassable ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-                                if ( other_object.name === 'bullet')
-                                    scene.remove(this);
-                            
-                        });
-                        scene.add(wall);
-                    }else if (this.ship_map[i][j] === 5) {
-                        var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-                    
-                        wall.position.x = ((i - units / 2) * UNITSIZE) ;
-                        wall.position.y = (WALLHEIGHT / 2);
-                        wall.position.z = ((j - units / 2) * UNITSIZE);
+                    });
+                    scene.add(wall);
+                } else if (this.ship_map[i][j] === 4) {
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
 
-                        wall.name = "LockedDoor";   
-                        map.command_wall.push(wall);
-                        scene.add(wall);
-                    }
+                    wall.position.x = ((i - units / 2) * UNITSIZE);
+                    wall.position.y = (WALLHEIGHT / 2);
+                    wall.position.z = ((j - units / 2) * UNITSIZE);
 
-            if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) {
-                var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-                    
-                wall.position.x = ((i - units / 2) * UNITSIZE) ;
-                wall.position.y = (WALLHEIGHT / 2);
-                wall.position.z = ((j - units / 2) * UNITSIZE);
+                    wall.life = 3;
+                    wall.name = 'wall_breakable';
+                    wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                        //console.log('mur cassable ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
 
-                wall.name = 'wall';
-                // wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                //     console.log("mur touche");
-                // });
-                scene.add(wall);
+                        scene.remove(this);
+
+                    });
+                    scene.add(wall);
+                } else if (this.ship_map[i][j] === 5) {
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+
+                    wall.position.x = ((i - units / 2) * UNITSIZE);
+                    wall.position.y = (WALLHEIGHT / 2);
+                    wall.position.z = ((j - units / 2) * UNITSIZE);
+
+                    wall.name = "LockedDoor";
+                    map.command_wall.push(wall);
+                    scene.add(wall);
+                }
+
+                if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) {
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+
+                    wall.position.x = ((i - units / 2) * UNITSIZE);
+                    wall.position.y = (WALLHEIGHT / 2);
+                    wall.position.z = ((j - units / 2) * UNITSIZE);
+
+                    wall.name = 'wall';
+                    // wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                    //     console.log("mur touche");
+                    // });
+                    scene.add(wall);
+                }
+
+
             }
+            if (this.ship_map[i][j] === 0 || this.ship_map[i][j] === 4 || this.ship_map[i][j] === 5 || this.ship_map[i][j] === 6 || this.ship_map[i][j] === 7 || this.ship_map[i][j] === 8 || this.ship_map[i][j] === 9
 
-            
-        }
-            if (   this.ship_map[i][j] === 0 
-                || this.ship_map[i][j] === 4
-                || this.ship_map[i][j] === 5
-                || this.ship_map[i][j] === 6 
-                || this.ship_map[i][j] === 7 
-                || this.ship_map[i][j] === 8
-                || this.ship_map[i][j] === 9 
-
-                ){
+            ) {
                 //génération du sol
                 var floor = new Physijs.BoxMesh(cube_floor, materials[0], 0);
+                floor.addEventListener('collision', function (other_object) {
+
+                })
                 floor.position.x = ((i - units / 2) * UNITSIZE);
                 floor.position.y = (FLOORHEIGHT / 2);
                 floor.position.z = ((j - units / 2) * UNITSIZE);
@@ -438,11 +445,11 @@ Map.prototype.ship = function () {
                 scene.add(roof);
 
                 if (this.ship_map[i][j] === 9) {
-                     robot_mechant.createEnemy(
-                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
-                   
-        
-                        
+                    robot_mechant.createEnemy(
+                        (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
+
+
+
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
                     robot_mechant.createSuperEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
@@ -472,14 +479,10 @@ Map.prototype.ship = function () {
                     scene.add(computer);
                 }
 
-                
-            
-
-            
 
 
             }
-            
+
         }
 
     }
@@ -506,7 +509,7 @@ Map.prototype.createLoot = function (parent_object, type) {
         mesh.name = "toHighlight";
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-           if (other_object.name === 'cameraCollider') {
+            if (other_object.name === 'cameraCollider') {
 
                 console.log("life sa touche");
                 var nbLife = Math.floor((Math.random() * 100) + 30);
@@ -567,7 +570,7 @@ Map.prototype.createLoot = function (parent_object, type) {
                     } else {
                         game.localPlayer.set('_energy', 100);
                     }
-                } 
+                }
 
                 if (game.localPlayer.get('_energy') >= 100) {
                     console.log()
@@ -575,7 +578,7 @@ Map.prototype.createLoot = function (parent_object, type) {
                 }
 
 
-                console.log("nb energy "+ game.localPlayer.get('_energy'));
+                console.log("nb energy " + game.localPlayer.get('_energy'));
             }
         });
 

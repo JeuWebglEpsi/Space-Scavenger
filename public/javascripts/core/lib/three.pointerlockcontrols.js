@@ -115,7 +115,7 @@ THREE.FirstPersonControls = function (object, domElement) {
 
         case 37:
             /*left*/
-        case 65:
+        case 81:
             /*A*/
             this.moveLeft = true;
             break;
@@ -143,7 +143,7 @@ THREE.FirstPersonControls = function (object, domElement) {
             this.moveDown = true;
             break;
 
-        case 81:
+        case 1000:
             /*Q*/
             this.freeze = !this.freeze;
             break;
@@ -170,7 +170,7 @@ THREE.FirstPersonControls = function (object, domElement) {
 
         case 37:
             /*left*/
-        case 65:
+        case 81:
             /*A*/
             this.moveLeft = false;
             this.object.setLinearVelocity({
@@ -282,23 +282,39 @@ THREE.FirstPersonControls = function (object, domElement) {
             }
 
             if (this.moveBackward) {
-                toX += dir.x;
-                toY += dir.y;
-                toZ += dir.z;
+                var dir = dir.negate();
+                toX += -dir.x;
+                toY += -dir.y;
+                toZ += -dir.z;
             }
 
             if (this.moveLeft) {
+                var vector = dir;
 
+                var axis = new THREE.Vector3(0, 1, 0);
+                var angle = Math.PI / 2;
+                var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
+
+                vector.applyMatrix4(matrix);
+                dir = vector;
+
+                toX += -dir.x;
+                toY += 0;
+                toZ += -dir.z;
+            }
+            if (this.moveRight) {
+                var vector = dir;
+
+                var axis = new THREE.Vector3(0, 1, 0);
+                var angle = Math.PI / 2;
+                var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
+
+                vector.applyMatrix4(matrix);
+                dir = vector;
 
                 toX += dir.x;
                 toY += 0;
                 toZ += dir.z;
-
-            }
-            if (this.moveRight) {
-                toX += -dir.x;
-                toY += -dir.y;
-                toZ += -dir.z;
             }
 
             if (this.moveUp) {
@@ -316,7 +332,7 @@ THREE.FirstPersonControls = function (object, domElement) {
                 y: this.movementSpeed * toY,
                 z: this.movementSpeed * toZ
             });
-
+            this.object.updateMatrixWorld();
         }
 
         var actualLookSpeed = delta * this.lookSpeed;
@@ -358,6 +374,8 @@ THREE.FirstPersonControls = function (object, domElement) {
 
         this.object.lookAt(targetPosition);
         this.mouseX = this.mouseY = 0
+
+        return true;
 
     };
 
