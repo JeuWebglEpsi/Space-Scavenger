@@ -381,7 +381,7 @@ Map.prototype.ship = function () {
                         wall.name = 'wall_breakable';
                         wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                             //console.log('mur cassable ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-
+                                if ( other_object.name === 'bullet')
                                     scene.remove(this);
                             
                         });
@@ -438,10 +438,10 @@ Map.prototype.ship = function () {
                 scene.add(roof);
 
                 if (this.ship_map[i][j] === 9) {
-                    robot_mechant.createEnemy(
-                        (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
+                     robot_mechant.createEnemy(
+                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
                    
-
+        
                         
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
                     robot_mechant.createSuperEnemy(
@@ -502,17 +502,21 @@ Map.prototype.createLoot = function (parent_object, type) {
             }),
             0);
         mesh.position = position;
-        mesh.position.y += 1;
+        mesh.position.y += 10;
         mesh.name = "toHighlight";
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            var nbLife = Math.floor((Math.random() * 100) + 30);
-            if (game.localPlayer.get('_life') < 100) {
-                scene.remove(this);
-                if (game.localPlayer.get('_life') < (100 - nbLife)) {
-                    game.localPlayer.set('_life', game.localPlayer.get('_life') + nbLife);
-                } else {
-                    game.localPlayer.set('_life', 100);
+           if (other_object.name === 'cameraCollider') {
+
+                console.log("life sa touche");
+                var nbLife = Math.floor((Math.random() * 100) + 30);
+                if (game.localPlayer.get('_life') < 100) {
+                    scene.remove(this);
+                    if (game.localPlayer.get('_life') < (100 - nbLife)) {
+                        game.localPlayer.set('_life', game.localPlayer.get('_life') + nbLife);
+                    } else {
+                        game.localPlayer.set('_life', 100);
+                    }
                 }
             }
         });
@@ -524,16 +528,20 @@ Map.prototype.createLoot = function (parent_object, type) {
             0);
         mesh.name = "toHighlight";
         mesh.position = position;
-        mesh.position.y += 1;
+        mesh.position.y += 10;
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            var nbAmmo = Math.floor((Math.random() * 10) + 1);
-            if (game.localPlayer.get('_ammo') < 100) {
-                scene.remove(this);
-                if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
-                    game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
-                } else {
-                    game.localPlayer.set('_ammo', 100);
+            if (other_object.name === 'cameraCollider') {
+
+                console.log("ammo sa touche");
+                var nbAmmo = Math.floor((Math.random() * 10) + 1);
+                if (game.localPlayer.get('_ammo') < 100) {
+                    scene.remove(this);
+                    if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
+                        game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
+                    } else {
+                        game.localPlayer.set('_ammo', 100);
+                    }
                 }
             }
         });

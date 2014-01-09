@@ -38,54 +38,45 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
 //frustum.setFromMatrix( new THREE.Matrix4().multiply( camera.projectionMatrix, camera.matrixWorldInverse ) );
 //alert( frustum.contains( plane ) );
 
+
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
-        var mechant = new Physijs.BoxMesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
+        var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
     
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
-        mechant.position.x = 0;
-        mechant.position.y = 0;
-        mechant.position.z = 0;
-
-
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
 
-        mechant.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            console.log('robot ' + this. id + ' in collision with ' + other_object.id + ' ' + other_object.name);
-            // si le robot collisionne avec une balle
-            if (other_object.name === "bullet") {
-  
+ var cube = new THREE.CubeGeometry(50, 60, 50);
 
-                    scene.remove(this);
-                    // chance de loot
-
-               
-            }
-        });
-
-        var robotCollider = new Physijs.SphereMesh(
-            new THREE.CylinderGeometry(.4, .4, 6),
+    var robotCollider = new Physijs.BoxMesh(cube,
             new THREE.MeshBasicMaterial({
-                color: 0x888888
-            })
-        );
+                color: 0x888888,
+                transparent: true,
+                opacity: 0
+            }),0
+            );
+
         robotCollider.position.x = x;
-        robotCollider.position.y = y+5;
+        robotCollider.position.y = y;
         robotCollider.position.z = z;
 
         robotCollider.__dirtyposition = true;
         robotCollider.__dirtyrotation = true;
         robotCollider.name = "robotCollider";
-        robotCollider.addEventListener('collision', function (obj) {
+        robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
-            console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
+            console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+            if (other_object === 'bullet')
+                scene.remove(this);
+
         }); 
+
         robotCollider.rotation.set(0, 0, 0);
-        //robotCollider.add(mechant);
-        scene.add(mechant);
+        robotCollider.add(mechant);
+        scene.add(robotCollider);
     });
 }
 

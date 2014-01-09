@@ -127,7 +127,12 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                                 }
 
             } else if (other_object.name === "robotCollider") {
-
+                //générer bullet
+                var luck = Math.floor((Math.random() * 100));
+                if (luck > 75)
+                    window.game.map.createLoot(other_object, "ammo");
+                else if (luck > 50)
+                window.game.map.createLoot(other_object, "life");
                 scene.remove(other_object);
             }
         });
