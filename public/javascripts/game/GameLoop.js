@@ -31,7 +31,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         Physijs.scripts.worker = '/javascripts/core/lib/physijs_worker.js';
         window.scene = new Physijs.Scene({
             reportsize: 2100,
-            fixedTimeStep: 1 / 120
+            fixedTimeStep: 1 / 90
         });
 
 

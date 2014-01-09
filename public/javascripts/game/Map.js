@@ -228,7 +228,7 @@ Map.prototype.progressShip = function () {
  */
 Map.prototype.ship = function () {
     var map = this;
-    window.controls.movementSpeed = 100;
+    window.controls.movementSpeed = 150;
 
     this.currentProgress = {
         completed: -1,
@@ -418,6 +418,7 @@ Map.prototype.ship = function () {
                 if (this.ship_map[i][j] === 9) {
                     robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE);
+                   
 
                         
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
