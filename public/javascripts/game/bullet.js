@@ -42,7 +42,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         balle.position.z = cameraCollider.position.z + cameraCollider.scale.z * dir.z;
 
 
-        balle.movementSpeed = 40000;
+        balle.movementSpeed = 4000;
 
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
