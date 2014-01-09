@@ -29,7 +29,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
         var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
 
-    
+        mechant.id = 1;
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
@@ -145,7 +145,14 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 
 EnemyManage.prototype.init = function (x, y, z) {
    
-
+//ajouter un enemy
+EnemyManage.prototype.addInEnemy = function (mechant) {
+    var EenemyManage = this;
+    biome.enemy.push({
+        id: mechant.id,
+        mechant: mechant
+    });
+}
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
