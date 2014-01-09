@@ -551,22 +551,24 @@ Map.prototype.createLoot = function (parent_object, type) {
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             var nbEnergy = 20;
             console.log("colision energy");
-            if (game.localPlayer.get('_energy') < 100) {
-                scene.remove(this);
-                if (game.localPlayer.get('_energy') < (100 - nbEnergy)) {
-                    game.localPlayer.set('_energy', game.localPlayer.get('_energy') + nbEnergy);
-                } else {
-                    game.localPlayer.set('_energy', 100);
+            if (other_object.name === 'cameraCollider') {
+                if (game.localPlayer.get('_energy') < 100) {
+                    scene.remove(this);
+                    if (game.localPlayer.get('_energy') < (100 - nbEnergy)) {
+                        game.localPlayer.set('_energy', game.localPlayer.get('_energy') + nbEnergy);
+                    } else {
+                        game.localPlayer.set('_energy', 100);
+                    }
+                } 
+
+                if (game.localPlayer.get('_energy') >= 100) {
+                    console.log()
+                    map.progressShip();
                 }
-            } 
 
-            if (game.localPlayer.get('_energy') >= 100) {
-                console.log()
-                map.progressShip();
+
+                console.log("nb energy "+ game.localPlayer.get('_energy'));
             }
-
-
-            console.log("nb energy "+ game.localPlayer.get('_energy'));
         });
 
     } else if (type === "levier") {

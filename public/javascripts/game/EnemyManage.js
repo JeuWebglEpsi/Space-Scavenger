@@ -67,22 +67,25 @@ EnemyManage.prototype.createEnemy = function (x, y, z) {
         });
 
         var robotCollider = new Physijs.SphereMesh(
-            new THREE.CylinderGeometry(.4, .4, 1),
+            new THREE.CylinderGeometry(.4, .4, 6),
             new THREE.MeshBasicMaterial({
                 color: 0x888888
             })
         );
         robotCollider.position.x = x;
-        robotCollider.position.y = y;
+        robotCollider.position.y = y+5;
         robotCollider.position.z = z;
+
+        robotCollider.__dirtyposition = true;
+        robotCollider.__dirtyrotation = true;
         robotCollider.name = "robotCollider";
         robotCollider.addEventListener('collision', function (obj) {
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
             console.log('colliding with ' + obj.name + ' ' + obj.id + ' on ' + JSON.stringify(this.position));
         }); 
         robotCollider.rotation.set(0, 0, 0);
-        robotCollider.add(mechant);
-        window.scene.add(robotCollider);
+        //robotCollider.add(mechant);
+        scene.add(mechant);
     });
 }
 
