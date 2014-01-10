@@ -94,10 +94,14 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
  * @return {[nothing]}
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) { 
 =======
 EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 >>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
+=======
+EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
+>>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
     var EnemyManage = this;
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
@@ -158,6 +162,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 
 EnemyManage.prototype.init = function (x, y, z) {
 <<<<<<< HEAD
+<<<<<<< HEAD
  }  
 //ajouter un enemy
 EnemyManage.prototype.addInEnemy = function (mechant) {
@@ -172,6 +177,8 @@ EnemyManage.prototype.addInEnemy = function (mechant) {
 EnemyManage.prototype.update = function(arguments) {
     // body...
 =======
+=======
+>>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
 
     //ajouter un enemy
     EnemyManage.prototype.addInEnemy = function (mechant) {
@@ -181,7 +188,10 @@ EnemyManage.prototype.update = function(arguments) {
             mechant: mechant
         });
     }
+<<<<<<< HEAD
 >>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
+=======
+>>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')

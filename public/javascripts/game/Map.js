@@ -71,7 +71,7 @@ Map.prototype.space = function () {
         mesh.scale.set(-2000, -2000, -2000);
         scene.add(mesh);
     });
-
+                      
     var planete = new THREE.Mesh(new THREE.SphereGeometry(4000, 64, 64),
         new THREE.ShaderMaterial({
             uniforms: {
@@ -280,9 +280,9 @@ Map.prototype.ship = function () {
         [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, ],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, ],
-        [1, 6, 0, 0, 8, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
+        [1, 0, 0, 0, 8, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, ],
         [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, ],
-        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
+        [1, 0, 1, 10, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, ],
         [1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
     ];
     var mapH = this.ship_map[0].length;
@@ -338,12 +338,17 @@ Map.prototype.ship = function () {
     //var scene = new THREE.Object3D();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //var robot_mechant = new EnemyManage();
          var mechantCount = 0;
 =======
     var robot_mechant = new EnemyManage();
     var mechantCount = 0;
 >>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
+=======
+    var robot_mechant = new EnemyManage();
+    var mechantCount = 0;
+>>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -352,7 +357,7 @@ Map.prototype.ship = function () {
                 || this.ship_map[i][j] === 5) // Porte sécurisé
             {
                 if (this.ship_map[i][j] === 3) {
-                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]],0);
 
                     wall.position.x = ((i - units / 2) * UNITSIZE);
                     wall.position.y = (WALLHEIGHT / 2);
@@ -426,7 +431,7 @@ Map.prototype.ship = function () {
 
 
             }
-            if (this.ship_map[i][j] === 0 || this.ship_map[i][j] === 4 || this.ship_map[i][j] === 5 || this.ship_map[i][j] === 6 || this.ship_map[i][j] === 7 || this.ship_map[i][j] === 8 || this.ship_map[i][j] === 9
+            if (this.ship_map[i][j] === 0 || this.ship_map[i][j] === 4 || this.ship_map[i][j] === 5 || this.ship_map[i][j] === 6 || this.ship_map[i][j] === 7 || this.ship_map[i][j] === 8 || this.ship_map[i][j] === 9 || this.ship_map[i][j] === 10
 
             ) {
                 //génération du sol
@@ -450,8 +455,11 @@ Map.prototype.ship = function () {
                     map.robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE, mechantCount);
                     mechantCount++;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
 
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
                     map.robot_mechant.createSuperEnemy(
@@ -481,6 +489,16 @@ Map.prototype.ship = function () {
                     });
 
                     scene.add(computer);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                }  else if (this.ship_map[i][j] === 10) { //ajout caisse de munition
+                    var bullet  = new Bullet();
+                    bullet.create_ammobox(floor.position);
+                    
+=======
+>>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
+>>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
                 }
 
             }
