@@ -119,6 +119,31 @@ Bullet.prototype.hasMunition = function () {
 
 }
 
+Bullet.prototype.create_ammobox = function(position) {
+
+                        console.log("ammobox sa passe");
+                    var loader = new THREE.JSONLoader();
+                    loader.load("/javascripts/Objects/ammobox.js", function (geometry, materials) {
+                         console.log("ammobox sa repasse");
+                        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
+                        mesh.name = "toHighlight";
+                        mesh.position = position;
+                        mesh.position.y +=1;
+                        console.log(mesh.position);
+
+                        mesh.scale.x = mesh.scale.y =  mesh.scale.z = 0.5;
+
+                        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                            console.log("ammobox collide");
+                            if (other_object.name === "cameraCollider") {
+                                window.game.localPlayer.set('_ammo', 100);
+                            }
+                        });
+                        scene.add(mesh);
+                    });
+    // body...
+};
+
 // a modifier
 /*
         event.preventDefault();
