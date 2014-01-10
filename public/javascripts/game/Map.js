@@ -337,7 +337,7 @@ Map.prototype.ship = function () {
     //var scene = new THREE.Object3D();
 
     var robot_mechant = new EnemyManage();
-         var i = 0;
+         var mechantCount = 0;
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -442,8 +442,8 @@ Map.prototype.ship = function () {
 
                 if (this.ship_map[i][j] === 9) {
                     robot_mechant.createEnemy(
-                        (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE, i);
-        i++;
+                        (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE, mechantCount);
+                      mechantCount++;
 
 
 

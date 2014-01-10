@@ -14,7 +14,7 @@ var EnemyManage = function () {
  * @param  {number} z
  * @return {[nothing]}
  */
-EnemyManage.prototype.createEnemy = function (x, y, z, i) {
+EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
     var EnemyManage = this;
     var cameraRobot = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
      var cameraViewProjectionMatrix = new THREE.Matrix4();
@@ -29,7 +29,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, i) {
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
         var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
 
-        mechant.id = 1;
+        mechant.id = mechantCount;
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
