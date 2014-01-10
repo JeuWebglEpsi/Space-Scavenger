@@ -248,7 +248,7 @@ Map.prototype.ship = function () {
 
 
 
-    // Initialisation de la progression 
+    // Initialisation de la progression
     this.currentProgress = {
         completed: -1,
         goal: null,
@@ -261,8 +261,8 @@ Map.prototype.ship = function () {
 
 
     // Creation map en 2d
-    this.ship_map = [        
-    // Initialisation des variables de dimension pour la création des mesh de terrains
+    this.ship_map = [
+        // Initialisation des variables de dimension pour la création des mesh de terrains
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
         [1, 1, 0, 8, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
         [1, 1, 0, 0, 0, 1, 1, 1, 9, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, ],
@@ -337,8 +337,13 @@ Map.prototype.ship = function () {
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     //var scene = new THREE.Object3D();
 
+<<<<<<< HEAD
     //var robot_mechant = new EnemyManage();
          var mechantCount = 0;
+=======
+    var robot_mechant = new EnemyManage();
+    var mechantCount = 0;
+>>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -444,7 +449,7 @@ Map.prototype.ship = function () {
                 if (this.ship_map[i][j] === 9) {
                     map.robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE, mechantCount);
-                      mechantCount++;
+                    mechantCount++;
 
 
 
@@ -476,7 +481,7 @@ Map.prototype.ship = function () {
                     });
 
                     scene.add(computer);
-                }   
+                }
 
             }
 

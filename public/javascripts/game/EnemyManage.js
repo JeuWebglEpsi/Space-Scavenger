@@ -17,8 +17,8 @@ var EnemyManage = function () {
 EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
     var EnemyManage = this;
     var cameraRobot = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
-     var cameraViewProjectionMatrix = new THREE.Matrix4();
-     var frustum = new THREE.Frustum();
+    var cameraViewProjectionMatrix = new THREE.Matrix4();
+    var frustum = new THREE.Frustum();
 
     cameraRobot.updateMatrixWorld() // = window.camera.updateMatrixWorld();
     cameraRobot.matrixWorldInverse.getInverse(cameraRobot.matrixWorld);
@@ -27,7 +27,13 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
+
+        materials.push(new THREE.MeshPhongMaterial({
+            emissive: 0x111111,
+            map: cameraRobot.renderTarget
+        }))
         var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
+
 
         mechant.id = mechantCount;
         mechant.name = "mechant_robot";
@@ -37,16 +43,16 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
 
- var cube = new THREE.CylinderGeometry(20, 20, 90);
+        var cube = new THREE.CylinderGeometry(20, 20, 90);
 
-    var robotCollider = new Physijs.BoxMesh(cube,
+        var robotCollider = new Physijs.BoxMesh(cube,
             new THREE.MeshBasicMaterial({
                 color: 0x888888,
                 transparent: true,
                 opacity: 0
-            }),0
-            );
-    robotCollider.life = 5;
+            }), 0
+        );
+        robotCollider.life = 5;
 
         robotCollider.position.x = x;
         robotCollider.position.y = y;
@@ -58,21 +64,21 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
             console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
-            if (other_object.name === "bullet"){
+            if (other_object.name === "bullet") {
                 this.life--;
                 if (this.life === 0) {
-                var luck = Math.floor((Math.random() * 100));
-                if (luck > 60)
-                    window.game.map.createLoot(other_object, "ammo");
-                else if (luck > 30)
-                    window.game.map.createLoot(other_object, "life");
+                    var luck = Math.floor((Math.random() * 100));
+                    if (luck > 60)
+                        window.game.map.createLoot(other_object, "ammo");
+                    else if (luck > 30)
+                        window.game.map.createLoot(other_object, "life");
 
 
-                scene.remove(this);
+                    scene.remove(this);
+                }
             }
-            }
 
-        }); 
+        });
 
         robotCollider.rotation.set(0, 0, 0);
         robotCollider.add(mechant);
@@ -87,7 +93,11 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
  * @param  {number} z
  * @return {[nothing]}
  */
+<<<<<<< HEAD
 EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) { 
+=======
+EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
+>>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
     var EnemyManage = this;
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
@@ -101,28 +111,28 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 20;
         var cube = new THREE.CylinderGeometry(30, 30, 120);
         var robotCollider = new Physijs.BoxMesh(cube,
-                new THREE.MeshBasicMaterial({
-                    color: 0x888888,
-                    transparent: true,
-                    opacity: 0
-                }),0
-                );
+            new THREE.MeshBasicMaterial({
+                color: 0x888888,
+                transparent: true,
+                opacity: 0
+            }), 0
+        );
         robotCollider.life = 20;
 
-            robotCollider.position.x = x;
-            robotCollider.position.y = y;
-            robotCollider.position.z = z;
+        robotCollider.position.x = x;
+        robotCollider.position.y = y;
+        robotCollider.position.z = z;
 
-            robotCollider.__dirtyposition = true;
-            robotCollider.__dirtyrotation = true;
-            robotCollider.name = "robotCollider";
-            robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
-                console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
-                if (other_object.name === "bullet"){
-                    this.life--;
-                    console.log(this.life);
-                    if (this.life === 0) {
+        robotCollider.__dirtyposition = true;
+        robotCollider.__dirtyrotation = true;
+        robotCollider.name = "robotCollider";
+        robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
+            console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+            if (other_object.name === "bullet") {
+                this.life--;
+                console.log(this.life);
+                if (this.life === 0) {
                     var luck = Math.floor((Math.random() * 100));
                     if (luck > 60)
                         window.game.map.createLoot(other_object, "ammo");
@@ -132,9 +142,9 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
 
                     scene.remove(this);
                 }
-                }
+            }
 
-            }); 
+        });
 
         robotCollider.rotation.set(0, 0, 0);
         robotCollider.add(mechant);
@@ -147,6 +157,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
 
 
 EnemyManage.prototype.init = function (x, y, z) {
+<<<<<<< HEAD
  }  
 //ajouter un enemy
 EnemyManage.prototype.addInEnemy = function (mechant) {
@@ -160,6 +171,17 @@ EnemyManage.prototype.addInEnemy = function (mechant) {
 
 EnemyManage.prototype.update = function(arguments) {
     // body...
+=======
+
+    //ajouter un enemy
+    EnemyManage.prototype.addInEnemy = function (mechant) {
+        var EenemyManage = this;
+        biome.enemy.push({
+            id: mechant.id,
+            mechant: mechant
+        });
+    }
+>>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
