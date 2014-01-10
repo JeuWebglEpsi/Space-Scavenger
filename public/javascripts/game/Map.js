@@ -5,6 +5,7 @@ var Map = function () {
     var map = this;
     var initialized = false;
     var currentLevel;
+    this.robot_mechant = new EnemyManage();
     var walls = [];
     var obstacles = [];
     this.asteroids = [];
@@ -336,7 +337,7 @@ Map.prototype.ship = function () {
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     //var scene = new THREE.Object3D();
 
-    var robot_mechant = new EnemyManage();
+    //var robot_mechant = new EnemyManage();
          var mechantCount = 0;
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
@@ -441,15 +442,16 @@ Map.prototype.ship = function () {
                 scene.add(roof);
 
                 if (this.ship_map[i][j] === 9) {
-                    robot_mechant.createEnemy(
+                    map.robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE, mechantCount);
                       mechantCount++;
 
 
 
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
-                    robot_mechant.createSuperEnemy(
-                        (i - units / 2) * UNITSIZE, -20, (j - units / 2) * UNITSIZE);
+                    map.robot_mechant.createSuperEnemy(
+                        (i - units / 2) * UNITSIZE, -20, (j - units / 2) * UNITSIZE, mechantCount);
+                    mechantCount++;
                 } else if (this.ship_map[i][j] === 8) { // creation cellule energie
 
                     this.createLoot(floor, 'energy');

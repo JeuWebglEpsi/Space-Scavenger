@@ -33,6 +33,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
+        EnemyManage.addInEnemy(mechant);
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
 
@@ -86,14 +87,16 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
  * @param  {number} z
  * @return {[nothing]}
  */
-EnemyManage.prototype.createSuperEnemy = function (x, y, z) { 
+EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) { 
     var EnemyManage = this;
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
         var mechant = new Physijs.BoxMesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
+        mechant.id = mechantCount;
         mechant.name = "super_mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
+         EnemyManage.addInEnemy(mechant);
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 20;
         var cube = new THREE.CylinderGeometry(30, 30, 120);
@@ -144,15 +147,19 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 
 
 EnemyManage.prototype.init = function (x, y, z) {
-   
+ }  
 //ajouter un enemy
 EnemyManage.prototype.addInEnemy = function (mechant) {
     var EenemyManage = this;
-    biome.enemy.push({
+    EenemyManage.enemy.push({
         id: mechant.id,
         mechant: mechant
     });
+    console.log("mechant added : " + mechant.id)
 }
+
+EnemyManage.prototype.update = function(arguments) {
+    // body...
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')

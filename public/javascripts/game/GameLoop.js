@@ -151,7 +151,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 }
 
             })
-            scene.simulate(undefined, 8);
+            scene.simulate(undefined, 16);
 
             window.isRendering = requestAnimationFrame(render);
             renderer.render(scene, camera);

@@ -286,6 +286,7 @@ THREE.FirstPersonControls = function (object, domElement) {
                 toX += -dir.x;
                 toY += -dir.y;
                 toZ += -dir.z;
+                this.object.__dirtyPosition =true
             }
 
             if (this.moveLeft) {
@@ -294,7 +295,7 @@ THREE.FirstPersonControls = function (object, domElement) {
                 var axis = new THREE.Vector3(0, 1, 0);
                 var angle = Math.PI / 2;
                 var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
-
+this.object.__dirtyPosition =true
                 vector.applyMatrix4(matrix);
                 dir = vector;
 
@@ -304,7 +305,7 @@ THREE.FirstPersonControls = function (object, domElement) {
             }
             if (this.moveRight) {
                 var vector = dir;
-
+this.object.__dirtyPosition =true
                 var axis = new THREE.Vector3(0, 1, 0);
                 var angle = Math.PI / 2;
                 var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
