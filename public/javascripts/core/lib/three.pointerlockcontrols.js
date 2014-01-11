@@ -9,7 +9,7 @@ THREE.FirstPersonControls = function (object, domElement) {
 
     this.domElement = (domElement !== undefined) ? domElement : document;
     this.hasMove = false;
-    this.movementSpeed = 1000;
+    this.movementSpeed = 1500;
     this.lookSpeed = 0.01;
 
     this.lookVertical = true;
@@ -271,6 +271,15 @@ THREE.FirstPersonControls = function (object, domElement) {
 
 
             vector = new THREE.Vector3(0, 0, 1);
+
+            this.object.updateMatrixWorld();
+            this.object.children[0].updateMatrixWorld();
+            this.object.__dirtyRotation = true;
+
+            this.object.rotation.x = this.object.children[0].rotation.x;
+            this.object.rotation.y = this.object.children[0].rotation.y;
+            this.object.rotation.z = this.object.children[0].rotation.z;
+
             pw = vector.applyMatrix4(this.object.matrixWorld);
             dir = pw.sub(this.object.position).normalize();
 
@@ -282,11 +291,9 @@ THREE.FirstPersonControls = function (object, domElement) {
             }
 
             if (this.moveBackward) {
-                var dir = dir.negate();
-                toX += -dir.x;
-                toY += -dir.y;
-                toZ += -dir.z;
-                this.object.__dirtyPosition =true
+                toX += dir.x;
+                toY += dir.y;
+                toZ += dir.z;
             }
 
             if (this.moveLeft) {
@@ -295,7 +302,6 @@ THREE.FirstPersonControls = function (object, domElement) {
                 var axis = new THREE.Vector3(0, 1, 0);
                 var angle = Math.PI / 2;
                 var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
-this.object.__dirtyPosition =true
                 vector.applyMatrix4(matrix);
                 dir = vector;
 
@@ -305,7 +311,6 @@ this.object.__dirtyPosition =true
             }
             if (this.moveRight) {
                 var vector = dir;
-this.object.__dirtyPosition =true
                 var axis = new THREE.Vector3(0, 1, 0);
                 var angle = Math.PI / 2;
                 var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
@@ -333,7 +338,6 @@ this.object.__dirtyPosition =true
                 y: this.movementSpeed * toY,
                 z: this.movementSpeed * toZ
             });
-            this.object.updateMatrixWorld();
         }
 
         var actualLookSpeed = delta * this.lookSpeed;

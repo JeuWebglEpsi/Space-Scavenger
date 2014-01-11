@@ -143,7 +143,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
             //Game update loop
             game.update();
-            controls.update(Date.now() - time);
 
 
             scene.traverse(function (obj) {
@@ -152,7 +151,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
                 }
 
             })
-            scene.simulate(undefined, 16);
+            scene.simulate(1 / 100, 16);
+            controls.update(Date.now() - time);
 
             window.isRendering = requestAnimationFrame(render);
             renderer.render(scene, camera);

@@ -5,6 +5,9 @@
     src: url('./DeadSpace.eot');
     src: url('./DeadSpace.eot?#iefix') format('embedded-opentype'), url('./DeadSpace.ttf') format('truetype');
 }
+html *{
+	-webkit-user-select:none;
+}
 body {
 	overflow: hidden;
 	margin:0 ;
@@ -477,4 +480,9 @@ p.white{
 }
 #story p.lead{
 	font-size: 60px;
+}
+#skip-story{
+	position: absolute;
+	bottom: 10px;
+	right:10px;
 }
