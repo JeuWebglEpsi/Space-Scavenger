@@ -128,7 +128,6 @@ Bullet.prototype.create_ammobox = function(position) {
                         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
                         mesh.name = "toHighlight";
                         mesh.position = position;
-                        mesh.position.y +=1;
                         console.log(mesh.position);
 
                         mesh.scale.x = mesh.scale.y =  mesh.scale.z = 0.5;
