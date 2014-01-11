@@ -39,7 +39,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         mechant.name = "mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
-        EnemyManage.addInEnemy(mechant);
+       // EnemyManage.addInEnemy(mechant);
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
 
@@ -53,7 +53,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
             }), 0
         );
         robotCollider.life = 5;
-
+robotCollider.id = mechantCount;
         robotCollider.position.x = x;
         robotCollider.position.y = y;
         robotCollider.position.z = z;
@@ -82,6 +82,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 
         robotCollider.rotation.set(0, 0, 0);
         robotCollider.add(mechant);
+        EnemyManage.addInEnemy(robotCollider);
         scene.add(robotCollider);
     });
 }
@@ -93,15 +94,8 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
  * @param  {number} z
  * @return {[nothing]}
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) { 
-=======
-EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
->>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
-=======
-EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
->>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
     var EnemyManage = this;
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
@@ -110,7 +104,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
         mechant.name = "super_mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
-         EnemyManage.addInEnemy(mechant);
+     //    EnemyManage.addInEnemy(mechant);
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 20;
         var cube = new THREE.CylinderGeometry(30, 30, 120);
@@ -122,7 +116,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
             }), 0
         );
         robotCollider.life = 20;
-
+robotCollider.id = mechantCount;
         robotCollider.position.x = x;
         robotCollider.position.y = y;
         robotCollider.position.z = z;
@@ -152,7 +146,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 
         robotCollider.rotation.set(0, 0, 0);
         robotCollider.add(mechant);
-
+ EnemyManage.addInEnemy(robotCollider);
         scene.add(robotCollider);
     });
 
@@ -161,8 +155,6 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z) {
 
 
 EnemyManage.prototype.init = function (x, y, z) {
-<<<<<<< HEAD
-<<<<<<< HEAD
  }  
 //ajouter un enemy
 EnemyManage.prototype.addInEnemy = function (mechant) {
@@ -174,25 +166,23 @@ EnemyManage.prototype.addInEnemy = function (mechant) {
     console.log("mechant added : " + mechant.id)
 }
 
-EnemyManage.prototype.update = function(arguments) {
-    // body...
-=======
-=======
->>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
-
+EnemyManage.prototype.update = function(x) {
+     var EnemyManage = this;
+    //  console.log('Biome updating...');
+    var i = EnemyManage.enemy.length;
+    var xx = x +1;
+    while (i--) {
+        EnemyManage.enemy[i].robotCollider.position.x = xx;
+    }
+}
     //ajouter un enemy
-    EnemyManage.prototype.addInEnemy = function (mechant) {
-        var EenemyManage = this;
-        biome.enemy.push({
-            id: mechant.id,
-            mechant: mechant
+    EnemyManage.prototype.addInEnemy = function (robotCollider) {
+        var EnemyManage = this;
+        EnemyManage.enemy.push({
+            id: robotCollider.id,
+            robotCollider: robotCollider
         });
     }
-<<<<<<< HEAD
->>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
-=======
->>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
-}
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = EnemyManage;

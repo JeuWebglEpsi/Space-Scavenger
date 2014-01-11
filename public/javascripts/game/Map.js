@@ -337,18 +337,8 @@ Map.prototype.ship = function () {
     var cube_roof = new THREE.CubeGeometry(UNITSIZE, FLOORHEIGHT, UNITSIZE);
     //var scene = new THREE.Object3D();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     //var robot_mechant = new EnemyManage();
-         var mechantCount = 0;
-=======
-    var robot_mechant = new EnemyManage();
     var mechantCount = 0;
->>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
-=======
-    var robot_mechant = new EnemyManage();
-    var mechantCount = 0;
->>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
     for (var i = mapW - 1; i >= 0; i--) {
         for (var j = this.ship_map[i].length - 1; j >= 0; j--) {
             //generation des murs
@@ -455,11 +445,6 @@ Map.prototype.ship = function () {
                     map.robot_mechant.createEnemy(
                         (i - units / 2) * UNITSIZE, -12, (j - units / 2) * UNITSIZE, mechantCount);
                     mechantCount++;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
 
                 } else if (this.ship_map[i][j] === 6) { // creation super mechant
                     map.robot_mechant.createSuperEnemy(
@@ -489,16 +474,10 @@ Map.prototype.ship = function () {
                     });
 
                     scene.add(computer);
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
                 }  else if (this.ship_map[i][j] === 10) { //ajout caisse de munition
                     var bullet  = new Bullet();
                     bullet.create_ammobox(floor.position);
                     
-=======
->>>>>>> f799550cfd00319c2e2eee9e144b3ea668f335ac
->>>>>>> 71d2a40280fd3957643df2f830ba6204a42dfb62
                 }
 
             }
