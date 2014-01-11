@@ -603,8 +603,15 @@ Map.prototype.createLoot = function (parent_object, type) {
  */
 Map.prototype.update = function () {
     var map = this;
-    if (typeof map.particleSystem !== 'undefined')
+    if (typeof map.particleSystem !== 'undefined'){
         map.particleSystem.rotation.y += 0.0002;
+    }
+    if (map.currentLevel === 'ship'){
+        map.robot_mechant.update();
+
+    }
+
+
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')

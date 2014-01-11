@@ -166,12 +166,13 @@ EnemyManage.prototype.addInEnemy = function (mechant) {
     console.log("mechant added : " + mechant.id)
 }
 
-EnemyManage.prototype.update = function(x) {
+EnemyManage.prototype.update = function() {
      var EnemyManage = this;
     //  console.log('Biome updating...');
     var i = EnemyManage.enemy.length;
-    var xx = x +1;
     while (i--) {
+        var x = EnemyManage.enemy[i].robotCollider.position.x;
+         var xx = x +1;
         EnemyManage.enemy[i].robotCollider.position.x = xx;
     }
 }
