@@ -66,10 +66,13 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         robotCollider.position.y = y;
         robotCollider.position.z = z;
 <<<<<<< HEAD
+<<<<<<< HEAD
         robotCollider.movementSpeed= 1000;
        
         
 =======
+=======
+>>>>>>> 15e6bb169d841601fdd7bccdc30522717706ef81
         robotCollider.rotation.set(0, 0, 0);
         robotCollider.__dirtyposition = true;
         robotCollider.__dirtyrotation = true;
@@ -97,6 +100,11 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
             //   enemyManage.robotTurn);
               // robotCollider.
               console.log("robot percute wall");
+            }
+
+            if (other_object.name === "cameraCollider") {
+                console.log("shoot");
+                EnemyManage.shoot(robotCollider, other_object.position);
             }
 
             if (other_object.name === "cameraCollider") {
@@ -247,6 +255,7 @@ EnemyManage.prototype.shoot = function(robotCollider, vector) {
         balle.position.y = robotCollider.position.y + (1.20 * dir.y) + robotCollider.scale.y * dir.y;
         balle.position.z = robotCollider.position.z + (1.20 * dir.z) + robotCollider.scale.z * dir.z;
 
+<<<<<<< HEAD
 
         balle.movementSpeed = 50;
 
@@ -256,6 +265,17 @@ EnemyManage.prototype.shoot = function(robotCollider, vector) {
             if (other_object.name === "cameraCollider")
                 window.game.localPlayer.set("_life", window.game.localPlayer.get('_life')-10);
 
+=======
+
+        balle.movementSpeed = 50;
+
+
+        balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            console.log('mechant bullet ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+            if (other_object.name === "cameraCollider")
+                window.game.localPlayer.set("_life", window.game.localPlayer.get('_life')-10);
+
+>>>>>>> 15e6bb169d841601fdd7bccdc30522717706ef81
             scene.remove(this);
 
         });
@@ -296,6 +316,7 @@ EnemyManage.prototype.update = function() {
         var rob =EnemyManage.enemy[i].robotCollider;
         var x = EnemyManage.enemy[i].robotCollider.position.x;
 <<<<<<< HEAD
+<<<<<<< HEAD
          var xx = x +3;
         
         rob.setLinearVelocity({
@@ -307,6 +328,8 @@ EnemyManage.prototype.update = function() {
         rob.updateMatrixWorld();
     }*/
 =======
+=======
+>>>>>>> 15e6bb169d841601fdd7bccdc30522717706ef81
         var xx = x +1;
         EnemyManage.enemy[i].robotCollider.position.x = xx;
         // var test = EnemyManage.enemy[i].robotCollider.position;
@@ -319,6 +342,9 @@ EnemyManage.prototype.update = function() {
         }
     
 
+<<<<<<< HEAD
+>>>>>>> 15e6bb169d841601fdd7bccdc30522717706ef81
+=======
 >>>>>>> 15e6bb169d841601fdd7bccdc30522717706ef81
 }
     //ajouter un enemy
@@ -360,6 +386,23 @@ var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
 vector.applyMatrix4(matrix);
 //return verctor;
 }*/
+
+
+setInterval(function() {
+    var mechant = new EnemyManage();
+    var i = mechant.enemy.length;
+    while (i--) {
+        var distance = mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider_position);
+         if ( distance <= 300) {
+                    console.log(distance);
+                    mechant.shoot(mechant.enemy[length].robotCollider, window.cameraCollider_position);
+            }
+    }
+
+
+}, 1000);
+
+
 
 
 setInterval(function() {
