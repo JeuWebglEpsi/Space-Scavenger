@@ -32,7 +32,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
             emissive: 0x111111,
             map: cameraRobot.renderTarget
         }))
-        var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
+        var mechant = new Physijs.BoxMesh(geometry, new THREE.MeshLambertMaterial(materials), 0);
 
 
         mechant.id = mechantCount;
@@ -48,19 +48,26 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         var robotCollider = new Physijs.BoxMesh(cube,
             new THREE.MeshBasicMaterial({
                 color: 0x888888,
-                transparent: true,
+                transparent: false,
                 opacity: 0
             }), 0
         );
+        robotCollider.name = "robotCollider";
+         robotCollider.__dirtyposition = true;
+        robotCollider.__dirtyrotation = true;
+
+        var vector = new THREE.Vector3(0, 0, -1);
+        var pw = vector.applyMatrix4(robotCollider.matrixWorld);
+        var dir = pw.sub(robotCollider.position).normalize();
+
         robotCollider.life = 5;
 robotCollider.id = mechantCount;
         robotCollider.position.x = x;
         robotCollider.position.y = y;
         robotCollider.position.z = z;
-
-        robotCollider.__dirtyposition = true;
-        robotCollider.__dirtyrotation = true;
-        robotCollider.name = "robotCollider";
+        robotCollider.movementSpeed= 1000;
+       
+        
         robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
             console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
@@ -77,13 +84,27 @@ robotCollider.id = mechantCount;
                     scene.remove(this);
                 }
             }
+             if (other_object.name === "wall"){
+                var newx = x - 0.5;
+                robotCollider.position.x = newx;
+            //   enemyManage.robotTurn);
+              // robotCollider.
+              console.log("robot percute wall");
+            }
 
         });
 
         robotCollider.rotation.set(0, 0, 0);
         robotCollider.add(mechant);
+
+       // robotCollider.updateMatrixWorld();
         EnemyManage.addInEnemy(robotCollider);
         scene.add(robotCollider);
+         robotCollider.setLinearVelocity({
+            x: robotCollider.movementSpeed * dir.x,
+            y: robotCollider.movementSpeed * dir.y,
+            z: robotCollider.movementSpeed * dir.z
+        });
     });
 }
 
@@ -141,6 +162,13 @@ robotCollider.id = mechantCount;
                     scene.remove(this);
                 }
             }
+            if (other_object.name === "wall"){
+                var newx = x - 0.5;
+                robotCollider.position.x = x;
+               var robotRotation = enemyManage.robotTurn();
+              // robotCollider.
+              console.log("robot percute wall");
+            }
 
         });
 
@@ -167,14 +195,21 @@ EnemyManage.prototype.addInEnemy = function (mechant) {
 }
 
 EnemyManage.prototype.update = function() {
-     var EnemyManage = this;
-    //  console.log('Biome updating...');
+  /*   var EnemyManage = this;
     var i = EnemyManage.enemy.length;
     while (i--) {
+        var rob =EnemyManage.enemy[i].robotCollider;
         var x = EnemyManage.enemy[i].robotCollider.position.x;
-         var xx = x +1;
-        EnemyManage.enemy[i].robotCollider.position.x = xx;
-    }
+         var xx = x +3;
+        
+        rob.setLinearVelocity({
+                x: rob.movementSpeed * 1,
+                y: rob.movementSpeed * 0,
+                z: rob.movementSpeed * 1
+            });
+        //EnemyManage.robotTurn(rob);
+        rob.updateMatrixWorld();
+    }*/
 }
     //ajouter un enemy
     EnemyManage.prototype.addInEnemy = function (robotCollider) {
@@ -184,6 +219,37 @@ EnemyManage.prototype.update = function() {
             robotCollider: robotCollider
         });
     }
+/*EnemyManage.prototype.robotMove = function(rob) {  
+            var toX, toY, toZ=0;
+            var vector = new THREE.Vector3(0, 0, 1);
+            pw = vector.applyMatrix4(rob.matrixWorld);
+            dir = pw.sub(rob.position).normalize();
+
+
+                toX += -dir.x;
+                //toY += -dir.y;
+                toZ += -dir.z;
+                rob.setLinearVelocity({
+                x: rob.movementSpeed * toX,
+                y: rob.movementSpeed * toY,
+                z: rob.movementSpeed * toZ
+            });
+ 
+ var matrix = new THREE.Matrix4().makeTranslation(100, 0, 100);
+            vector.applyMatrix4(matrix);
+            rob.updateMatrixWorld();
+}
+EnemyManage.prototype.robotTurn = function() {  
+            var vector = new THREE.Vector3(0, 0, 1);
+            pw = vector.applyMatrix4(this.object.matrixWorld);
+            vector = pw.sub(this.object.position).normalize();
+
+var axis = new THREE.Vector3(0, 1, 0);
+var angle = Math.PI / 2;
+var matrix = new THREE.Matrix4().makeRotationAxis(axis, angle);
+vector.applyMatrix4(matrix);
+//return verctor;
+}*/
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = EnemyManage;
