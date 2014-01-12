@@ -1,6 +1,6 @@
 /**
- * Classe de gestion des énemis
- */
+* Classe de gestion des énemis
+*/
 var EnemyManage = function () {
     var EnemyManage = this;
     this.enemy = [];
@@ -8,12 +8,12 @@ var EnemyManage = function () {
 }
 
 /**
- * Fonction de création
- * @param  {number} x
- * @param  {number} y
- * @param  {number} z
- * @return {[nothing]}
- */
+* Fonction de création
+* @param {number} x
+* @param {number} y
+* @param {number} z
+* @return {[nothing]}
+*/
 EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
     var EnemyManage = this;
     var cameraRobot = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -85,7 +85,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
             if (other_object.name === "wall") {
                 var newx = x - 0.5;
                 robotCollider.position.x = newx;
-                //   enemyManage.robotTurn);
+                // enemyManage.robotTurn);
                 // robotCollider.
                 console.log("robot percute wall");
             }
@@ -105,23 +105,23 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         // var cube_detect = new THREE.SphereGeometry(300);
 
         // var robotDetector = new THREE.Mesh(cube_detect,
-        //     new THREE.MeshBasicMaterial({
-        //         color: 0x888888,
-        //         transparent: true,
-        //         opacity: 0.5
-        //     }), 0
+        // new THREE.MeshBasicMaterial({
+        // color: 0x888888,
+        // transparent: true,
+        // opacity: 0.5
+        // }), 0
         // );
         // robotDetector.rotation.set(0, 0, 0);
         // robotDetector.__dirtyposition = true;
         // robotDetector.__dirtyrotation = true;
         // robotDetector.name = "robotDetector";
         // robotDetector.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        //     //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
-        //     console.log('robotDetector colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
-        //     if (other_object.name === "cameraCollider") {
-        //         console.log('robotDetector colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+        // //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
+        // console.log('robotDetector colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+        // if (other_object.name === "cameraCollider") {
+        // console.log('robotDetector colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
 
-        //     }
+        // }
 
         // });
 
@@ -140,12 +140,12 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 }
 
 /**
- * Fonction de création
- * @param  {number} x
- * @param  {number} y
- * @param  {number} z
- * @return {[nothing]}
- */
+* Fonction de création
+* @param {number} x
+* @param {number} y
+* @param {number} z
+* @return {[nothing]}
+*/
 
 EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
     var EnemyManage = this;
@@ -156,7 +156,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
         mechant.name = "super_mechant_robot";
         mechant.__dirtyposition = true;
         mechant.__dirtyrotation = true;
-        //    EnemyManage.addInEnemy(mechant);
+        // EnemyManage.addInEnemy(mechant);
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 20;
         var cube = new THREE.CylinderGeometry(30, 30, 120);
@@ -283,13 +283,13 @@ EnemyManage.prototype.update = function () {
 
     /*var EnemyManage = this;
 
-    var i = EnemyManage.enemy.length;
-    while (i--) {
-       // var rob =EnemyManage.enemy[i].robotCollider;
-       var x = EnemyManage.enemy[i].robotCollider.position.x;
-       var xx = x +1;
-       EnemyManage.enemy[i].robotCollider.position.x = xx;
-           */
+var i = EnemyManage.enemy.length;
+while (i--) {
+// var rob =EnemyManage.enemy[i].robotCollider;
+var x = EnemyManage.enemy[i].robotCollider.position.x;
+var xx = x +1;
+EnemyManage.enemy[i].robotCollider.position.x = xx;
+*/
 }
 
 
@@ -303,29 +303,29 @@ EnemyManage.prototype.addInEnemy = function (robotCollider) {
     });
 }
 /*EnemyManage.prototype.robotMove = function(rob) {
-            var toX, toY, toZ=0;
-            var vector = new THREE.Vector3(0, 0, 1);
-            pw = vector.applyMatrix4(rob.matrixWorld);
-            dir = pw.sub(rob.position).normalize();
+var toX, toY, toZ=0;
+var vector = new THREE.Vector3(0, 0, 1);
+pw = vector.applyMatrix4(rob.matrixWorld);
+dir = pw.sub(rob.position).normalize();
 
 
-                toX += -dir.x;
-                //toY += -dir.y;
-                toZ += -dir.z;
-                rob.setLinearVelocity({
-                x: rob.movementSpeed * toX,
-                y: rob.movementSpeed * toY,
-                z: rob.movementSpeed * toZ
-            });
+toX += -dir.x;
+//toY += -dir.y;
+toZ += -dir.z;
+rob.setLinearVelocity({
+x: rob.movementSpeed * toX,
+y: rob.movementSpeed * toY,
+z: rob.movementSpeed * toZ
+});
 
- var matrix = new THREE.Matrix4().makeTranslation(100, 0, 100);
-            vector.applyMatrix4(matrix);
-            rob.updateMatrixWorld();
+var matrix = new THREE.Matrix4().makeTranslation(100, 0, 100);
+vector.applyMatrix4(matrix);
+rob.updateMatrixWorld();
 }
 EnemyManage.prototype.robotTurn = function() {
-            var vector = new THREE.Vector3(0, 0, 1);
-            pw = vector.applyMatrix4(this.object.matrixWorld);
-            vector = pw.sub(this.object.position).normalize();
+var vector = new THREE.Vector3(0, 0, 1);
+pw = vector.applyMatrix4(this.object.matrixWorld);
+vector = pw.sub(this.object.position).normalize();
 
 var axis = new THREE.Vector3(0, 1, 0);
 var angle = Math.PI / 2;
