@@ -16,7 +16,6 @@
     <link rel="prefetch" href="/javascripts/Maps/cube1.png" />
     <link rel="prefetch" href="/javascripts/Maps/particle.png" />
 
-
     <!--Scripts files-->
     <script type="text/javascript" src="/javascripts/core/lib/require.js"></script>
     <script type="text/javascript">
@@ -225,6 +224,7 @@ document.exitPointerLock = document.exitPointerLock ||
                 <button type="button" id="rungame"  class="btn btn-primary" data-loading-text="Chargement . . ." data-complete-text="C'est parti !" >Jouer</button><br/><br/>
             <button type="button" class="btn btn-primary" onclick="window.fullScreen();">Plein ecran</button><br><br>
             <button type="button" id="credits"class="btn btn-primary" >Credits</button><br><br>
+            <button type="button" id="quitgame"class="btn btn-primary" >Quitter le jeu</button><br><br>
 
             </div>
         </div>
@@ -286,7 +286,7 @@ Malheureusement, votre tâche ne sera pas aisée du fait que ces épaves sont en
     </div>
 
 </div>
-<button id="skip-strory" class="btn btn-primary">Passer</button>
+<button id="skip-story" class="btn btn-primary">Passer</button>
 </div>
 <!-- MODALS -->
 <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModal" aria-hidden="true">
@@ -345,8 +345,11 @@ $(document).ready(function(){
         $('#story').fadeOut().promise().done(function(){ $('#story').remove();});
     },30000);
 })
-$('button#skip-strory').on('click',function(){
+$('button#skip-story').on('click',function(){
     $('#story').remove();$('#game-opt .container').show();
+})
+$('button#quitgame').on('click',function(){
+    history.back();
 })
     $('button#credits').on('click',function(){
         $('#creditModal').modal();

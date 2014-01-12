@@ -71,7 +71,7 @@ Map.prototype.space = function () {
         mesh.scale.set(-2000, -2000, -2000);
         scene.add(mesh);
     });
-                      
+
     var planete = new THREE.Mesh(new THREE.SphereGeometry(4000, 64, 64),
         new THREE.ShaderMaterial({
             uniforms: {
@@ -84,7 +84,7 @@ Map.prototype.space = function () {
             transparent: true
         }));
 
-    planete.position.set(-8000, 0, -200);
+    planete.position.set(-12000, 0, -200);
     scene.add(planete);
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
@@ -244,8 +244,8 @@ Map.prototype.ship = function () {
     var map = this;
 
     // Modification de la vitesse de déplacement
-    window.controls.movementSpeed = 200;
-
+    window.controls.movementSpeed = 500;
+    window.controls.canMoveVertival = false;
 
 
     // Initialisation de la progression
@@ -347,7 +347,7 @@ Map.prototype.ship = function () {
                 || this.ship_map[i][j] === 5) // Porte sécurisé
             {
                 if (this.ship_map[i][j] === 3) {
-                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]],0);
+                    var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
 
                     wall.position.x = ((i - units / 2) * UNITSIZE);
                     wall.position.y = (WALLHEIGHT / 2);
@@ -473,10 +473,10 @@ Map.prototype.ship = function () {
                     });
 
                     scene.add(computer);
-                }  else if (this.ship_map[i][j] === 10) { //ajout caisse de munition
-                    var bullet  = new Bullet();
+                } else if (this.ship_map[i][j] === 10) { //ajout caisse de munition
+                    var bullet = new Bullet();
                     bullet.create_ammobox(floor.position);
-                    
+
                 }
 
             }
@@ -552,7 +552,6 @@ Map.prototype.createLoot = function (parent_object, type) {
             0);
         mesh.name = "toHighlight";
         mesh.position = position;
-        console.log(position);
 
         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             var nbEnergy = 20;
@@ -602,10 +601,10 @@ Map.prototype.createLoot = function (parent_object, type) {
  */
 Map.prototype.update = function () {
     var map = this;
-    if (typeof map.particleSystem !== 'undefined'){
+    if (typeof map.particleSystem !== 'undefined') {
         map.particleSystem.rotation.y += 0.0002;
     }
-    if (map.currentLevel === 'ship'){
+    if (map.currentLevel === 'ship') {
         map.robot_mechant.update();
 
     }

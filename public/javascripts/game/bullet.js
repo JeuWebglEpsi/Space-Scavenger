@@ -43,8 +43,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         balle.position.z = cameraCollider.position.z + (1.20 * dir.z) + cameraCollider.scale.z * dir.z;
 
 
-        balle.movementSpeed = 1000;
-
+        balle.movementSpeed = 2000;
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
@@ -95,7 +94,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
                         }
                     });
                 }
-            } 
+            }
         });
 
         scene.add(balle);
@@ -119,27 +118,27 @@ Bullet.prototype.hasMunition = function () {
 
 }
 
-Bullet.prototype.create_ammobox = function(position) {
+Bullet.prototype.create_ammobox = function (position) {
 
-                        console.log("ammobox sa passe");
-                    var loader = new THREE.JSONLoader();
-                    loader.load("/javascripts/Objects/ammobox.js", function (geometry, materials) {
-                         console.log("ammobox sa repasse");
-                        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
-                        mesh.name = "toHighlight";
-                        mesh.position = position;
-                        console.log(mesh.position);
+    console.log("ammobox sa passe");
+    var loader = new THREE.JSONLoader();
+    loader.load("/javascripts/Objects/ammobox.js", function (geometry, materials) {
+        console.log("ammobox sa repasse");
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+        mesh.name = "toHighlight";
+        mesh.position = position;
+        console.log(mesh.position);
 
-                        mesh.scale.x = mesh.scale.y =  mesh.scale.z = 0.5;
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.5;
 
-                        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                            console.log("ammobox collide");
-                            if (other_object.name === "cameraCollider") {
-                                window.game.localPlayer.set('_ammo', 100);
-                            }
-                        });
-                        scene.add(mesh);
-                    });
+        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            console.log("ammobox collide");
+            if (other_object.name === "cameraCollider") {
+                window.game.localPlayer.set('_ammo', 100);
+            }
+        });
+        scene.add(mesh);
+    });
     // body...
 };
 
