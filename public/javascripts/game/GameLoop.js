@@ -93,8 +93,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         scene.add(cameraCollider);
 
         var renderer = new THREE.WebGLRenderer({
-            antialias: false,
-            precision: 'lowp',
+            antialias: true,
+            precision: 'highp',
             alpha: true,
             premultiplyAlpha: true
         });
@@ -103,14 +103,6 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         renderer.shadowMapEnabled = true;
         renderer.shadowMapSoft = true;
 
-        renderer.shadowCameraNear = 10;
-        renderer.shadowCameraFar = camera.far;
-        renderer.shadowCameraFov = 55;
-
-        renderer.shadowMapBias = 0.0039;
-        renderer.shadowMapDarkness = 0.5;
-        renderer.shadowMapWidth = 1024;
-        renderer.shadowMapHeight = 1024;
 
 
         $('body').append(renderer.domElement);

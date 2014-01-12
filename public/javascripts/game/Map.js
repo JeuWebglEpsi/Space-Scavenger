@@ -88,8 +88,8 @@ Map.prototype.space = function () {
     scene.add(planete);
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-        var asteroidCount = 800;
-        var veryBigAste = 1;
+        var asteroidCount = 1500;
+        var veryBigAste = 10;
         var bigAste = 200;
         var weight;
         while (asteroidCount--) {
@@ -158,29 +158,26 @@ Map.prototype.space = function () {
     })
     // on ajoute un point de lumière
 
-    var hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0x000000, .4);
-    hemiLight.castShadow = false;
-    scene.add(hemiLight);
 
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(-2000, 0, -200);
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+    directionalLight.position.set(-12000, 0, -200);
     directionalLight.castShadow = true;
-    directionalLight.shadowMapWidth = directionalLight.shadowMapHeight = 1024 * 2;
+    directionalLight.shadowMapWidth = directionalLight.shadowMapHeight = 4096 * 2;
 
-    var d = 300;
+    var d = 300000;
 
     directionalLight.shadowCameraLeft = -d;
     directionalLight.shadowCameraRight = d;
     directionalLight.shadowCameraTop = d;
     directionalLight.shadowCameraBottom = -d;
 
-    directionalLight.shadowCameraFar = 3500;
-    directionalLight.shadowBias = -0.0001;
-    directionalLight.shadowDarkness = 0.35;
+    directionalLight.shadowCameraFar = 350000;
+    directionalLight.shadowBias = 0.001;
+    directionalLight.shadowDarkness = .35;
 
     scene.add(directionalLight);
     // create the particle variables
-    var particleCount = 20000,
+    var particleCount = 100000,
         particles = new THREE.Geometry()
         // create the particle variables
         var pMaterial = new THREE.ParticleBasicMaterial({
