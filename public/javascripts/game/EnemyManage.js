@@ -115,15 +115,6 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
                 console.log("robot percute wall");
             }
 
-            if (other_object.name === "cameraCollider") {
-                console.log("shoot");
-                EnemyManage.shoot(robotCollider, other_object.position);
-            }
-
-            if (other_object.name === "cameraCollider") {
-                console.log("shoot");
-                EnemyManage.shoot(robotCollider, other_object.position);
-            }
 
         });
 
@@ -248,7 +239,12 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
 
 }
 
-EnemyManage.prototype.shoot = function (robotCollider, position) {
+EnemyManage.prototype.addInEnemy = function(robotCollider) {
+    EnemyManage = this;
+    EnemyManage.enemy.push({id: robotCollider.id, robotCollider: robotCollider});
+};
+
+EnemyManage.prototype.shoot = function (robotCollider, cameraCollider) {
 
     var bulletCamera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
     var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(1),
@@ -268,14 +264,14 @@ EnemyManage.prototype.shoot = function (robotCollider, position) {
     // balle.__dirtyRotation = true;
 
         var vector = new THREE.Vector3(0, 0, -1);
-        var pw = vector.applyMatrix4(window.cameraCollider.matrixWorld);
-        var dir = pw.sub(window.cameraCollider.position).normalize();
+        var pw = vector.applyMatrix4(cameraCollider.matrixWorld);
+        var dir = pw.sub(cameraCollider.position).normalize();
 
         balle.name = 'mechant_bullet'; 
 
 
         balle.position.x = robotCollider.position.x + (50 * -dir.x) + robotCollider.scale.x * -dir.x;
-        balle.position.y = robotCollider.position.y + 35;
+        balle.position.y = robotCollider.position.y ;
         balle.position.z = robotCollider.position.z + (50 * -dir.z) + robotCollider.scale.z * -dir.z;
 
     balle.movementSpeed = 300;

@@ -82,12 +82,10 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             cameraCollider.position.set(0, 0, 8000);
         else if (level === 2) {
             cameraCollider.position.set(850, 30, -950);
-            var flash = new THREE.PointLight(0xFFFFFF, 2, 400);
+            var flash = new THREE.PointLight(0xFFFFFF, 1, 400);
             flash.position.set(0, 0, 0);
             cameraCollider.add(flash);
-            window.cameraCollider_position = cameraCollider.position;
             window.cameraCollider = cameraCollider;
-            window.cameraCollider_rotation = cameraCollider.rotation;
         }
 
 
