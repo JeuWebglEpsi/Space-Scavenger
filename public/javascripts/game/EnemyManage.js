@@ -33,11 +33,13 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 
         mechant.id_robot = mechantCount;
         mechant.name = "mechant_robot";
-        mechant.__dirtyposition = true;
-        mechant.__dirtyrotation = true;
+
         // EnemyManage.addInEnemy(mechant);
 
         mechant.scale.x = mechant.scale.y = mechant.scale.z = 15;
+        cameraRobot.rotation.set(0, 0, 0);
+
+        mechant.add(cameraRobot);
 
         var cube = new THREE.CylinderGeometry(20, 20, 40);
         var robotCollider = new Physijs.BoxMesh(cube,
@@ -138,6 +140,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         // });
 
         // robotCollider.add(robotDetector);
+        mechant.rotation.set(0, 0, 0);
         robotCollider.add(mechant);
 
         // robotCollider.updateMatrixWorld();
@@ -251,9 +254,9 @@ EnemyManage.prototype.shoot = function (robotCollider, vector) {
     var dir = pw.sub(robotCollider.position).normalize();
 
     balle.name = 'mechant_bullet';
-    balle.position.x = robotCollider.position.x + (1.20 * dir.x) + robotCollider.scale.x * dir.x;
-    balle.position.y = robotCollider.position.y + (1.20 * dir.y) + robotCollider.scale.y * dir.y;
-    balle.position.z = robotCollider.position.z + (1.20 * dir.z) + robotCollider.scale.z * dir.z;
+    balle.position.x = robotCollider.position.x + (1.40 * dir.x) + robotCollider.scale.x * dir.x;
+    balle.position.y = robotCollider.position.y + (1.40 * dir.y) + robotCollider.scale.y * dir.y;
+    balle.position.z = robotCollider.position.z + (1.40 * dir.z) + robotCollider.scale.z * dir.z;
 
 
     balle.movementSpeed = 1000;
@@ -294,8 +297,10 @@ EnemyManage.prototype.addInEnemy = function (mechant) {
 EnemyManage.prototype.update = function () {
     window.scene.traverse(function (obj) {
         if (obj.name === 'robotCollider') {
+
             obj.__dirtyPosition = true;
             obj.__dirtyRotation = true;
+
             if (obj.moveXplus) {
                 obj.position.x += 1;
                 obj.rotation.y = 0.5;
