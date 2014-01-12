@@ -44,7 +44,9 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         var robotCollider = new Physijs.BoxMesh(cube,
             new THREE.MeshBasicMaterial({
                 color: 0x888888,
-                wireframe: true
+                wireframe: true,
+                transparent: true,
+                opacity: 0
             }), 0
         );
         robotCollider.name = "robotCollider";
@@ -71,6 +73,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
             console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
             if (other_object.name === "bullet") {
                 this.life--;
+                console.log(this.life);
                 if (this.life === 0) {
                     var luck = Math.floor((Math.random() * 100));
                     if (luck > 60)
@@ -78,6 +81,14 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
                     else if (luck > 30)
                         window.game.map.createLoot(other_object, "life");
 
+                    // suppression du tableau enemy
+                    var i = EnemyManage.enemy.length;
+                    while(i--) {
+                        if (EnemyManage.enemy[i].robotCollider.id === this.id){
+                            EnemyManage.enemy.splice(i,1); 
+                            i=0;
+                        }
+                    }
 
                     scene.remove(this);
                 }
@@ -182,7 +193,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
 
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
             console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
-            if (other_object.name === "bullet") {
+            if (other_object.name === "bullet") {   
                 this.life--;
                 console.log(this.life);
                 if (this.life === 0) {
@@ -191,7 +202,15 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
                         window.game.map.createLoot(other_object, "ammo");
                     if (luck > 30)
                         window.game.map.createLoot(other_object, "life");
-
+                    //console.log("test remove id="+this.id);
+                
+                    var i = EnemyManage.enemy.length;
+                    while(i--) {
+                        if (EnemyManage.enemy[i].robotCollider.id === this.id){
+                            EnemyManage.enemy.splice(i,1); 
+                            i=0;
+                        }
+                    }
 
                     scene.remove(this);
                 }
@@ -214,9 +233,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
 
 }
 
-EnemyManage.prototype.shoot = function (robotCollider, vector) {
-
-    var loader = new THREE.JSONLoader();
+EnemyManage.prototype.shoot = function (robotCollider, position) {
 
     var bulletCamera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1e7);
     var balle = new Physijs.BoxMesh(new THREE.SphereGeometry(1),
@@ -231,56 +248,53 @@ EnemyManage.prototype.shoot = function (robotCollider, vector) {
             transparent: true
         }), 1
     );
-    balle.add(bulletCamera);
-    balle.__dirtyPosition = true;
+     balle.add(bulletCamera);
+     balle.__dirtyPosition = true;
+    // balle.__dirtyRotation = true;
 
-    // var vector = new THREE.Vector3(0, 0, -1);
-    var pw = vector.applyMatrix4(robotCollider.matrixWorld);
-    var dir = pw.sub(robotCollider.position).normalize();
+        var vector = new THREE.Vector3(0, 0, -1);
+        var pw = vector.applyMatrix4(window.cameraCollider.matrixWorld);
+        var dir = pw.sub(window.cameraCollider.position).normalize();
 
-    balle.name = 'mechant_bullet';
-    balle.position.x = robotCollider.position.x + (1.20 * dir.x) + robotCollider.scale.x * dir.x;
-    balle.position.y = robotCollider.position.y + (1.20 * dir.y) + robotCollider.scale.y * dir.y;
-    balle.position.z = robotCollider.position.z + (1.20 * dir.z) + robotCollider.scale.z * dir.z;
+        balle.name = 'mechant_bullet'; 
 
+        balle.position.x = robotCollider.position.x + (50 * -dir.x) + robotCollider.scale.x * -dir.x;
+        balle.position.y = robotCollider.position.y + 35;
+        balle.position.z = robotCollider.position.z + (50 * -dir.z) + robotCollider.scale.z * -dir.z;
 
-    balle.movementSpeed = 50;
+    balle.movementSpeed = 300;
 
 
     balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        console.log('mechant bullet ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+        //console.log('mechant bullet ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
         if (other_object.name === "cameraCollider")
             window.game.localPlayer.set("_life", window.game.localPlayer.get('_life') - 10);
 
-        scene.remove(this);
+        if (other_object.name !== "robotCollider")
+            scene.remove(this);
 
     });
-    console.log("create balle mechant");
+    //console.log("create balle mechant");
+
     scene.add(balle);
+     balle.setLinearVelocity({
+         x: balle.movementSpeed * -dir.x,
+         y: balle.movementSpeed * -dir.y,
+         z: balle.movementSpeed * -dir.z
+     });
 
-    balle.setLinearVelocity({
-        x: balle.movementSpeed * dir.x,
-        y: balle.movementSpeed * dir.y,
-        z: balle.movementSpeed * dir.z
-    });
+
+
+
+    
 
 };
 
 EnemyManage.prototype.init = function (x, y, z) {
 
 }
-//ajouter un enemy
-EnemyManage.prototype.addInEnemy = function (mechant) {
-    var EenemyManage = this;
-    EenemyManage.enemy.push({
-        id: mechant.id,
-        mechant: mechant
-    });
-    console.log("mechant added : " + mechant.id)
-}
 
 EnemyManage.prototype.update = function () {
-
     /*var EnemyManage = this;
 
 var i = EnemyManage.enemy.length;
@@ -335,35 +349,7 @@ vector.applyMatrix4(matrix);
 }*/
 
 
-setInterval(function () {
-    var mechant = new EnemyManage();
-    var i = mechant.enemy.length;
-    while (i--) {
-        var distance = mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider_position);
-        if (distance <= 300) {
-            console.log(distance);
-            mechant.shoot(mechant.enemy[length].robotCollider, window.cameraCollider_position);
-        }
-    }
 
-
-}, 1000);
-
-
-
-setInterval(function () {
-    var mechant = new EnemyManage();
-    var i = mechant.enemy.length;
-    while (i--) {
-        var distance = mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider_position);
-        if (distance <= 300) {
-            console.log(distance);
-            mechant.shoot(mechant.enemy[length].robotCollider, window.cameraCollider_position);
-        }
-    }
-
-
-}, 1000);
 
 
 

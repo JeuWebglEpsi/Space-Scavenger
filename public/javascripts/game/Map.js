@@ -612,6 +612,32 @@ Map.prototype.update = function () {
 
 }
 
+
+// pour faire tirer les robots
+setInterval(function () {
+if (typeof window.game !== 'undefined' && typeof window.game.map !== 'undefined') {
+
+
+        var i = window.game.map.robot_mechant.enemy.length;
+        while (i--) {
+            var distance = game.map.robot_mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider_position);
+                
+            if (distance <= 300) {
+                //console.log(game.map.robot_mechant.enemy[i].robotCollider.id + " " + distance);
+                  game.map.robot_mechant.shoot(game.map.robot_mechant.enemy[i].robotCollider, window.cameraCollider_position);
+          
+                //faire tourner le robot
+               // game.map.robot_mechant.enemy[i].robotCollider.rotation.y = -window.cameraCollider_rotation.y;
+
+
+            }
+        }
+}
+
+    }, 1000);
+
+    
+
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = Map;
 else

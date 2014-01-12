@@ -86,6 +86,8 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
             flash.position.set(0, 0, 0);
             cameraCollider.add(flash);
             window.cameraCollider_position = cameraCollider.position;
+            window.cameraCollider = cameraCollider;
+            window.cameraCollider_rotation = cameraCollider.rotation;
         }
 
 
