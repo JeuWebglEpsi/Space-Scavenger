@@ -348,7 +348,7 @@ Map.prototype.ship = function () {
             {
                 if (this.ship_map[i][j] === 3) {
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-
+                    wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
                     wall.position.y = (WALLHEIGHT / 2);
                     wall.position.z = ((j - units / 2) * UNITSIZE);
@@ -375,7 +375,7 @@ Map.prototype.ship = function () {
                     scene.add(wall);
                 } else if (this.ship_map[i][j] === 4) {
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-
+                    wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
                     wall.position.y = (WALLHEIGHT / 2);
                     wall.position.z = ((j - units / 2) * UNITSIZE);
@@ -395,7 +395,7 @@ Map.prototype.ship = function () {
                     scene.add(wall);
                 } else if (this.ship_map[i][j] === 5) {
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-
+                    wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
                     wall.position.y = (WALLHEIGHT / 2);
                     wall.position.z = ((j - units / 2) * UNITSIZE);
@@ -407,7 +407,7 @@ Map.prototype.ship = function () {
 
                 if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) {
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
-
+                    wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
                     wall.position.y = (WALLHEIGHT / 2);
                     wall.position.z = ((j - units / 2) * UNITSIZE);
@@ -425,7 +425,9 @@ Map.prototype.ship = function () {
 
             ) {
                 //génération du sol
-                var floor = new Physijs.BoxMesh(cube_floor, materials[0], 0);
+                var floor = new Physijs.BoxMesh(cube_floor, materials[0], 0, {
+                    collision_flags: 3
+                });
                 floor.addEventListener('collision', function (other_object) {
 
                 })
@@ -435,7 +437,9 @@ Map.prototype.ship = function () {
                 scene.add(floor);
 
                 //génération du plafond
-                var roof = new Physijs.BoxMesh(cube_roof, materials[0], 0);
+                var roof = new Physijs.BoxMesh(cube_roof, materials[0], 0, {
+                    collision_flags: 3
+                });
                 roof.position.x = ((i - units / 2) * UNITSIZE);
                 roof.position.y = (FLOORHEIGHT / 2 + WALLHEIGHT);
                 roof.position.z = ((j - units / 2) * UNITSIZE);
