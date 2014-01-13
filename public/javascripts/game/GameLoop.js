@@ -1,4 +1,4 @@
-require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, Audio5js) {
+require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, howl) {
     console.log(arguments);
     window.runGame = function (level) {
 
@@ -12,12 +12,9 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         element.requestPointerLock();
 
         //audio sampling.
-        var audio5js = new Audio5js({
-            ready: function () {
-                this.load('/contact.mp3');
-                this.play();
-            }
-        });
+        var sound = new howl.Howl({
+            urls: ['contact.mp3']
+        }).play();
 
         window.isBlocked = true;
         //capture du pointeur.

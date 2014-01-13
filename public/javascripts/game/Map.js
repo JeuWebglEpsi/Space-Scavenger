@@ -88,7 +88,7 @@ Map.prototype.space = function () {
     scene.add(planete);
 
     loader.load("/javascripts/Maps/asteroid.js", function (geometry, materials) {
-        var asteroidCount = 1500;
+        var asteroidCount = 1000;
         var veryBigAste = 10;
         var bigAste = 200;
         var weight;
