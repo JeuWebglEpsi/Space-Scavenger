@@ -13,7 +13,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         //audio sampling.
         var sound = new howl.Howl({
-            urls: ['contact.mp3']
+            urls: ['contact.ogg']
         }).play();
 
         window.isBlocked = true;
