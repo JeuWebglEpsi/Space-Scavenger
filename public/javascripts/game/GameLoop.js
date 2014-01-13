@@ -1,7 +1,7 @@
 require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'audiojs'], function ($, THREE, Physijs, FirstPersonControl, WindowResize, Game, howl) {
     console.log(arguments);
     window.runGame = function (level) {
-
+        window.sound;
         console.log('Running game ' + level)
 
         var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
@@ -12,10 +12,10 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         element.requestPointerLock();
 
         //audio sampling.
-        if (sound) {
-            sound.stop();
+        if (window.sound) {
+            window.sound.stop();
         }
-        var sound = new howl.Howl({
+        window.sound = new howl.Howl({
             urls: ['contact.ogg'],
             buffer: true
         }).play();
