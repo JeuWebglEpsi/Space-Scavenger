@@ -94,7 +94,7 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
 
         var renderer = new THREE.WebGLRenderer({
             antialias: true,
-            precision: 'highp',
+            precision: 'lowp',
             alpha: true,
             premultiplyAlpha: true
         });

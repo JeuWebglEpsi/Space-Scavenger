@@ -128,12 +128,6 @@ Map.prototype.space = function () {
     loader.load('/javascripts/Maps/ship.js', function (geometry, materials) {
 
         var mirrorCamera = new THREE.CubeCamera(0.1, 5000, 512);
-        var mirrorMaterial = new THREE.MeshPhongMaterial({
-            emissive: 0x111111,
-            envMap: mirrorCamera.renderTarget
-        });
-        materials.push(mirrorMaterial);
-        console.log(materials);
 
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials), 1e10);
 
@@ -162,7 +156,7 @@ Map.prototype.space = function () {
     var directionalLight = new THREE.DirectionalLight(0xffffff, 3);
     directionalLight.position.set(-12000, 0, -200);
     directionalLight.castShadow = true;
-    directionalLight.shadowMapWidth = directionalLight.shadowMapHeight = 4096 * 2;
+    directionalLight.shadowMapWidth = directionalLight.shadowMapHeight = 1024 * 2;
 
     var d = 300000;
 
@@ -616,28 +610,28 @@ Map.prototype.update = function () {
 
 // pour faire tirer les robots
 setInterval(function () {
-if (typeof window.game !== 'undefined' && typeof window.game.map !== 'undefined') {
+    if (typeof window.game !== 'undefined' && typeof window.game.map !== 'undefined') {
 
 
         var i = window.game.map.robot_mechant.enemy.length;
         while (i--) {
             var distance = game.map.robot_mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider.position);
-                
+
             if (distance <= 300) {
                 //console.log(game.map.robot_mechant.enemy[i].robotCollider.id + " " + distance);
-                  game.map.robot_mechant.shoot(game.map.robot_mechant.enemy[i].robotCollider, window.cameraCollider);
-          
+                game.map.robot_mechant.shoot(game.map.robot_mechant.enemy[i].robotCollider, window.cameraCollider);
+
                 //faire tourner le robot
-               // game.map.robot_mechant.enemy[i].robotCollider.rotation.y = -window.cameraCollider_rotation.y;
+                // game.map.robot_mechant.enemy[i].robotCollider.rotation.y = -window.cameraCollider_rotation.y;
 
 
             }
         }
-}
+    }
 
-    }, 1000);
+}, 1000);
 
-    
+
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
     module.exports = Map;
