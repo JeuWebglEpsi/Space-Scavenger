@@ -99,6 +99,13 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
         scene.add(balle);
 
+        var sound = new Howl({
+            urls: ['laser.ogg'],
+            sprite: {
+                laser: [100, 1000]
+            }
+        }).play('laser');
+
         balle.setLinearVelocity({
             x: balle.movementSpeed * dir.x,
             y: balle.movementSpeed * dir.y,
