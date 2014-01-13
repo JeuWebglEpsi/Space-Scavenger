@@ -4,6 +4,12 @@
 var Bullet = function () {
     var bullet = this;
     this.name = 'bullet';
+    this.soundbullet = new Howl({
+        urls: ['laser.ogg'],
+        sprite: {
+            laser: [100, 1000]
+        }
+    })
 }
 /**
  * Fonctio nde création balle
@@ -12,7 +18,7 @@ var Bullet = function () {
  * @return {nothing}
  */
 Bullet.prototype.position = function (cameraCollider, camera) {
-
+    var b = this;
     var loader = new THREE.JSONLoader();
 
     if (this.hasMunition()) {
@@ -99,12 +105,7 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
         scene.add(balle);
 
-        var sound = new Howl({
-            urls: ['laser.ogg'],
-            sprite: {
-                laser: [100, 1000]
-            }
-        }).play('laser');
+        b.soundbullet.play('laser');
 
         balle.setLinearVelocity({
             x: balle.movementSpeed * dir.x,

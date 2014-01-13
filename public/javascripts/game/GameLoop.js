@@ -12,8 +12,12 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         element.requestPointerLock();
 
         //audio sampling.
+        if (sound) {
+            sound.stop();
+        }
         var sound = new howl.Howl({
-            urls: ['contact.ogg']
+            urls: ['contact.ogg'],
+            buffer: true
         }).play();
 
         window.isBlocked = true;
