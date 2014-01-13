@@ -74,10 +74,10 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
         robotCollider.name = "robotCollider";
         robotCollider.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
-            console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+            //  console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
             if (other_object.name === "bullet") {
                 this.life--;
-                console.log(this.life);
+                //   console.log(this.life);
                 if (this.life === 0) {
                     var luck = Math.floor((Math.random() * 100));
                     if (luck > 60)
@@ -116,7 +116,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
                     this.moveZmoins = false;
                     this.moveXplus = true;
                 }
-                console.log("robot percute wall");
+                // console.log("robot percute wall");
             }
 
 
@@ -147,6 +147,8 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 
         // robotCollider.add(robotDetector);
         mechant.rotation.set(0, 0, 0);
+        robotCollider.mechant = mechant;
+
         robotCollider.add(mechant);
 
         // robotCollider.updateMatrixWorld();
@@ -202,10 +204,10 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
 
 
             //window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
-            console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
+            //     console.log('robotCollider colliding with ' + other_object.name + ' ' + other_object.id + ' on ' + JSON.stringify(this.position));
             if (other_object.name === "bullet") {
                 this.life--;
-                console.log(this.life);
+                //      console.log(this.life);
                 if (this.life === 0) {
                     var luck = Math.floor((Math.random() * 100));
                     if (luck > 60)
@@ -230,7 +232,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
                 robotCollider.position.x = x;
                 var robotRotation = enemyManage.robotTurn();
                 // robotCollider.
-                console.log("robot percute wall");
+                //    console.log("robot percute wall");
             }
 
         });

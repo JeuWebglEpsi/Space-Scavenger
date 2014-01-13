@@ -5,6 +5,7 @@ var Map = function () {
     var map = this;
     var initialized = false;
     var currentLevel;
+    this.fireTimeout = 0;
     this.robot_mechant = new EnemyManage();
     var walls = [];
     var obstacles = [];
@@ -562,7 +563,6 @@ Map.prototype.createLoot = function (parent_object, type) {
                 }
 
                 if (game.localPlayer.get('_energy') >= 100) {
-                    console.log()
                     map.progressShip();
                 }
 
@@ -601,35 +601,19 @@ Map.prototype.update = function () {
     }
     if (map.currentLevel === 'ship') {
         map.robot_mechant.update();
-
-    }
-
-
-}
-
-
-// pour faire tirer les robots
-setInterval(function () {
-    if (typeof window.game !== 'undefined' && typeof window.game.map !== 'undefined') {
-
-
-        var i = window.game.map.robot_mechant.enemy.length;
-        while (i--) {
-            var distance = game.map.robot_mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider.position);
-
-            if (distance <= 300) {
-                //console.log(game.map.robot_mechant.enemy[i].robotCollider.id + " " + distance);
-                game.map.robot_mechant.shoot(game.map.robot_mechant.enemy[i].robotCollider, window.cameraCollider);
-
-                //faire tourner le robot
-                // game.map.robot_mechant.enemy[i].robotCollider.rotation.y = -window.cameraCollider_rotation.y;
-
-
+        if (((map.fireTimeout++) / 10) > 1) {
+            var i = window.game.map.robot_mechant.enemy.length;
+            while (i--) {
+                var distance = game.map.robot_mechant.enemy[i].robotCollider.position.distanceTo(window.cameraCollider.position);
+                if (distance <= 300) {
+                    game.map.robot_mechant.shoot(game.map.robot_mechant.enemy[i].robotCollider, window.cameraCollider);
+                }
             }
+            map.fireTimeout = 0;
         }
     }
 
-}, 1000);
+}
 
 
 
