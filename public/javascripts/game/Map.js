@@ -494,7 +494,7 @@ Map.prototype.createLoot = function (parent_object, type) {
             mesh.position = position;
             // ajustement fait car le robotCollider est trop haut
             if (game.map.currentLevel === 'ship')
-                mesh.position.y = 0;
+                mesh.position.y = 2;
 
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             if (other_object.name === 'cameraCollider') {
@@ -522,7 +522,7 @@ Map.prototype.createLoot = function (parent_object, type) {
             mesh.position = position;
             // ajustement fait car le robotCollider est trop haut
             if (game.map.currentLevel === 'ship')
-                mesh.position.y = 0;
+                mesh.position.y = 2;
 
 
              mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
@@ -561,10 +561,11 @@ Map.prototype.createLoot = function (parent_object, type) {
                         game.localPlayer.set('_energy', game.localPlayer.get('_energy') + nbEnergy);
                     } else {
                         game.localPlayer.set('_energy', 100);
+
                     }
                 }
 
-                if (game.localPlayer.get('_energy') >= 100) {
+                if (game.localPlayer.get('_energy') >= 100 && map.currentProgress === "collect") {
                     map.progressShip();
                 }
 
