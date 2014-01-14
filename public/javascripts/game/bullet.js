@@ -49,7 +49,11 @@ Bullet.prototype.position = function (cameraCollider, camera) {
         balle.position.z = cameraCollider.position.z + (1.20 * dir.z) + cameraCollider.scale.z * dir.z;
 
 
-        balle.movementSpeed = 2500;
+        if (window.game.map.currentLevel === 'space')
+            balle.movementSpeed = 5000;
+        else
+            balle.movementSpeed = 2500;
+
 
         balle.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);

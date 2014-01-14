@@ -73,6 +73,9 @@ Map.prototype.space = function () {
         scene.add(mesh);
     });
 
+
+
+
     var planete = new THREE.Mesh(new THREE.SphereGeometry(4000, 64, 64),
         new THREE.ShaderMaterial({
             uniforms: {
@@ -239,7 +242,7 @@ Map.prototype.ship = function () {
     window.controls.movementSpeed = 500;
     window.controls.canMoveVertival = false;
 
-
+    var loader = new THREE.JSONLoader();
     // Initialisation de la progression
     this.currentProgress = {
         completed: -1,
@@ -257,10 +260,10 @@ Map.prototype.ship = function () {
         // Initialisation des variables de dimension pour la création des mesh de terrains
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
         [1, 1, 1, 8, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 8, 4, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 4, 1, 1, 1, 1, 0, 1, 1, 0, 9, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 9, 1, 0, 9, 1, 0, 0, 9, 1, 0, 9, 0, 0, 9, 0, 0, 9, 0, 0, 9, 0, 0, 9, 0, 5, 0, 0, 0, 0, 9, 0, 6, 0, 9, 0, 0, 1, ],
-        [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 2, 1, 1, 2, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 9, 0, 9, 0, 0, 0, 1, ],
+        [1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 7, 1, ],
+        [1, 1, 1, 4, 1, 1, 1, 1, 0, 1, 1, 0, 9, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 9, 1, 0, 9, 1, 0, 0, 9, 1, 0, 9, 0, 0, 9, 0, 0, 9, 0, 0, 9, 0, 0, 9, 0, 5, 0, 0, 0, 0, 9, 0, 6, 0, 9, 0, 7, 1, ],
+        [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 1, ],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 2, 1, 1, 2, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 9, 0, 0, 9, 0, 9, 0, 0, 7, 1, ],
         [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 2, 0, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ],
         [1, 1, 1, 1, 0, 0, 0, 9, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 4, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
         [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
@@ -450,25 +453,8 @@ Map.prototype.ship = function () {
 
                     this.createLoot(floor, 'energy');
                 } else if (this.ship_map[i][j] === 7) { // creation du poste de control
+                     this.create_console(floor.position);
 
-
-                    var computer = new Physijs.BoxMesh(
-                        new THREE.CubeGeometry(10, 30, 10),
-                        new THREE.MeshLambertMaterial({
-                            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte2.jpg') //4 Porte cassable
-                        }), 0);
-
-                    computer.position = floor.position;
-
-                    computer.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                        if (other_object.name === "cameraCollider") {
-                            if (map.currentProgress.goal === 'desactivate')
-                                map.progressShip();
-                        }
-
-                    });
-
-                    scene.add(computer);
                 } else if (this.ship_map[i][j] === 10) { //ajout caisse de munition
                     var bullet = new Bullet();
                     bullet.create_ammobox(floor.position);
@@ -492,17 +478,19 @@ Map.prototype.createLoot = function (parent_object, type) {
     position = parent_object.position;
     cube = new THREE.CubeGeometry(20, 20, 35);
 
-    if (type === "life") {
-        mesh = new Physijs.BoxMesh(cube,
-            new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-            }),
-            0);
-        mesh.position = position;
-        mesh.position.y += 1;
-        mesh.name = "toHighlight";
+    var loader = new THREE.JSONLoader();
 
-        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+    if (type === "life") {
+
+         loader.load("/javascripts/Objects/life.js", function (geometry, materials) {
+            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
+            mesh.name = "toHighlight";
+            mesh.position = position;
+            // ajustement fait car le robotCollider est trop haut
+            if (game.map.currentLevel === 'ship')
+                mesh.position.y = 0;
+
+            mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             if (other_object.name === 'cameraCollider') {
 
                 var nbLife = Math.floor((Math.random() * 100) + 40);
@@ -516,40 +504,47 @@ Map.prototype.createLoot = function (parent_object, type) {
                 }
             }
         });
-    } else if (type === "ammo") {
-        mesh = new Physijs.BoxMesh(cube,
-            new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-            }),
-            0);
-        mesh.name = "toHighlight";
-        mesh.position = position;
-        mesh.position.y += 1;
 
-        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            if (other_object.name === 'cameraCollider') {
-                var nbAmmo = Math.floor((Math.random() * 10) + 50);
-                if (game.localPlayer.get('_ammo') < 100) {
-                    scene.remove(this);
-                    if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
-                        game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
-                    } else {
-                        game.localPlayer.set('_ammo', 100);
+            scene.add(mesh);
+
+        });
+    } else if (type === "ammo") {
+
+        loader.load("/javascripts/Objects/ammo.js", function (geometry, materials) {
+            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
+            mesh.name = "toHighlight";
+            mesh.position = position;
+            // ajustement fait car le robotCollider est trop haut
+            if (game.map.currentLevel === 'ship')
+                mesh.position.y = 0;
+
+
+             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+                if (other_object.name === 'cameraCollider') {
+                    var nbAmmo = Math.floor((Math.random() * 10) + 50);
+                    if (game.localPlayer.get('_ammo') < 100) {
+                        scene.remove(this);
+                        if (game.localPlayer.get('_ammo') < (100 - nbAmmo)) {
+                            game.localPlayer.set('_ammo', game.localPlayer.get('_ammo') + nbAmmo);
+                        } else {
+                            game.localPlayer.set('_ammo', 100);
+                        }
                     }
                 }
-            }
+            });
+
+            scene.add(mesh);
+
         });
-
     } else if (type === "energy") {
-        mesh = new Physijs.BoxMesh(cube,
-            new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture('javascripts/Maps/energy.jpg')
-            }),
-            0);
-        mesh.name = "toHighlight";
-        mesh.position = position;
+        loader.load("/javascripts/Objects/energy.js", function (geometry, materials) {
+            var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
+            mesh.name = "toHighlight";
+            mesh.position = position;
 
-        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+            mesh.scale.x = mesh.scale.y = mesh.scale.z = 3;
+
+            mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             var nbEnergy = 20;
             console.log("colision energy");
             if (other_object.name === 'cameraCollider') {
@@ -571,24 +566,59 @@ Map.prototype.createLoot = function (parent_object, type) {
             }
         });
 
+            scene.add(mesh);
+
+        });
+
+
+      
     } else if (type === "levier") {
-        mesh = new Physijs.BoxMesh(cube,
-            new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg')
-            }),
-            0);
+
+        loader.load("/javascripts/Objects/crowbar.js", function (geometry, materials) {
+        var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
         mesh.name = "toHighlight";
         mesh.position = position;
-        mesh.position.y += 1;
 
-        mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
+
+         mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             if (map.currentProgress.goal === 'collect' && other_object.name === "cameraCollider")
                 map.progressSpace();
         });
 
+
+        scene.add(mesh);
+    });
+    
+
     }
-    scene.add(mesh);
+    
 }
+
+
+Map.prototype.create_console = function(position) {
+
+
+    var loader = new THREE.JSONLoader();
+
+   loader.load("/javascripts/Objects/console.js", function (geometry, materials) {
+    var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials),0);
+    mesh.name = "toHighlight";
+    mesh.position  = position;
+
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = 7;
+
+    mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
+    if (other_object.name === "cameraCollider") {
+        if (map.currentProgress.goal === 'desactivate')
+            map.progressShip();
+    }
+
+    });
+    scene.add(mesh);
+ 
+ });
+};
 
 /**
  * Fonction de mise a jour

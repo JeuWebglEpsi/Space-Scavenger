@@ -232,7 +232,7 @@ EnemyManage.prototype.createSuperEnemy = function (x, y, z, mechantCount) {
             if (other_object.name === "wall" || other_object.name === 'Door' || other_object.name === 'LockedDoor' || other_object.name === 'wall_breakable') {
                 var newx = x - 0.5;
                 robotCollider.position.x = x;
-                var robotRotation = enemyManage.robotTurn();
+                //var robotRotation = enemyManage.robotTurn();
                 // robotCollider.
                 //    console.log("robot percute wall");
             }
