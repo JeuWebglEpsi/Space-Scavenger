@@ -24,11 +24,13 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
     cameraRobot.matrixWorldInverse.getInverse(cameraRobot.matrixWorld);
     cameraViewProjectionMatrix.multiplyMatrices(cameraRobot.projectionMatrix, cameraRobot.matrixWorldInverse);
     frustum.setFromMatrix(cameraViewProjectionMatrix);
-
+ /*var mater = new THREE.MeshLambertMaterial({
+            map: THREE.ImageUtils.loadTexture('javascripts/Objects/robot.png')
+        });*/
     var loader = new THREE.JSONLoader();
     loader.load("/javascripts/Objects/robot.js", function (geometry, materials) {
 
-        var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials));
+        var mechant = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial(materials),0);
         mechant.position.y = -40;
 
         mechant.id_robot = mechantCount;
@@ -322,8 +324,54 @@ EnemyManage.prototype.update = function () {
                 if (obj.moveXmoins) obj.position.x -= 1;
                 if (obj.moveZmoins) obj.position.z -= 1;
             }
-        }
+           /* var vector = new THREE.Vector3(0, 0, -1);
+            vector.applyQuaternion(obj.mechant.cameraRobot.quaternion);
+            var angle = vector.angleTo(window.cameraCollider.position);
+            obj.setRotationFromAxisAngle(obj.position.y, angle);*/
+            //EnemyManage.superRotation(obj);
+            }
     })
+}
+EnemyManage.prototype.superRotation = function (obj){
+//var direction = new THREE.Vector3().subVectors(obj.position, cameraCollider.position);
+//obj.rotation.set(0, direction.y, 0);
+//on récupère les positions 
+var p = window.cameraCollider.position; 
+var r = obj.position; 
+var rot = obj.rotation;
+var look = obj.mechant.cameraRobot.LookAt();
+console.log("look at " + look.y)
+console.log("position robot : " + r.x + " " + r.y+ " " + r.z);
+console.log("position player : " + p.y + " " + p.y+ " " + p.z);
+console.log ("rotation du robot : " + rot.y);
+// norme
+var x1 = p.x -r.x;
+var x2 = x1 * x1;
+var z1 = p.z - r.z;
+var z2 = z1 * z1;
+var norme = Math.sqrt(x2 + z2);
+console.log(" x1 " + x1);
+console.log(" x2 " + x2);
+console.log(" z1 " + z1);
+console.log(" z2 " + z2);
+console.log(" norme : " + norme);
+
+//calcul angle
+var cosDegretB = z1 / norme;
+//convertion en radian
+var degretToRadian = Math.PI /180;
+var cosB = cosDegretB * degretToRadian;
+var B = 0;
+if (p.x > r.x){
+    B = Math.acos(cosB)
+}
+else if (p.x < r.x){
+    B -= Math.acos(cosB);
+}
+//on enleve l'angle initiale du robot par rapport à au repère
+var G = B - rot.y;
+console.log(" l'angle B : " + B + " ... G : " + G);
+obj.rotation.set(0, G, 0);
 }
 
 
