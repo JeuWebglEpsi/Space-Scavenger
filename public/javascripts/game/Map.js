@@ -309,7 +309,7 @@ Map.prototype.ship = function () {
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte2.jpg') //4 Porte cassable
         }),
         new THREE.MeshLambertMaterial({
-            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte3.jpg') //5 Porte cible
+            map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull-Porte3.jpg') //5 Porte verrouillé
         }),
         new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture('javascripts/Maps/shiphull.jpg') // 6 super mechant
@@ -341,7 +341,7 @@ Map.prototype.ship = function () {
                 || this.ship_map[i][j] === 4 //Porte fragile
                 || this.ship_map[i][j] === 5) // Porte sécurisé
             {
-                if (this.ship_map[i][j] === 3) {
+                if (this.ship_map[i][j] === 3) { // création de la porte du vaisseau
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
                     wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
@@ -368,7 +368,7 @@ Map.prototype.ship = function () {
 
                     });
                     scene.add(wall);
-                } else if (this.ship_map[i][j] === 4) {
+                } else if (this.ship_map[i][j] === 4) { // création d'un mur cassable
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
                     wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
@@ -377,6 +377,7 @@ Map.prototype.ship = function () {
 
                     wall.life = 3;
                     wall.name = 'wall_breakable';
+
                     wall.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
                         //console.log('mur cassable ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
                         if (other_object.name === "bullet") {
@@ -389,6 +390,8 @@ Map.prototype.ship = function () {
                     });
                     scene.add(wall);
                 } else if (this.ship_map[i][j] === 5) {
+                //création dune porte vérrouillé, 
+                    //elle se détruit d'elle meme si le joueur est assé avancé dans ses objectifs
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
                     wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
@@ -400,7 +403,8 @@ Map.prototype.ship = function () {
                     scene.add(wall);
                 }
 
-                if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) {
+                if (this.ship_map[i][j] === 1 || this.ship_map[i][j] === 2) { 
+                // création de mur simple et griffé 
                     var wall = new Physijs.BoxMesh(cube, materials[this.ship_map[i][j]], 0);
                     wall._physijs.collision_flags = 0
                     wall.position.x = ((i - units / 2) * UNITSIZE);
@@ -416,6 +420,7 @@ Map.prototype.ship = function () {
 
 
             }
+            // création d'autres objets qui ne sont pas mur. ou qui ont besoin d'un sol et d'un plafond
             if (this.ship_map[i][j] === 0 || this.ship_map[i][j] === 4 || this.ship_map[i][j] === 5 || this.ship_map[i][j] === 6 || this.ship_map[i][j] === 7 || this.ship_map[i][j] === 8 || this.ship_map[i][j] === 9 || this.ship_map[i][j] === 10
 
             ) {
@@ -470,7 +475,8 @@ Map.prototype.ship = function () {
 
 
 }
-//à déplacer dans Utils
+// Création de loot sur la map
+// est appeller lorsque mesh est detruit
 Map.prototype.createLoot = function (parent_object, type) {
     var map = this;
     var item, mesh, position, cube;
@@ -480,7 +486,7 @@ Map.prototype.createLoot = function (parent_object, type) {
 
     var loader = new THREE.JSONLoader();
 
-    if (type === "life") {
+    if (type === "life") { // création d'un pack de vie
 
          loader.load("/javascripts/Objects/life.js", function (geometry, materials) {
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
@@ -508,7 +514,7 @@ Map.prototype.createLoot = function (parent_object, type) {
             scene.add(mesh);
 
         });
-    } else if (type === "ammo") {
+    } else if (type === "ammo") { //création de munitions
 
         loader.load("/javascripts/Objects/ammo.js", function (geometry, materials) {
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
@@ -536,7 +542,7 @@ Map.prototype.createLoot = function (parent_object, type) {
             scene.add(mesh);
 
         });
-    } else if (type === "energy") {
+    } else if (type === "energy") { // création d'énergie, utile pour finir le jeu
         loader.load("/javascripts/Objects/energy.js", function (geometry, materials) {
             var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
             mesh.name = "toHighlight";
@@ -544,6 +550,7 @@ Map.prototype.createLoot = function (parent_object, type) {
 
             mesh.scale.x = mesh.scale.y = mesh.scale.z = 3;
 
+            //lorsque le joueur touche l'energie, il gagne 20 points d'énergie, si il en a 100 il rempli un objectif
             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
             var nbEnergy = 20;
             console.log("colision energy");
@@ -572,7 +579,7 @@ Map.prototype.createLoot = function (parent_object, type) {
 
 
       
-    } else if (type === "levier") {
+    } else if (type === "levier") { // création d'un levier pour ouvrir le vaisseau
 
         loader.load("/javascripts/Objects/crowbar.js", function (geometry, materials) {
         var mesh = new Physijs.BoxMesh(geometry, new THREE.MeshFaceMaterial(materials),0);
@@ -596,7 +603,8 @@ Map.prototype.createLoot = function (parent_object, type) {
 }
 
 
-Map.prototype.create_console = function(position) {
+// Création d'une console utile pour déboquer la porte du vaisseau de l'intérieur
+Map.prototype.create_console = function(position) { 
 
 
     var loader = new THREE.JSONLoader();
@@ -608,6 +616,7 @@ Map.prototype.create_console = function(position) {
 
     mesh.scale.x = mesh.scale.y = mesh.scale.z = 7;
 
+// Est un objet spécial, qu'il faut trouver pour accomplir ses objectifs
     mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
     if (other_object.name === "cameraCollider") {
         if (map.currentProgress.goal === 'desactivate')
@@ -630,6 +639,7 @@ Map.prototype.update = function () {
         map.particleSystem.rotation.y += 0.0002;
     }
     if (map.currentLevel === 'ship') {
+        // a chaque boucle, on verifie si un robot est proche, si oui il tire vers la direction du joueur
         map.robot_mechant.update();
         if (((map.fireTimeout++) / 10) > 1) {
             var i = window.game.map.robot_mechant.enemy.length;
