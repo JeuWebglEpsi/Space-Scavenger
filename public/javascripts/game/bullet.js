@@ -61,15 +61,16 @@ Bullet.prototype.position = function (cameraCollider, camera) {
             if (other_object.name === "asteroid") {
                 scene.remove(other_object);
                 var popItem = parseInt(Math.random() * 10);
-                if (popItem > 5) {
+                if (popItem > 8){
+                    window.game.map.createLoot(other_object, 'levier');
+                }
+                else if (popItem > 5) {
                     var item = parseInt(Math.random() * 10);
                     if (item > 5) {
                         window.game.map.createLoot(other_object, 'life')
                     } else {
                         window.game.map.createLoot(other_object, 'ammo');
                     }
-                } else {
-                    window.game.map.createLoot(other_object, 'levier');
                 }
                 var scale = parseInt(other_object.scale.x);
                 if (scale < 50) {
