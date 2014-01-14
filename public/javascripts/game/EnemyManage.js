@@ -43,7 +43,7 @@ EnemyManage.prototype.createEnemy = function (x, y, z, mechantCount) {
 
         mechant.add(cameraRobot);
 
-        var cube = new THREE.CylinderGeometry(20, 20, 40);
+        var cube = new THREE.CylinderGeometry(30, 30, 40);
         var robotCollider = new Physijs.BoxMesh(cube,
             new THREE.MeshBasicMaterial({
                 color: 0x888888,
