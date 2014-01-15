@@ -77,22 +77,23 @@ require(['jquery', 'three', 'physi', 'pointerlockcontrols', 'resize', 'game', 'a
         });
         cameraCollider.rotation.set(0, 0, 0);
 
-            var flash = new THREE.PointLight(0xFFFFFF, 1, 400);
-            flash.position.set(0, 0, 0);
-            cameraCollider.add(flash);
-            window.cameraCollider = cameraCollider;
-        if (level === 1){
+        var flash = new THREE.PointLight(0xFFFFFF, 1, 400);
+        flash.position.set(0, 0, 0);
+        cameraCollider.add(flash);
+        window.cameraCollider = cameraCollider;
+        if (level === 1) {
             window.sound = new howl.Howl({
-            urls: ['contact.ogg'],
-            buffer: true
-        }).play();
+                urls: ['contact.ogg'],
+                loop: true,
+                buffer: true
+            }).play();
             cameraCollider.position.set(0, 0, 8000);
-        }
-        else if (level === 2) {
+        } else if (level === 2) {
             cameraCollider.position.set(850, 30, -950);
             window.sound = new howl.Howl({
-            urls: ['Myst.ogg'],
-            buffer: true
+                urls: ['Myst.ogg'],
+                loop: true,
+                buffer: true
             }).play();
 
         }
