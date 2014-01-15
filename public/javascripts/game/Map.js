@@ -590,8 +590,10 @@ Map.prototype.createLoot = function (parent_object, type) {
         mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
 
          mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            if (map.currentProgress.goal === 'collect' && other_object.name === "cameraCollider")
+            if (map.currentProgress.goal === 'collect' && other_object.name === "cameraCollider"){
                 map.progressSpace();
+                scene.remove(this);
+            }
         });
 
 
