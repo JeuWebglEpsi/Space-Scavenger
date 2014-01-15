@@ -65,10 +65,9 @@ Bullet.prototype.position = function (cameraCollider, camera) {
             if (other_object.name === "asteroid") {
                 scene.remove(other_object);
                 var popItem = parseInt(Math.random() * 10);
-                if (popItem > 8){
+                if (popItem > 8) {
                     window.game.map.createLoot(other_object, 'levier');
-                }
-                else if (popItem > 5) {
+                } else if (popItem > 5) {
                     var item = parseInt(Math.random() * 10);
                     if (item > 5) {
                         window.game.map.createLoot(other_object, 'life')
@@ -99,7 +98,8 @@ Bullet.prototype.position = function (cameraCollider, camera) {
 
                             mesh.name = "asteroid";
                             mesh.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                                // console.log('asteroid ' + this.id + ' in collision with ' + other_object.id + ' ' + other_object.name);
+                                if (other_object.name === "cameraCollider")
+                                    window.game.localPlayer.set('_life', window.game.localPlayer.get('_life') - 20);
                             });
                             scene.add(mesh);
                         }
