@@ -179,7 +179,7 @@ var element = document.body;
         window.toMainMenu = function(hide){
             if(window.isRendering){
                 window.cancelAnimationFrame(isRendering);
-                isRendering = undefined;
+                window.isRendering = null;
             }
             $('#rungame').button('reset')
                 $('#game-opt').fadeIn(1000);
@@ -190,10 +190,10 @@ var element = document.body;
                     '-webkit-animation-play-state':'running'
                 })
 
-                window.game = undefined;
-                window.controls = undefined;
-                window.scene = undefined;
-                window.render=undefined;
+                window.game = null;
+                window.controls = null;
+                window.scene = null;
+                window.render=null;
 
                 setTimeout(function(){
 document.exitPointerLock = document.exitPointerLock ||
