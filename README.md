@@ -1,4 +1,6 @@
 #Space Scavenger
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FJeuWebglEpsi%2FSpace-Scavenger.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FJeuWebglEpsi%2FSpace-Scavenger?ref=badge_shield)
+
 ##Le projet
 <img src="moodboard.jpg" alt="">
 ###Histoire
@@ -22,3 +24,7 @@ Lancement : node app.js puis visiter la page <a href="http://localhost:3000" tar
 - Tommy BOUCHER, développeur et concepteur.
 - École Privée des Sciences Informatiques - LYON
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FJeuWebglEpsi%2FSpace-Scavenger.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FJeuWebglEpsi%2FSpace-Scavenger?ref=badge_large)
